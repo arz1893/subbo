@@ -1,0 +1,12 @@
+/node_modules
+/public/hot
+/public/storage
+/public/image_thumbnails
+/public/uploaded_images/
+/public/zippedfile
+/storage/*.key
+/.idea
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
