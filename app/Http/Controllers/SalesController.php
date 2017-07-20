@@ -14,6 +14,7 @@ class SalesController extends Controller
 
     public function showMonthlyRevenue(User $user) {
         $userWallet = $user->wallet()->first();
-        return view('sales.show_monthly_sales', compact('user', 'userWallet'));
+        $currency = $user->currency;
+        return view('sales.show_monthly_sales', compact('user', 'userWallet', 'currency'));
     }
 }

@@ -4,7 +4,7 @@
     <div class="container">
         <h5>Total Nett Earning</h5>
         <span style="font-size: 1.5em;" class="blue-grey-text">
-            {{ "Rp " . number_format( $userWallet->deposit , 2 , ',', '.' ) }}
+            {{ $currency->code . " " . number_format( $userWallet->deposit , 2 , '.', '.' ) }}
         </span>
         <hr>
 
@@ -20,7 +20,7 @@
                 </span>
                 <span class="col s6">
                     <span class="blue-grey-text">
-                        {{ "Rp " . number_format( $userWallet->deposit , 2 , ',', '.' ) }}
+                        {{ $currency->code . " " . number_format( $userWallet->deposit , 2 , '.', '.' ) }}
                     </span>
                 </span>
             </span>
@@ -31,9 +31,9 @@
                 <span class="col s6">
                     <span class="blue-grey-text">
                         @if($userWallet->deposit == 0)
-                            Rp 0,00
+                            {{ $currency->code . " " . "00.00" }}
                         @else
-                            Rp 10.000,00
+                            {{ $currency->code . " " . number_format( $userWallet->deposit * 0.01 , 2 , '.', '.' ) }}
                         @endif
                     </span>
                 </span>
@@ -46,16 +46,16 @@
             </div>
             <div class="col s6 blue-grey-text" style="font-size: 1.5em;">
                 @if($userWallet->deposit >= 10000)
-                    {{ "Rp " . number_format( $userWallet->deposit - 10000 , 2 , ',', '.' ) }}
+                    {{ $currency->code . " " . number_format( $userWallet->deposit - ($userWallet->deposit * 0.01) , 2 , '.', '.' ) }}
                 @else
-                    {{ "Rp " . number_format( $userWallet->deposit , 2 , ',', '.' ) }}
+                    {{ $currency->code . " " . number_format( $userWallet->deposit , 2 , '.', '.' ) }}
                 @endif
             </div>
         </div>
 
         <div class="col s12 m12 l12">
             <a href="#!" class="btn amber" style="width: 100%">Withdraw</a> <br><br>
-            <a href="#!" style="font-size: 1.5em;"><u>Payout Settings</u></a>
+            <a href="{{ route('account_setting', Auth::user()->id) }}" style="font-size: 1.5em;"><u>Payout Settings</u></a>
         </div>
     </div>
 @endsection

@@ -75,81 +75,75 @@
             </li>
         </ul>
 
-        <p class="flow-text">
-        @if($album->price == 0)
-            <h5 class="green-text">Free to download</h5>
-        @else
-            <h5 class="red-text darken-1">Price : <?php echo "Rp " . number_format( $album->price , 2 , ',', '.' ); ?></h5>
-            @endif
-            </p>
+        <h5 class="red-text darken-1">Price : {{ $currency->code . " " .number_format( $album->price , 2 , '.', '.' ) }}</h5>
+        @unless($album->categories->isEmpty())
+            <h5>Category : </h5>
+            <ul>
+                @foreach($album->categories as $category)
+                    <div class="chip">
+                        <img src="{{ asset('images/default/' . $category->image) }}">
+                        {{ $category->category_name }}
+                    </div>
+                @endforeach
+            </ul>
+        @endunless
 
-            @unless($album->categories->isEmpty())
-                <h5>Category : </h5>
-                <ul>
-                    @foreach($album->categories as $category)
-                        <div class="chip">
-                            <img src="{{ asset('images/default/' . $category->image) }}">
-                            {{ $category->category_name }}
-                        </div>
+        <div class="row">
+
+            @if($album->is_published == 1)
+                <ul class="image-viewer">
+                    @foreach($imageThumbnails as $imageThumbnail)
+                        <li>
+                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
+                             class="col s4 m2 l2 image-thumbnails" height="75px">
+                        </li>
                     @endforeach
                 </ul>
-            @endunless
 
-            <div class="row">
-
-                @if($album->is_published == 1)
-                    <ul class="image-viewer">
-                        @foreach($imageThumbnails as $imageThumbnail)
-                            <li>
-                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
-                                 class="col s4 m2 l2 image-thumbnails" height="75px">
-                            </li>
-                        @endforeach
-                    </ul>
-
-                @else
-                    @foreach($imageThumbnails as $imageThumbnail)
-                        @if($imageThumbnail->id == $album->album_cover_id)
-                            <div class="col s12 m4 l4">
-                                <div class="card">
-                                    <div class="card-image">
-                                        <a href="#!" onclick="Materialize.toast('Already a cover image', 2000)" >
-                                            <img src="{{asset($imageThumbnail->thumbnail_path)}}" height="300">
-                                            <span class="card-title">
-                                                <h4>Album Cover</h4>
-                                            </span>
-                                        </a>
-                                    </div>
-                                    {{--<div class="card-content">--}}
-                                        {{--<a  href="#popUpDeleteImage" class="red-text modal-trigger"--}}
-                                            {{--data-id="{{$imageThumbnail->id}}" onclick="setDeleteTarget(this)">--}}
-                                            {{--Delete <i class="fa fa-trash" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-                                    {{--</div>--}}
+            @else
+                @foreach($imageThumbnails as $imageThumbnail)
+                    @if($imageThumbnail->id == $album->album_cover_id)
+                        <div class="col s12 m4 l4">
+                            <div class="card">
+                                <div class="card-image">
+                                    <a href="#!" onclick="Materialize.toast('Already a cover image', 2000)" >
+                                        <img src="{{asset($imageThumbnail->thumbnail_path)}}" height="300">
+                                        <span class="card-title">
+                                            <h4>Album Cover</h4>
+                                        </span>
+                                    </a>
                                 </div>
+                                {{--<div class="card-content">--}}
+                                    {{--<a  href="#popUpDeleteImage" class="red-text modal-trigger"--}}
+                                        {{--data-id="{{$imageThumbnail->id}}" onclick="setDeleteTarget(this)">--}}
+                                        {{--Delete <i class="fa fa-trash" aria-hidden="true"></i>--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
                             </div>
-                        @else
-                            <div class="col s12 m4 l4">
-                                <div class="card">
-                                    <div class="card-image">
-                                        <a href="#popUpConfirm" class="modal-trigger" data-target="#popUpConfirm"
-                                           data-id="{{$imageThumbnail->id}}" onClick="selectCover(this);">
-                                            <img src="{{asset($imageThumbnail->thumbnail_path)}}" height="300">
-                                        </a>
-                                    </div>
-                                    {{--<div class="card-content">--}}
-                                        {{--<a  href="#popUpDeleteImage" class="red-text modal-trigger"--}}
-                                            {{--data-id="{{$imageThumbnail->id}}" onclick="setDeleteTarget(this)">--}}
-                                            {{--Delete <i class="fa fa-trash" aria-hidden="true"></i>--}}
-                                        {{--</a>--}}
-                                    {{--</div>--}}
+                        </div>
+                    @else
+                        <div class="col s12 m4 l4">
+                            <div class="card">
+                                <div class="card-image">
+                                    <a href="#popUpConfirm" class="modal-trigger" data-target="#popUpConfirm"
+                                       data-id="{{$imageThumbnail->id}}" onClick="selectCover(this);">
+                                        <img src="{{asset($imageThumbnail->thumbnail_path)}}" height="300">
+                                    </a>
                                 </div>
+                                {{--<div class="card-content">--}}
+                                    {{--<a  href="#popUpDeleteImage" class="red-text modal-trigger"--}}
+                                        {{--data-id="{{$imageThumbnail->id}}" onclick="setDeleteTarget(this)">--}}
+                                        {{--Delete <i class="fa fa-trash" aria-hidden="true"></i>--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
                             </div>
-                        @endif
-                    @endforeach
-                @endif
+                        </div>
+                    @endif
+                @endforeach
+            @endif
 
-            </div>
-            @include('layouts.popup.popup')
+        </div>
+
+        @include('layouts.popup.popup')
     </div>
 @endsection

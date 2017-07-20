@@ -67,7 +67,7 @@
                                 </ul>
                             @endunless
                             <h4 class="m-0"><strong>{{ $album->title }}</strong></h4>
-                            <h4><?php echo "Rp " . number_format( $album->price , 2 , ',', '.' ); ?></h4>
+                            <h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>
                             <p class="flow-text" style="text-align: justify;">
                                 <span><b>Description: </b></span><br>
                                 {{ $album->description }}

@@ -56,7 +56,11 @@
                         <a href="#!" class="btn-floating waves-effect waves-light purple">
                             <i class="fa fa-instagram"></i>
                         </a>
-                        <a href="#!" class="btn-floating waves-effect waves-light blue-grey">
+                        <a href="#!"
+                           class="btn-floating waves-effect waves-light blue-grey"
+                           id="btn-share-link"
+                           data-url="{{ $host . '/showcase/show-album/' . $album->id }}"
+                           onclick="copyLinkAddress(this)">
                             <i class="fa fa-link"></i>
                         </a>
                         @if($album->is_published == 1)

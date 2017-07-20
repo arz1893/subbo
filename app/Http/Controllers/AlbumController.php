@@ -195,7 +195,8 @@ class AlbumController extends Controller
 
     public function show(Album $album) {
         $imageThumbnails = ImageThumbnail::where('album_id', $album->id)->get();
-        return view('album.showalbum', compact('album', 'imageThumbnails'));
+        $currency = Auth::user()->currency;
+        return view('album.showalbum', compact('album', 'imageThumbnails', 'currency'));
     }
 
     public function edit(Album $album) {

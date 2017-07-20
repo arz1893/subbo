@@ -40,6 +40,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function albums() {
+        return $this->hasMany(Album::class);
+    }
+
     public function currency() {
         return $this->belongsTo(Currency::class);
     }

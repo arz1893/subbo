@@ -15,10 +15,16 @@ $(document).ready(function(){
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $('.scrollspy').scrollSpy();
     $('#categoryList').selectize();
-    $('#select_currency').selectize();
+    // $('#select_currency').selectize();
+    // $('#select_currency').material_select();
     $('#order-history-table').dataTable({
         scrollX: true
     });
+
+    $('#confirm_change_currency').change(function(){
+        $("#select_currency").prop("disabled", !$(this).is(':checked'));
+    });
+
     $('.image-viewer').viewer({
         title: false,
         toolbar: false,
@@ -419,6 +425,17 @@ function deleteAlbum() {
             window.location.replace(window.location.protocol + "//" + window.location.host + "/" + 'album');
         }
     });
+}
+
+function copyLinkAddress(selected) {
+    Materialize.toast('Link copied to clipboard', 3000);
+    var url = document.createElement("input");
+    url.setAttribute('value', $(selected).data('url'));
+    document.body.appendChild(url);
+    url.select();
+    document.execCommand("copy");
+
+    document.body.removeChild(url);
 }
 
 function facebookShare(selected) {

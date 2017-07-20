@@ -134,9 +134,19 @@
     <div id="modal_currency" class="modal modal-fixed-footer">
         <div class="modal-content">
             <h5 class="blue-grey-text">Set your currency</h5> <br>
+            <p align="justify">
+                <span class="red-text">*Important notes :</span> <br>
+                if you change your currency, all of your album will be set to unpublished and
+                all of your album price will reset to 0 (zero),
+                are you sure want to proceed to change your currency ?
+            </p>
+
+            <input type="checkbox" id="confirm_change_currency" value="1">
+            <label for="confirm_change_currency">Yes, i understand the risk</label> <br><br>
+
             {{ Form::model($user, ['method' => 'PATCH', 'action' => ['UserController@updateCurrency', Auth::user()], 'id' => 'form-currency']) }}
-            <label for="currency_id" style="font-size: 1em; color: black;">Choose country</label>
-            {{ Form::select('currency_id', $select_currency, null, ['id' => 'select_currency', 'placeholder' => 'choose. . .']) }}
+                <label for="currency_id" style="font-size: 1em; color: black;">Choose country</label>
+                {{ Form::select('currency_id', $select_currency, null, ['id' => 'select_currency', 'class' => 'browser-default', 'placeholder' => 'choose. . .', 'disabled' => true]) }}
             {{ Form::close() }}
         </div>
         <div class="modal-footer">

@@ -109,7 +109,7 @@
             </a>
 
             <a href="{{ route('show_sales', Auth::user()) }}" class="black-text">
-                <i class="fa fa-dollar" aria-hidden="true"></i> Sales (dummy)
+                <i class="fa fa-dollar" aria-hidden="true"></i> Sales
             </a>
         </ul>
     @endif
@@ -273,7 +273,7 @@
                         {{--</a>--}}
 
                         <a href="{{ route('show_sales', Auth::user()) }}">
-                            <i class="fa fa-usd" aria-hidden="true"></i> Sales (dummy)
+                            <i class="fa fa-usd" aria-hidden="true"></i> Sales
                         </a>
 
                         <a href="{{ route('order_history', Auth::user()) }}" class="black-text">

@@ -20,7 +20,7 @@
                     <!-- Products in cart -->
                     <div class="checkout-details">
                         <img class="checkout-image" src="{{ asset($imageCover->thumbnail_path) }}" width="75" height="75">
-                        <span class="right"><?php echo "Rp " . number_format( $album->price , 2 , ',', '.' ); ?></span>
+                        <span class="right">{{ "Rp " . number_format( $album->price , 2 , ',', '.' ) }}</span>
                         <div class="checkout-product-title">
                             <h6>{{ $album->title }}</h6>
                             <div>
@@ -41,7 +41,7 @@
 
                     <!-- Total -->
                     <div class="total">
-                        <h5>Total <span class="right">{{ "Rp " . number_format( $album->price , 2 , ',', '.' ); }}</span></h5>
+                        <h5>Total <span class="right"> {{ "Rp " . number_format( $album->price , 2 , ',', '.' ) }}</span></h5>
                     </div>
 
                 </div>
