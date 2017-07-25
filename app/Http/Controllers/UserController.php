@@ -66,13 +66,17 @@ class UserController extends Controller
     }
 
     public function updateCurrency(Request $request, User $user) {
-        if($request->currency_id != null) {
+        $userWallet = $user->wallet;
+        if($userWallet->deposit > 0) {
+            Session::flash('error', 'please make sure your account deposit is empty');
+        }
+        else if($request->currency_id != null) {
+
             if($request->currency_id != $user->currency_id) {
                 $user->update($request->all());
                 $userAlbums = $user->albums;
                 foreach ($userAlbums as $userAlbum) {
                     $userAlbum->is_published = 0;
-                    $userAlbum->price = 0;
                     $userAlbum->update();
                 }
             }

@@ -28,6 +28,7 @@ class Album extends Model
         return $this->hasMany(Image::class);
     }
 
+
     public function image_thumbnails() {
         return $this->hasMany(ImageThumbnail::class);
     }

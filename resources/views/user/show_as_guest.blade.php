@@ -66,14 +66,17 @@
                            class="btn-floating waves-effect waves-light blue">
                             <i class="fa fa-facebook"></i>
                         </a>
-
-                        <a href="https://twitter.com/share" class="btn-floating waves-effect waves-light blue lighten-2">
+                        <a href="#!" class="btn-floating waves-effect waves-light blue lighten-2">
                             <i class="fa fa-twitter"></i>
                         </a>
                         <a href="#!" class="btn-floating waves-effect waves-light purple">
                             <i class="fa fa-instagram"></i>
                         </a>
-                        <a href="#!" class="btn-floating waves-effect waves-light blue-grey">
+                        <a href="#!"
+                           class="btn-floating waves-effect waves-light blue-grey"
+                           id="btn-share-link"
+                           data-url="{{ $host . '/showcase/show-album/' . $album->id }}"
+                           onclick="copyLinkAddress(this)">
                             <i class="fa fa-link"></i>
                         </a>
                     </div>

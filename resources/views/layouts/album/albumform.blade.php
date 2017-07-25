@@ -16,13 +16,13 @@
 
     <div class="row" id="category_container">
         <label for="category_list" class="form-label">Select Category</label>
-        {!! Form::select('category_list[]', $categories, null, ['multiple', 'id' => 'categoryList', 'placeholder' => 'Choose . . .']) !!}
+        {!! Form::select('category_list[]', $categories, null, ['multiple' ,'class' => 'validate', 'id' => 'categoryList', 'placeholder' => 'Choose . . .']) !!}
     </div>
 
     <div class="row">
         <div class="">
-            <label for="price" class="form-label">Price</label>
-            {!! Form::input('number', 'price', null, ['class' => 'validate', 'step' => 'any', 'placeholder' => 'Rp.', 'id' => 'price']) !!}
+            <label for="price" class="form-label">Price <span class="grey-text">(current currency : {{ $currency->code }} / {{ $currency->currency }})</span></label>
+            {!! Form::input('number', 'price', null, ['class' => 'validate', 'step' => 'any', 'placeholder' => $currency->code, 'id' => 'price']) !!}
         </div>
     </div>
 </div>

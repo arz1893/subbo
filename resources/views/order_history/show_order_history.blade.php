@@ -2,7 +2,7 @@
 
 @section('main')
     <div class="container">
-        <h5 class="blue-grey-text">Your purchased album</h5>
+        <h5 class="blue-grey-text">Albums that have been purchased by you</h5>
         <hr>
 
         <div class="col s12 m12 l12">
@@ -29,7 +29,7 @@
                                 @endforeach
                             </td>
                             <td><a href="{{ route('showcase_album', $purchasedAlbum->id) }}">{{ $purchasedAlbum->title }}</a></td>
-                            <td>{{ "Rp " . number_format( $purchasedAlbum->price , 2 , ',', '.' ) }}</td>
+                            <td>{{ $currency->code . " " . number_format( $purchasedAlbum->price , 2 , '.', '.' ) }}</td>
                             <td>
                                 {{ $purchasedAlbum->pivot->created_at->format('d-M-Y') }}
                             </td>

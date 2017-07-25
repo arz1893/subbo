@@ -55,6 +55,7 @@ Route::resource('image', 'ImageController');
 Route::resource('showcase', 'ShowcaseController');
 Route::resource('sales', 'SalesController');
 Route::get('/sales/show-monthly-revenue/{user}', 'SalesController@showMonthlyRevenue')->name('show_sales');
+Route::post('/sales/withdraw-deposit', 'SalesController@withdrawDeposit');
 //
 Route::post('/user/change-profile-picture', 'UserController@changeProfilePicture');
 Route::get('/album/{album}/edit', 'AlbumController@edit')->name('album.edit')->middleware('ownership');
@@ -77,7 +78,9 @@ Route::post('/user/change-password/{user}', 'UserController@changePassword')->na
 Route::get('/payment/{album}', 'PaymentController@showPaymentPage')->name('show_payment');
 Route::post('/payment/buy-album', 'PaymentController@buyAlbum')->name('buy_album');
 
-Route::get('/order_history/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
+Route::get('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
+Route::get('/order_history/sold_album/{user}', 'OrderHistoryController@showSoldAlbumHistory')->name('sold_album');
+Route::get('/order_history/view-user-download/{album}', 'OrderHistoryController@viewAllUserDownload')->name('user_download')->middleware('ownership');
 
 Route::get('/download/{album}', 'DownloadController@showDownload')->name('show_download');
 Route::post('/download/download-album', 'DownloadController@downloadAlbum')->name('download_album');

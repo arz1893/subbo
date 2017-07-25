@@ -111,6 +111,10 @@
             <a href="{{ route('show_sales', Auth::user()) }}" class="black-text">
                 <i class="fa fa-dollar" aria-hidden="true"></i> Sales
             </a>
+
+            <a href="{{ route('sold_album', Auth::user()) }}" class="black-text">
+                <i class="fa fa-area-chart" aria-hidden="true"></i> Sold album
+            </a>
         </ul>
     @endif
 
@@ -190,6 +194,15 @@
                     </a>
                     <a href="#!" class="breadcrumb text-limiter">
                         Download
+                    </a>
+                </div>
+            @elseif(Route::currentRouteName() == 'user_download' && !Auth::guest())
+                <div class="brand-logo center">
+                    <a href="{{ route('sold_album', Auth::user()) }}" class="breadcrumb white-text">
+                        <i id="homeBrand" class="fa fa-area-chart" aria-hidden="true"></i>
+                    </a>
+                    <a href="#!" class="breadcrumb text-limiter">
+                        View all user
                     </a>
                 </div>
             @else
@@ -280,6 +293,10 @@
                             <i class="fa fa-history" aria-hidden="true"></i> Order History
                         </a>
 
+                        <a href="{{ route('sold_album', Auth::user()) }}" class="black-text">
+                            <i class="fa fa-area-chart" aria-hidden="true"></i> Sold album
+                        </a>
+
                         <a href="{{ route('account_setting', Auth::user()) }}">
                             <i class="fa fa-cogs" aria-hidden="true"></i> Setting
                         </a>
@@ -307,6 +324,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/vue/vue.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/dropzone/dropzone.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/selectize/selectize.min.js') }}" type="text/javascript"></script>

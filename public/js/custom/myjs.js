@@ -21,8 +21,17 @@ $(document).ready(function(){
         scrollX: true
     });
 
+    $('#table-sold-album').dataTable({
+        scrollX: true
+    });
+
     $('#confirm_change_currency').change(function(){
         $("#select_currency").prop("disabled", !$(this).is(':checked'));
+    });
+
+    $('#btn-max-withdraw').click(function () {
+        var withdraw_value = $('#max-withdraw').val();
+        $('#txt_withdraw_amount').val(withdraw_value);
     });
 
     $('.image-viewer').viewer({
@@ -437,6 +446,7 @@ function copyLinkAddress(selected) {
 
     document.body.removeChild(url);
 }
+
 
 function facebookShare(selected) {
     var id = $(selected).data('id');

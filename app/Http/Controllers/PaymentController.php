@@ -20,8 +20,10 @@ class PaymentController extends Controller
         if(Auth::user()->id == $album->user_id) {
             return redirect()->route('showcase_album', $album->id);
         } else {
+            $user = User::findOrFail($album->user_id);
+            $userCurrency = $user->currency;
             $imageCover = ImageThumbnail::findOrFail($album->album_cover_id);
-            return view('payment.payment_page', compact('imageCover', 'album'));
+            return view('payment.payment_page', compact('imageCover', 'album', 'userCurrency'));
         }
     }
 

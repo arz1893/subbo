@@ -136,9 +136,8 @@
             <h5 class="blue-grey-text">Set your currency</h5> <br>
             <p align="justify">
                 <span class="red-text">*Important notes :</span> <br>
-                if you change your currency, all of your album will be set to unpublished and
-                all of your album price will reset to 0 (zero),
-                are you sure want to proceed to change your currency ?
+                if you change your currency, all of your album will be set to unpublished and you need to withdraw all of your deposit.
+                Are you sure want to proceed to change your currency ?
             </p>
 
             <input type="checkbox" id="confirm_change_currency" value="1">
