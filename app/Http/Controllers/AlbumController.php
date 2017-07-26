@@ -54,7 +54,7 @@ class AlbumController extends Controller
 
     public function create(Album $album) {
         $currency = Auth::user()->currency;
-        $categories = Category::pluck('category_name', 'id');
+        $categories = Category::all('category_name', 'id');
 //        $latestNullAlbums = Album::where('title', null)->where('user_id', Auth::user()->id)->get();
 //        if($latestNullAlbums != null) {
 //            foreach ($latestNullAlbums as $latestNullAlbum) {

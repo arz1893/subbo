@@ -34,32 +34,6 @@
         }(document, 'script', 'facebook-jssdk'));</script>
 
     @if(!Auth::guest())
-        <ul id="dropdown-album1" class="dropdown-content">
-            <li>
-                <a href="{{ route('album.index') }}" class="black-text">
-                    My album
-                </a>
-            </li>
-            <li>
-                <a href="#!" class="black-text">
-                    Purchased
-                </a>
-            </li>
-        </ul>
-
-        <ul id="dropdown-album2" class="dropdown-content">
-            <li>
-                <a href="{{ route('album.index') }}" class="black-text">
-                    My album
-                </a>
-            </li>
-            <li>
-                <a href="#!" class="black-text">
-                    Purchased
-                </a>
-            </li>
-        </ul>
-
         <ul id="dropdown1" class="dropdown-content" style="width: 200px">
             <li>
                 <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
@@ -218,10 +192,9 @@
             @if(!Auth::guest())
                 <ul class="left hide-on-med-and-down">
                     <li>
-                        <a href="#!" class="white-text dropdown-button" data-activates="dropdown-album1">
+                        <a href="{{ route('album.index') }}" class="white-text">
                             <i class="fa fa-camera-retro" aria-hidden="true"></i>
-                            Album
-                            <i class="material-icons right">arrow_drop_down</i>
+                            My Album
                         </a>
                     </li>
                     {{--<li>--}}
@@ -275,10 +248,9 @@
                     </a>
                 @else
                     <li>
-                        <a href="#!" class="dropdown-button" data-activates="dropdown-album2">
+                        <a href="{{ route('album.index') }}">
                             <i class="fa fa-camera-retro" aria-hidden="true"></i>
-                            Album
-                            <i class="material-icons right">arrow_drop_down</i>
+                            My Album
                         </a>
 
                         {{--<a href="{{ url('/home') }}" class="black-text">--}}

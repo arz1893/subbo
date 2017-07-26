@@ -14,7 +14,9 @@ $(document).ready(function(){
     $(".dropdown-button").dropdown();
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $('.scrollspy').scrollSpy();
-    $('#categoryList').selectize();
+    $('#categoryList').selectize({
+        placeholder: 'Choose . . .'
+    });
     // $('#select_currency').selectize();
     // $('#select_currency').material_select();
     $('#order-history-table').dataTable({
@@ -39,30 +41,33 @@ $(document).ready(function(){
         toolbar: false,
         rotatable: false
     });
-    $('#form-album').validate({
+
+    $('#album-form').validate({
         rules: {
             title: {
                 required: true,
                 minlength: 3
             },
             description: "required",
-            categoryList: "required",
+            category_list: "required",
             price: "required"
         },
         messages: {
             title: {
-                required: "you haven't input your title",
+                required: "Title field is required",
                 minlength: "at least 3 characters are required for title"
             },
-            description: "description is required",
-            categoryList: "you haven't choose your album category",
-            price: "price is required"
+            description: "description field is required",
+            category_list: "you haven't choose your album category",
+            price: "price field is required"
         },
-
+        // Make sure the form is submitted to the destination defined
+        // in the "action" attribute of the form when valid
         submitHandler: function(form) {
             form.submit();
         }
     });
+
     $('#form-add-password').validate({
         rules: {
             // The key name on the left side is the name attribute
@@ -166,33 +171,6 @@ $(document).ready(function(){
         }
     });
 
-    $('.material-card > .mc-btn-action').click(function () {
-        var card = $(this).parent('.material-card');
-        var icon = $(this).children('i');
-        icon.addClass('fa-spin-fast');
-
-        if (card.hasClass('mc-active')) {
-            card.removeClass('mc-active');
-
-            window.setTimeout(function() {
-                icon
-                    .removeClass('fa-arrow-left')
-                    .removeClass('fa-spin-fast')
-                    .addClass('fa-bars');
-
-            }, 800);
-        } else {
-            card.addClass('mc-active');
-
-            window.setTimeout(function() {
-                icon
-                    .removeClass('fa-bars')
-                    .removeClass('fa-spin-fast')
-                    .addClass('fa-arrow-left');
-
-            }, 800);
-        }
-    });
     
     $('#select_profile_picture').on('change', function () {
         $('#form_upload_profile_picture').submit();
@@ -253,7 +231,7 @@ Dropzone.options.uploadImage = {
 
         $('#btnSubmitImage').on('click', function () {
             var result = $('#album-form').valid();
-            if(result == true) {
+            if (result == true) {
                 self.processQueue();
             }
         });
@@ -445,64 +423,4 @@ function copyLinkAddress(selected) {
     document.execCommand("copy");
 
     document.body.removeChild(url);
-}
-
-
-function facebookShare(selected) {
-    var id = $(selected).data('id');
-    FB.ui({
-        method: 'share',
-        display: 'popup',
-        href: "http://subboapp2.esy.es/showcatalog/"+id
-    }, function(response){});
-}
-
-function deleteImageContent(selected) {
-    $(selected).remove();
-}
-
-function removeElement(selected) {
-    var id = $(selected).attr('id');
-    console.log(id);
-    $("\"#" + id + "\"").remove();
-    var template = '<div class="row" id="image-row' + counter +'">' +
-        '<div class="col s6">' +
-        '<img src="' + e.target.result + '" class="col s3 m2 l2" style="margin-bottom: 3%; margin-right: 1%; width: 100px; height: 75px;">' +
-        '</div>' +
-        '<div class="col s6 m2 l2">' +
-        '<button type="button" class="btn red lighten-2" data-id="image-row'+ counter +'" style="width: 70%" onclick="deleteImageContent(this)">' +
-        '<i class="fa fa-trash"></i>' +
-        '</button>' +
-        '</div>' +
-        '</div>';
-}
-
-// function downloadAlbum(selected) {
-//     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-//     var album_id = $(selected).data('id');
-//
-//     $.ajax({
-//         method: 'POST',
-//         url: window.location.protocol + "//" + window.location.host + "/" + 'download/download-album',
-//         dataType: 'json',
-//         data: {album_id: album_id, _token: CSRF_TOKEN},
-//         success: function (response) {
-//             location.replace(window.location.protocol + "//" + window.location.host + "/" + '/showcase/show-album/' + album_id);
-//         }
-//     });
-// }
-
-function changePassword() {
-    // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    // var formData = $('#form-password').serializeArray();
-    // console.log(formData);
-    // $.ajax({
-    //     method: 'POST',
-    //     url: window.location.protocol + "//" + window.location.host + "/" + 'user/change-password/',
-    //     dataType: 'json',
-    //     data: {data: formData, _token: CSRF_TOKEN},
-    //     success: function (repsonse) {
-    //
-    //     }
-    // });
 }
