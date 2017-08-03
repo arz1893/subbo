@@ -23,6 +23,19 @@ Route::get('/contact', function () {
     return view('etc.contact');
 });
 
+Route::post('/session/set-country-detail', function (\Illuminate\Http\Request $request) {
+    if($request->json()) {
+        if(!$request->session()->has('country_name')) {
+            $request->session()->put('country_name', $request->country_name);
+            return response()->json('success', 200);
+        }
+        else {
+            return response()->json(['message' => 'session has been set'], 201);
+        }
+    }
+    return response()->json('failed', 404);
+});
+
 //Route::get('/', 'RootController@index');
 //Route::get('/about', 'HomeController@showAbout');
 //Route::get('/contact', 'HomeController@showContact');
@@ -51,7 +64,7 @@ Route::post('/album/unpublishalbum', 'AlbumController@unpublishAlbum');
 Route::resource('user', 'UserController');
 Route::resource('album', 'AlbumController');
 Route::resource('image', 'ImageController');
-//Route::resource('payment', 'PaymentController');
+Route::resource('payment', 'PaymentController');
 Route::resource('showcase', 'ShowcaseController');
 Route::resource('sales', 'SalesController');
 Route::get('/sales/show-monthly-revenue/{user}', 'SalesController@showMonthlyRevenue')->name('show_sales');
@@ -75,8 +88,10 @@ Route::patch('/user/update-currency/{user}', 'UserController@updateCurrency')->n
 Route::get('/user/account-setting-page/{user}', 'UserController@accountSettingPage')->name('account_setting');
 Route::post('/user/change-password/{user}', 'UserController@changePassword')->name('change_password');
 
-Route::get('/payment/{album}', 'PaymentController@showPaymentPage')->name('show_payment');
-Route::post('/payment/buy-album', 'PaymentController@buyAlbum')->name('buy_album');
+Route::get('/payment/album-payment/{album}', 'PaymentController@showPaymentPage')->name('show_payment');
+Route::post('/payment/buy-album-paypal', 'PaymentController@buyWithPaypal')->name('buy_album_paypal');
+// this is after make the payment, PayPal redirect back to your site
+Route::get('/payment/paypal/get-status/{album}', 'PaymentController@getPaypalPaymentStatus')->name('payment_status');
 
 Route::get('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
 Route::get('/order_history/sold_album/{user}', 'OrderHistoryController@showSoldAlbumHistory')->name('sold_album');

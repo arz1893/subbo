@@ -3,6 +3,7 @@
 namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 trait AuthenticatesUsers
@@ -14,7 +15,7 @@ trait AuthenticatesUsers
      *
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
         return view('auth.login');
     }

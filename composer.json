@@ -13,6 +13,7 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
+        "paypal/rest-api-sdk-php": "*",
         "torann/geoip": "^1.0",
         "webpatser/laravel-uuid": "2.*"
     },

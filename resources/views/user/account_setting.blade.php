@@ -72,6 +72,26 @@
                 </tr>
                 <tr>
                     <td>
+                        Paypal Account :
+                    </td>
+                    <td>
+                        <ul class="collection">
+                            <li class="collection-item avatar">
+                                <i class="fa fa-paypal circle purple lighten-1"></i>
+                                <span class="title">sunwell-buyer@gmail.com</span>
+                                <p class="red-text">(Dummy Account)</p>
+                                <a href="#!" class="amber-text">
+                                    <i class="fa fa-pencil-square fa-2x"></i>
+                                </a>
+                                <a href="#!" class="red-text">
+                                    <i class="fa fa-trash fa-2x"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         Select Currency :
                     </td>
                     <td>
@@ -230,8 +250,8 @@
             </div>
             <div class="row">
                 <div class="">
-                    {{ Form::label('password', 'New Password : ', ['class' => 'form-label']) }}
-                    {{ Form::password('password', null, ['class' => 'validate', 'placeholder' => 'New Password', 'id' => 'password']) }}
+                    {{ Form::label('new_password', 'New Password : ', ['class' => 'form-label']) }}
+                    {{ Form::password('new_password', null, ['class' => 'validate', 'placeholder' => 'New Password', 'id' => 'new_password']) }}
                 </div>
             </div>
             <div class="row">

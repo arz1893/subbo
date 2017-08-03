@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ShowcaseController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function showcaseAlbum(Album $album) {
         $user = User::findOrFail($album->user_id);
         $currency = $user->currency;

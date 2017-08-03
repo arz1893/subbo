@@ -23,7 +23,7 @@
     <link href="{{ asset('css/viewer/viewer.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom/mycss.css') }}" rel="stylesheet">
 </head>
-<body>
+<body onload="urlChecking()">
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];

@@ -106,19 +106,19 @@ $(document).ready(function(){
             // of an input field. Validation rules are defined
             // on the right side
             current_password: "required",
-            password: {
+            new_password: {
                 required: true,
                 minlength: 4
             },
             password_confirmation: {
                 minlength: 4,
-                equalTo: "#password"
+                equalTo: '#new_password'
             }
         },
         // Specify validation error messages
         messages: {
             current_password: "Please input your current password",
-            password: {
+            new_password: {
                 required: "Please input your new password",
                 minlength: "Your password must be at least 4 characters long"
             },
@@ -179,8 +179,6 @@ $(document).ready(function(){
     $('.btn-add-image').on('click', function () {
         $('#upload-image').removeAttr('style');
     });
-
-
 });
 
 Dropzone.options.uploadImage = {
@@ -423,4 +421,60 @@ function copyLinkAddress(selected) {
     document.execCommand("copy");
 
     document.body.removeChild(url);
+}
+
+function getCountry() {
+    alert('function triggered !');
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    var countryId = null;
+    $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
+        countryId = data.country_code;
+
+        jQuery.getJSON(
+            "https://restcountries.eu/rest/v1/alpha/" + countryId,
+            function (data) {
+                $.ajax({
+                    method: 'POST',
+                    url: window.location.protocol + "//" + window.location.host + "/session/set-country-detail",
+                    dataType: 'json',
+                    data: {country_name: data.nativeName, _token: CSRF_TOKEN},
+                    success: function (response) {
+                        console.log(response);
+                        $('#get_country_loader').css('display', 'none');
+                    }
+                });
+
+            });
+    });
+}
+
+function urlChecking() {
+    if(
+        new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/login').valueOf()
+        || new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/register').valueOf()) {
+        
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        var countryId = null;
+        $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
+            countryId = data.country_code;
+
+            jQuery.getJSON(
+                "https://restcountries.eu/rest/v1/alpha/" + countryId,
+                function (data) {
+                    $.ajax({
+                        method: 'POST',
+                        url: window.location.protocol + "//" + window.location.host + "/session/set-country-detail",
+                        dataType: 'json',
+                        data: {country_name: data.nativeName, _token: CSRF_TOKEN},
+                        success: function (response) {
+                            console.log(response);
+                            $('#get_country_loader').css('display', 'none');
+                        }
+                    });
+
+                });
+        });
+    }
 }

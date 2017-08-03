@@ -7,6 +7,8 @@
             <center>
                 <h5 class="indigo-text">Please, login into your account</h5>
 
+                {{--<img id="get_country_loader" src="{{ asset('images/default/loading-icon.gif') }}" width="150">--}}
+
                 <div class="container">
                     <div class="row" style="display: inline-block; padding: 32px 48px 0px 48px;">
 
@@ -70,4 +72,6 @@
     </div>
 
     @include('footer')
+
+
 @endsection

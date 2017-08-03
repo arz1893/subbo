@@ -39,6 +39,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->redirectTo = \url()->previous();
         $this->middleware('guest')->except('logout');
     }
 
@@ -50,7 +51,7 @@ class LoginController extends Controller
         $user = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        return redirect($this->redirectTo);
+        return redirect()->intended($this->redirectPath());
     }
 
     public function findOrCreateUser($user, $provider)

@@ -172,6 +172,7 @@ return [
         Intervention\Image\ImageServiceProviderLaravel5::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
+        Torann\Currency\CurrencyServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -235,7 +236,8 @@ return [
         'Uuid' => Webpatser\Uuid\Uuid::class,
         'InterventionImage' => Intervention\Image\Facades\Image::class,
         'GeoIp' => Torann\GeoIP\Facades\GeoIP::class,
-        'Zipper' => Chumper\Zipper\Zipper::class
+        'Zipper' => Chumper\Zipper\Zipper::class,
+        'Currency' => Torann\Currency\Facades\Currency::class
     ],
 
 ];
