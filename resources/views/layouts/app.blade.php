@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/subboicon.png') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,6 +22,7 @@
     <link href="{{ asset('css/selectize/selectize.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dropzone/dropzone.css') }}" rel="stylesheet">
     <link href="{{ asset('css/viewer/viewer.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/venobox/venobox.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom/mycss.css') }}" rel="stylesheet">
 </head>
 <body onload="urlChecking()">
@@ -302,6 +304,7 @@
     <script src="{{ asset('js/selectize/selectize.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/jquery_validation/jquery.validate.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/viewer/viewer.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/venobox/venobox.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('js/custom/myjs.js') }}" type="text/javascript"></script>
 </body>

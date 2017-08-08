@@ -36,6 +36,11 @@ $(document).ready(function(){
         $('#txt_withdraw_amount').val(withdraw_value);
     });
 
+    $('.venobox').venobox({
+        numeratio: true,            // default: false
+        infinigall: true            // default: false
+    });
+
     $('.image-viewer').viewer({
         title: false,
         toolbar: false,
@@ -190,7 +195,7 @@ Dropzone.options.uploadImage = {
     parallelUploads: 25,
     timeout: 300000,
     addRemoveLinks: true,
-    dictResponseError: 'Server not Configured',
+    dictResponseError: 'Error while uploading file',
     acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
     init:function(){
         var self = this;
@@ -217,14 +222,25 @@ Dropzone.options.uploadImage = {
         //     $('.meter').delay(999).slideUp(999);
         // });
         //
-        // // On removing file
-        // self.on("removedfile", function (file) {
-        //     console.log(file);
-        // });
+        // On removing file
+        self.on("removedfile", function (file) {
+            console.log("file removed");
+            console.log(file);
+        });
+        
+        self.on("canceled", function (file) {
+            console.log("upload canceled");
+            console.log(file);
+        });
 
         self.on("maxfilesexceeded", function (file) {
             alert("Files too many!");
             this.removeAllFiles();
+        });
+
+        self.on("error", function (file, response) {
+            $(file.previewElement).find('#dz-error-message').text(response);
+            return false;
         });
 
         $('#btnSubmitImage').on('click', function () {
@@ -412,6 +428,11 @@ function deleteAlbum() {
     });
 }
 
+function facebookShare(selected) {
+    var url = $(selected).data('url');
+    window.open(url, '_blank');
+}
+
 function copyLinkAddress(selected) {
     Materialize.toast('Link copied to clipboard', 3000);
     var url = document.createElement("input");
@@ -453,7 +474,7 @@ function urlChecking() {
     if(
         new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/login').valueOf()
         || new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/register').valueOf()) {
-        
+
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
         var countryId = null;

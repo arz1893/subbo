@@ -16,7 +16,7 @@
     <div class="row">
         @foreach($albums as $album)
             <div class="col m6 l4">
-                <div class="card small">
+                <div class="card">
                     <div class="card-image">
                         @if($album->album_cover_id == null)
                             <a href="{{route('album.show', $album->id)}}">
@@ -32,37 +32,40 @@
                                     <a href="{{route('album.show', $album->id)}}">
                                         <img src="{{asset($imageThumbnail->thumbnail_path)}}">
 
-                                        <span class="card-title">
-                                            @if($album->is_published == 1)
-                                                <h5>{{$album->title}}</h5>
-                                            @else
-                                                <h5>{{$album->title}}</h5>
-                                            @endif
-                                        </span>
+                                            <span class="card-title">
+                                                @if($album->is_published == 1)
+                                                    <h5>{{$album->title}}</h5>
+                                                @else
+                                                    <h5>{{$album->title}}</h5>
+                                                @endif
+                                            </span>
                                     </a>
                                 @endif
                             @endforeach
                         @endif
                     </div>
                     <div class="card-content">
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($host . '/showcase/show-album/' . $album->id) }}"
-                           target="_blank"
+                        <button
+                           data-url="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($host . '/showcase/show-album/' . $album->id) }}"
+                           onclick="facebookShare(this)"
                            class="btn-floating waves-effect waves-light blue">
                             <i class="fa fa-facebook"></i>
-                        </a>
-                        <a href="#!" class="btn-floating waves-effect waves-light blue lighten-2">
+                        </button>
+
+                        <a class="btn-floating waves-effect waves-light blue lighten-2"
+                           href="https://twitter.com/intent/tweet?text=Hello%20world">
                             <i class="fa fa-twitter"></i>
                         </a>
+
                         <a href="#!" class="btn-floating waves-effect waves-light purple">
                             <i class="fa fa-instagram"></i>
                         </a>
-                        <a href="#!"
-                           class="btn-floating waves-effect waves-light blue-grey"
+                        <button class="btn-floating waves-effect waves-light blue-grey"
                            id="btn-share-link"
                            data-url="{{ $host . '/showcase/show-album/' . $album->id }}"
                            onclick="copyLinkAddress(this)">
                             <i class="fa fa-link"></i>
-                        </a>
+                        </button>
                         @if($album->is_published == 1)
                             <span class="new badge blue right" data-badge-caption="published"></span>
                         @else

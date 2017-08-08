@@ -91,11 +91,13 @@
         <div class="row">
 
             @if($album->is_published == 1)
-                <ul class="image-viewer">
+                <ul class="">
                     @foreach($imageThumbnails as $imageThumbnail)
                         <li>
-                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
-                             class="col s4 m2 l2 image-thumbnails" height="75px">
+                            <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($imageThumbnail->thumbnail_path) }}">
+                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
+                                     class="col s4 m2 l2 image-thumbnails" height="75px">
+                            </a>
                         </li>
                     @endforeach
                 </ul>

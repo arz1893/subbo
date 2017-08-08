@@ -1,10 +1,16 @@
 @extends('layouts.app')
 @section('content')
     <div class="container" style="margin-top: 5%">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="http://subboapp2.esy.es/showcatalog/{{$album->id}}">
-        <meta name="twitter:title" content="{{$album->title}}">
-        <meta name="twitter:description" content="{{$album->description}}">
+        {{--<meta name="twitter:card" content="summary_large_image">--}}
+        {{--<meta name="twitter:site" content="{{ $host . '/showcase/show-album/' . $album->id }}">--}}
+        {{--<meta name="twitter:creator" content="{{ Auth::user()->name }}">--}}
+        {{--<meta name="twitter:title" content="{{ $album->title }}">--}}
+        {{--<meta name="twitter:description" content="{{ $album->description }}">--}}
+        @foreach($imageThumbnails as $imageThumbnail)
+            @if($album->album_cover_id == $imageThumbnail->id)
+                <meta name="twitter:image" content="{{ asset($imageThumbnail->thumbnail_path) }}">
+            @endif
+        @endforeach
 
         @if(\Session::has('info'))
             <div class="chip green lighten-1 white-text center" style="width: 100%;">
@@ -83,13 +89,27 @@
             </ul>
 
             <div class="row">
-                <ul>
-                    @foreach($imageThumbnails as $imageThumbnail)
-                        <li>
-                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
-                        </li>
-                    @endforeach
-                </ul>
+
+                @if($status == true)
+                    <ul class="">
+                        @foreach($imageThumbnails as $imageThumbnail)
+                            <li>
+                                <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($imageThumbnail->thumbnail_path) }}">
+                                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
+                                         class="col s4 m2 l2 image-thumbnails" height="75px">
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <ul>
+                        @foreach($imageThumbnails as $imageThumbnail)
+                            <li>
+                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
         </div>
     </div>

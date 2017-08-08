@@ -2,6 +2,7 @@
 
 @section('main')
     <div id="add_album_container" style="">
+        <p class="red-text" align="center" id="dz-error-message"></p>
         @include('errors.errorlist')
         {!! Form::open(['action' => 'AlbumController@store', 'files' => true, 'id' => 'album-form']) !!}
             {{ Form::hidden('id', $album->id) }}
