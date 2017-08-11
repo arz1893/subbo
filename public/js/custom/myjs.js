@@ -473,7 +473,8 @@ function getCountry() {
 function urlChecking() {
     if(
         new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/login').valueOf()
-        || new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/register').valueOf()) {
+        || new String(window.location.href).valueOf() == new String(window.location.protocol + "//" + window.location.host + '/register').valueOf())
+    {
 
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -497,5 +498,69 @@ function urlChecking() {
 
                 });
         });
+    } else if(new String(window.location.href).valueOf() == new String()) {
+
     }
+}
+
+function getOS() {
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    var os = '';
+
+    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        console.log("iOS");
+        os = 'iOS';
+    }
+
+    if(os == 'iOS') {
+        $.ajax({
+            method: 'POST',
+            url: window.location.protocol + "//" + window.location.host + '/os-detection',
+            dataType: 'json',
+            data: {os: os, _token: CSRF_TOKEN},
+            success: function (response) {
+                if (response == 'success') {
+                    window.location.replace(window.location.protocol + "//" + window.location.host + '/create-blank-album');
+                }
+            }
+        });
+    } else {
+        window.location.replace(window.location.protocol + "//" + window.location.host + '/create-blank-album');
+    }
+
+
+
+    // // Opera 8.0+
+    // var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    //
+    // // Firefox 1.0+
+    // var isFirefox = typeof InstallTrigger !== 'undefined';
+    //
+    // // Safari 3.0+ "[object HTMLElementConstructor]"
+    // var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+    //
+    // // Internet Explorer 6-11
+    // var isIE = /*@cc_on!@*/false || !!document.documentMode;
+    //
+    // // Edge 20+
+    // var isEdge = !isIE && !!window.StyleMedia;
+    //
+    // // Chrome 1+
+    // var isChrome = !!window.chrome && !!window.chrome.webstore;
+    //
+    // // Blink engine detection
+    // var isBlink = (isChrome || isOpera) && !!window.CSS;
+    //
+    // var output = 'Detecting browsers by ducktyping:<hr>';
+    // output += 'isFirefox: ' + isFirefox + '<br>';
+    // output += 'isChrome: ' + isChrome + '<br>';
+    // output += 'isSafari: ' + isSafari + '<br>';
+    // output += 'isOpera: ' + isOpera + '<br>';
+    // output += 'isIE: ' + isIE + '<br>';
+    // output += 'isEdge: ' + isEdge + '<br>';
+    // output += 'isBlink: ' + isBlink + '<br>';
+    // $('#is_browser').html(output);
 }

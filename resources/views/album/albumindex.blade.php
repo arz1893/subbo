@@ -16,7 +16,7 @@
     <div class="row">
         @foreach($albums as $album)
             <div class="col m6 l4">
-                <div class="card">
+                <div class="card small">
                     <div class="card-image">
                         @if($album->album_cover_id == null)
                             <a href="{{route('album.show', $album->id)}}">
@@ -76,6 +76,12 @@
                 </div>
             </div>
         @endforeach
+    </div>
+
+    <div class="container">
+        <div class="center-align">
+            @include('layouts.paginator.paginator', ['paginator' => $albums])
+        </div>
     </div>
 
     @include('layouts.popup.popup')

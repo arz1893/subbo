@@ -74,6 +74,7 @@ Route::post('/user/change-profile-picture', 'UserController@changeProfilePicture
 Route::get('/album/{album}/edit', 'AlbumController@edit')->name('album.edit')->middleware('ownership');
 Route::get('/album/{album}', 'AlbumController@show')->name('album.show')->middleware('ownership');
 Route::any('/create-blank-album', 'AlbumController@createAlbumFirst')->name('create_album_first');
+Route::post('/os-detection', 'AlbumController@operatingSystemDetection');
 Route::get('/album/create-album/{album}', 'AlbumController@create')->name('create_album');
 Route::get('/album/choose-album-cover/{album}', 'AlbumController@chooseAlbumCoverPage')->name('choose_album_cover')->middleware('ownership');
 Route::post('/album/apply-album-cover/{album}', 'AlbumController@applyAlbumCover')->name('apply_album_cover');
@@ -92,6 +93,8 @@ Route::get('/payment/album-payment/{album}', 'PaymentController@showPaymentPage'
 Route::post('/payment/buy-album-paypal', 'PaymentController@buyWithPaypal')->name('buy_album_paypal');
 // this is after make the payment, PayPal redirect back to your site
 Route::get('/payment/paypal/get-status/{album}', 'PaymentController@getPaypalPaymentStatus')->name('payment_status');
+
+Route::post('payment/buy-album-midtrans', 'PaymentController@buyWithMidtrans');
 
 Route::get('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
 Route::get('/order_history/sold_album/{user}', 'OrderHistoryController@showSoldAlbumHistory')->name('sold_album');

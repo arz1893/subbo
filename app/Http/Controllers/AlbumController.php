@@ -39,7 +39,7 @@ class AlbumController extends Controller
         }
         $user = Auth::user();
         $host = $request->getHttpHost();
-        $albums = Album::where('user_id', Auth::user()->id)->where('is_deleted', 0)->orderBy('created_at', 'desc')->get();
+        $albums = Album::where('user_id', Auth::user()->id)->where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6);
         $imageThumbnails = ImageThumbnail::all();
         return view('album.albumindex', compact('albums', 'images', 'imageThumbnails', 'user', 'host'));
     }
@@ -52,7 +52,14 @@ class AlbumController extends Controller
         return redirect()->route('create_album', $album);
     }
 
-    public function create(Album $album) {
+    public function create(Request $request, Album $album) {
+        $os = $request->session()->pull('operating_system');
+        if($os != null) {
+            if($os == 'iOS') {
+                return view('album.feature_not_avalaible');
+            }
+        }
+
         $currency = Auth::user()->currency;
         $categories = Category::all('category_name', 'id');
 //        $latestNullAlbums = Album::where('title', null)->where('user_id', Auth::user()->id)->get();
@@ -267,5 +274,12 @@ class AlbumController extends Controller
             return response()->json($request->album_id);
         }
         return null;
+    }
+
+    public function operatingSystemDetection(Request $request) {
+        if($request->os = 'iOS') {
+            $request->session()->put('operating_system', 'iOS');
+        }
+        return response()->json('success', 200);
     }
 }

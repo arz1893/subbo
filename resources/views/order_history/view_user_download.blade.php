@@ -20,7 +20,7 @@
                             View user <i class="fa fa-eye"></i>
                         </a>
                     </p>
-                    <a href="#!" class="secondary-content"><i class="fa fa-user-plus"></i></a>
+                    <a href="#!" class="secondary-content blue-text"><i class="fa-2x fa fa-user-plus"></i></a>
                 </li>
             </ul>
         @endforeach

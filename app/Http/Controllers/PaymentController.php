@@ -20,6 +20,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
+use App\Veritrans\Veritrans;
 
 class PaymentController extends Controller
 {
@@ -154,6 +155,10 @@ class PaymentController extends Controller
             return redirect()->route('showcase_album', $album)->with('info', 'Album has been purchased');
         }
         return redirect()->route('showcase_album', $album)->with('error', 'Payment failed');
+    }
+
+    public function buyWithMidtrans(Request $request) {
+        dd($request->all());
     }
 
 }

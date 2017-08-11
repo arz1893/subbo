@@ -1,7 +1,14 @@
 @extends('home')
 
 @section('main')
+
+    {{--<div class="container" style="margin-top: 3%">--}}
+        {{--<div id="is_browser"></div>--}}
+        {{--<button onclick="getBrowser()" class="btn blue lighten-1">Detect browser</button>--}}
+    {{--</div>--}}
+
     <div id="add_album_container" style="">
+
         <p class="red-text" align="center" id="dz-error-message"></p>
         @include('errors.errorlist')
         {!! Form::open(['action' => 'AlbumController@store', 'files' => true, 'id' => 'album-form']) !!}

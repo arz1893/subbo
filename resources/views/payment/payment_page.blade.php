@@ -49,11 +49,11 @@
         </ul>
 
         <h5 class="blue-grey-text">Pay with</h5>
-        <a href="#modal_payment_confirm">
+        <a href="#modal_paypal_confirm">
             <img src="{{ asset('images/default/Paypal-icon.png') }}" width="75" height="75">
         </a>
-        <a href="#!">
-            <img src="{{ asset('images/default/maestro-logo.png') }}" width="75" height="75">
+        <a href="#modal_midtrans_confirm">
+            <img src="{{ asset('images/default/midtrans.png') }}" width="125" height="75">
         </a>
         <a href="#!">
             <img src="{{ asset('images/default/visa-debit.png') }}" width="75" height="75">
@@ -61,17 +61,36 @@
     </div>
 
     <!-- Modal Structure -->
-    <div id="modal_payment_confirm" class="modal">
+    <div id="modal_paypal_confirm" class="modal">
         <div class="modal-content">
             <h4 class="blue-text">Info !</h4>
             <p>Are you sure want to buy this album</p>
         </div>
         <div class="modal-footer">
-            {{ Form::open(['action' => 'PaymentController@buyWithPaypal', 'id' => 'form-payment']) }}
+            {{ Form::open(['action' => 'PaymentController@buyWithPaypal', 'id' => 'form-paypal']) }}
                 {{ Form::hidden('album_id', $album->id) }}
             {{ Form::close() }}
 
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text" onclick="$('#form-payment').submit()">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text" onclick="$('#form-paypal').submit()">
+                Buy <i class="fa fa-dollar"></i>
+            </a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">
+                Cancel <i class="fa fa-ban"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="modal_midtrans_confirm" class="modal">
+        <div class="modal-content">
+            <h4 class="blue-text">Info !</h4>
+            <p>Are you sure want to buy this album</p>
+        </div>
+        <div class="modal-footer">
+            {{ Form::open(['action' => 'PaymentController@buyWithMidtrans', 'id' => 'form-midtrans']) }}
+                {{ Form::hidden('album_id', $album->id) }}
+            {{ Form::close() }}
+
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text" onclick="$('#form-midtrans').submit()">
                 Buy <i class="fa fa-dollar"></i>
             </a>
             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red-text">
