@@ -25,6 +25,11 @@ class AlbumController extends Controller
     }
 
     public function index(Request $request) {
+
+        if($request->session()->get('operating_system') != null) {
+            $request->session()->forget('operating_system');
+        }
+
         $latestNullAlbums = Album::where('title', null)->where('user_id', Auth::user()->id)->get();
         if($latestNullAlbums != null) {
             foreach ($latestNullAlbums as $latestNullAlbum) {
@@ -53,15 +58,10 @@ class AlbumController extends Controller
     }
 
     public function create(Request $request, Album $album) {
-        $os = $request->session()->pull('operating_system');
-        if($os != null) {
-            if($os == 'iOS') {
-                return view('album.feature_not_avalaible');
-            }
-        }
-
+        $os = $request->session()->get('operating_system');
         $currency = Auth::user()->currency;
         $categories = Category::all('category_name', 'id');
+
 //        $latestNullAlbums = Album::where('title', null)->where('user_id', Auth::user()->id)->get();
 //        if($latestNullAlbums != null) {
 //            foreach ($latestNullAlbums as $latestNullAlbum) {
@@ -75,10 +75,17 @@ class AlbumController extends Controller
 //            }
 //        }
 
+        if($os != null) {
+            if($os == 'iOS') {
+                return view('album.ios_upload_page', compact('categories', 'album', 'currency'));
+            }
+        }
+
         return view('album.addalbum', compact('categories', 'album', 'currency'));
     }
 
     public function store(Request $request) {
+
 
         $messsages = array(
             'title.required' => 'Title is required',
@@ -152,6 +159,7 @@ class AlbumController extends Controller
 //    }
 
     public function uploadAllImages(Request $request) {
+//        dd($request->all());
         $image = $request->file('file');
         if(!is_null($image)) {
             $filename = $request->album_id . '_' . $image->getClientOriginalName();
@@ -191,6 +199,7 @@ class AlbumController extends Controller
                 'user_id' => Auth::user()->id
             ]);
         }
+        return response()->json('success', 200);
     }
 
     public function update(Album $album, AlbumRequest $request) {

@@ -73,6 +73,32 @@ $(document).ready(function(){
         }
     });
 
+    $('#album-form-ios').validate({
+        rules: {
+            title: {
+                required: true,
+                minlength: 3
+            },
+            description: "required",
+            category_list: "required",
+            price: "required"
+        },
+        messages: {
+            title: {
+                required: "Title field is required",
+                minlength: "at least 3 characters are required for title"
+            },
+            description: "description field is required",
+            category_list: "you haven't choose your album category",
+            price: "price field is required"
+        },
+        // Make sure the form is submitted to the destination defined
+        // in the "action" attribute of the form when valid
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
     $('#form-add-password').validate({
         rules: {
             // The key name on the left side is the name attribute
@@ -184,10 +210,22 @@ $(document).ready(function(){
     $('.btn-add-image').on('click', function () {
         $('#upload-image').removeAttr('style');
     });
+
+    $('.btn-add-image-ios').on('click', function () {
+        $('#upload-image-ios').removeAttr('style');
+    });
+
+    $('#btnSubmitImageIos').on('click', function () {
+        var is_image = $('#is_image').val();
+        console.log(is_image);
+        var result = $('#album-form-ios').valid();
+        if (result == true && is_image == true) {
+            $('#album-form-ios').submit();
+        }
+    });
 });
 
 Dropzone.options.uploadImage = {
-    autoProcessQueue: false,
     clickable: '.btn-add-image',
     dictDefaultMessage: 'Preview',
     maxFiles: 25,
@@ -252,8 +290,69 @@ Dropzone.options.uploadImage = {
 
         // on complete process
         self.on("complete", function (file) {
-            if (self.getUploadingFiles().length === 0 && self.getQueuedFiles().length === 0) {
-                $('#album-form').submit();
+            // if (self.getUploadingFiles().length === 0 && self.getQueuedFiles().length === 0) {
+            //     $('#album-form').submit();
+            // }
+        });
+    }
+};
+
+Dropzone.options.uploadImageIos = {
+    clickable: '.btn-add-image-ios',
+    dictDefaultMessage: 'Preview',
+    maxFiles: 25,
+    maxFileSize: 10000,
+    parallelUploads: 25,
+    timeout: 300000,
+    addRemoveLinks: true,
+    dictResponseError: 'Error while uploading file',
+    acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+    init:function(){
+        var self = this;
+        // config
+        self.options.addRemoveLinks = true;
+        self.options.dictRemoveFile = "Delete";
+        self.hiddenFileInput.removeAttribute('multiple');
+
+        self.on("processing", function (file) {
+            $('.btn-add-image').addClass('disabled');
+            $('#btnUploadImage').addClass('disabled');
+        });
+
+        // On removing file
+        self.on("removedfile", function (file) {
+            console.log("file removed");
+            console.log(file);
+        });
+
+        self.on("canceled", function (file) {
+            console.log("upload canceled");
+            console.log(file);
+        });
+
+        self.on("maxfilesexceeded", function (file) {
+            alert("Files too many!");
+            this.removeAllFiles();
+        });
+
+        self.on("error", function (file, response) {
+            $(file.previewElement).find('#dz-error-message').text(response);
+            return false;
+        });
+
+        // on complete process
+        self.on("complete", function (file) {
+            $('.btn-add-image').removeClass('disabled');
+            $('#btnUploadImage').removeClass('disabled');
+
+            // if (self.getUploadingFiles().length === 0 && self.getQueuedFiles().length === 0) {
+            //     $('#album-form').submit();
+            // }
+        });
+        
+        self.on("success", function (file, response) {
+            if(response === 'success') {
+                $('#is_image').val(true);
             }
         });
     }
@@ -498,8 +597,6 @@ function urlChecking() {
 
                 });
         });
-    } else if(new String(window.location.href).valueOf() == new String()) {
-
     }
 }
 
