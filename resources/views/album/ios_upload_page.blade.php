@@ -16,16 +16,16 @@
                 <i class="fa fa-plus-square"></i>
             </a> <br> <br>
 
-            {!! Form::open(['action' => ['AlbumController@uploadAllImages'], 'class' => 'dropzone', 'files' => true, 'id'=>'upload-image-ios', 'style' => 'display:none']) !!}
+            {!! Form::open(['action' => ['AlbumController@uploadImageIos'], 'class' => 'dropzone', 'files' => true, 'id'=>'upload-image-ios', 'style' => 'display:none']) !!}
                 {{ Form::hidden('album_id', $album->id, ['id' => 'album_id']) }}
             {!! Form::close() !!}
 
-            {{ Form::hidden('is_image', false, ['id' => 'is_image']) }}
+            {{ Form::hidden('is_image', 0, ['id' => 'is_image']) }}
 
             <br>
 
             <div class="row">
-                <button id="btnSubmitImageIos" type="button" class="btn-large waves-effect teal lighten-1" style="width: 100%;">
+                <button id="btnSubmitImageIos" type="submit" class="btn-large waves-effect teal lighten-1" style="width: 100%;">
                     Create album
                 </button>
             </div>

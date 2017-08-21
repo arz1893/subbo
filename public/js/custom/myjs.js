@@ -215,35 +215,33 @@ $(document).ready(function(){
         $('#upload-image-ios').removeAttr('style');
     });
 
-    $('#btnSubmitImageIos').on('click', function () {
-        var is_image = $('#is_image').val();
-        console.log(is_image);
-        var result = $('#album-form-ios').valid();
-        if (result == true && is_image == true) {
-            $('#album-form-ios').submit();
-        }
-    });
 });
 
 Dropzone.options.uploadImage = {
+    autoProcessQueue: false,
     clickable: '.btn-add-image',
     dictDefaultMessage: 'Preview',
     maxFiles: 25,
     maxFileSize: 10000,
     parallelUploads: 25,
-    timeout: 300000,
+    timeout: 3000000,
     addRemoveLinks: true,
     dictResponseError: 'Error while uploading file',
     acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
     init:function(){
         var self = this;
+        var counter = 0;
         // config
         self.options.addRemoveLinks = true;
         self.options.dictRemoveFile = "Delete";
+        self.options.timeout = 3000000;
+
         //New file added
-        // self.on("addedfile", function (file) {
-        //     console.log('new file added ', file);
-        // });
+        self.on("addedfile", function (file) {
+            counter++;
+            // console.log('new file added ', counter);
+        });
+
         // // Send file starts
         // self.on("sending", function (file) {
         //     console.log('upload started', file);
@@ -281,7 +279,8 @@ Dropzone.options.uploadImage = {
             return false;
         });
 
-        $('#btnSubmitImage').on('click', function () {
+        $('#btnSubmitImage').on('click', function (e) {
+            e.preventDefault();
             var result = $('#album-form').valid();
             if (result == true) {
                 self.processQueue();
@@ -289,10 +288,17 @@ Dropzone.options.uploadImage = {
         });
 
         // on complete process
-        self.on("complete", function (file) {
-            // if (self.getUploadingFiles().length === 0 && self.getQueuedFiles().length === 0) {
-            //     $('#album-form').submit();
-            // }
+        self.on("success", function (file, response) {
+            if(response === 'success') {
+                counter--;
+            }
+
+            // console.log(self.getUploadingFiles().length, counter);
+
+            if (self.getUploadingFiles().length === 0 && counter === 0) {
+                // console.log('all file uploaded');
+                $('#album-form').submit();
+            }
         });
     }
 };
@@ -309,10 +315,20 @@ Dropzone.options.uploadImageIos = {
     acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
     init:function(){
         var self = this;
+        var counter = 1;
+
         // config
         self.options.addRemoveLinks = true;
         self.options.dictRemoveFile = "Delete";
-        self.hiddenFileInput.removeAttribute('multiple');
+
+        self.on('addedfile', function (file) {
+
+        });
+        
+        self.on('sending', function (file, xhr, formData) {
+            formData.append('fileName', counter + '_' + file.name);
+            counter++;
+        });
 
         self.on("processing", function (file) {
             $('.btn-add-image').addClass('disabled');
@@ -351,10 +367,22 @@ Dropzone.options.uploadImageIos = {
         });
         
         self.on("success", function (file, response) {
-            if(response === 'success') {
-                $('#is_image').val(true);
-            }
+            console.log(response);
+            // if(response === 'success') {
+            //
+            // }
+            $('#is_image').val(1);
         });
+        
+        $('#btnSubmitImageIos').on('click', function (e) {
+            e.preventDefault();
+            var isUploaded = $('#is_image').val();
+            console.log(isUploaded);
+            var isValid = $('#album-form-ios').valid();
+            if(isValid == true && isUploaded == 1) {
+                $('#album-form-ios').submit();
+            }
+        })
     }
 };
 
@@ -533,14 +561,42 @@ function facebookShare(selected) {
 }
 
 function copyLinkAddress(selected) {
-    Materialize.toast('Link copied to clipboard', 3000);
-    var url = document.createElement("input");
-    url.setAttribute('value', $(selected).data('url'));
-    document.body.appendChild(url);
-    url.select();
-    document.execCommand("copy");
+    var id = $(selected).data('id');
 
-    document.body.removeChild(url);
+    if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
+        var $input = $('#copy' + id);
+        $input.val();
+        var el = $input.get(0);
+        var editable = el.contentEditable;
+        var readOnly = el.readOnly;
+        el.contentEditable = true;
+        el.readOnly = false;
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        el.setSelectionRange(0, 999999);
+        el.contentEditable = editable;
+        el.readOnly = readOnly;
+
+        var successful = document.execCommand('copy');
+        $input.blur();
+
+        if(successful) {
+            Materialize.toast('Link copied to clipboard', 3000);
+        }
+    }
+
+    else {
+        var url = document.createElement("input");
+        url.setAttribute('value', $('#copy' + id).val());
+        document.body.appendChild(url);
+        url.select();
+        document.execCommand("copy");
+        document.body.removeChild(url);
+        Materialize.toast('Link copied to clipboard', 3000);
+    }
 }
 
 function getCountry() {

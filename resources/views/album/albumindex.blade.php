@@ -14,6 +14,7 @@
     @endif
 
     <div class="row">
+        @php $counter = 0; @endphp
         @foreach($albums as $album)
             <div class="col m6 l4">
                 <div class="card small">
@@ -62,10 +63,13 @@
                         </a>
                         <button class="btn-floating waves-effect waves-light blue-grey"
                            id="btn-share-link"
-                           data-url="{{ $host . '/showcase/show-album/' . $album->id }}"
+                           data-id="{{ $counter }}"
                            onclick="copyLinkAddress(this)">
                             <i class="fa fa-link"></i>
                         </button>
+
+                        <textarea id="{{ "copy" . $counter }}" style="display: none;">{{ $host . '/showcase/show-album/' . $album->id }}</textarea>
+
                         @if($album->is_published == 1)
                             <span class="new badge blue right" data-badge-caption="published"></span>
                         @else
@@ -75,6 +79,7 @@
 
                 </div>
             </div>
+            @php $counter++; @endphp
         @endforeach
     </div>
 

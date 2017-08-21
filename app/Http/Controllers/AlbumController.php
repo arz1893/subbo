@@ -202,6 +202,50 @@ class AlbumController extends Controller
         return response()->json('success', 200);
     }
 
+    public function uploadImageIos(Request $request) {
+//        dd($request->fileName);
+        $image = $request->file('file');
+        if(!is_null($image)) {
+            $filename = $request->album_id . '_' . $request->fileName;
+
+            $uploadedImage = Image::create([
+                'file_name' => $filename,
+                'size' => $image->getClientSize(),
+                'path' => 'uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename,
+                'alias' => $image->getClientOriginalName(),
+                'album_id' => $request->album_id
+            ]);
+
+            if(!File::exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id))) {
+                mkdir(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id), 0777, true);
+                $image->move(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/'), $filename);
+            } else {
+                $image->move(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/'), $filename);
+            }
+
+            if(!File::exists(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id))) {
+                mkdir(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id), 0777, true);
+
+                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+            } else {
+                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+            }
+
+            ImageThumbnail::create([
+                'thumbnail_name' => 'thumb_' . $filename,
+                'thumbnail_size' => $interventionImage->filesize(),
+                'thumbnail_path' => 'image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename,
+                'alias' => $image->getClientOriginalName(),
+                'image_id' => $uploadedImage->id,
+                'album_id' => $request->album_id,
+                'user_id' => Auth::user()->id
+            ]);
+        }
+        return response()->json($filename, 200);
+    }
+
     public function update(Album $album, AlbumRequest $request) {
         $album->update($request->all());
         if(!is_null($request->category_list)) {

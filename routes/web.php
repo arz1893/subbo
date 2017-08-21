@@ -80,6 +80,7 @@ Route::get('/album/choose-album-cover/{album}', 'AlbumController@chooseAlbumCove
 Route::post('/album/apply-album-cover/{album}', 'AlbumController@applyAlbumCover')->name('apply_album_cover');
 //Route::get('album/upload-image-page/{album}', 'AlbumController@uploadImagePage')->name('album.upload_image_page');
 Route::post('/album/upload-image/', 'AlbumController@uploadAllImages')->name('album.upload_all_images');
+Route::post('/album/upload-image-ios/', 'AlbumController@uploadImageIos')->name('album.upload_image_ios');
 Route::get('/showcase/show-album/{album}', 'ShowcaseController@showcaseAlbum')->name('showcase_album');
 
 Route::get('/user/show-as-guest/{user}', 'UserController@showAsGuest')->name('show_as_guest');
