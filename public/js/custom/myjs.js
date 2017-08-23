@@ -41,12 +41,6 @@ $(document).ready(function(){
         infinigall: true            // default: false
     });
 
-    $('.image-viewer').viewer({
-        title: false,
-        toolbar: false,
-        rotatable: false
-    });
-
     $('#album-form').validate({
         rules: {
             title: {
@@ -201,7 +195,6 @@ $(document).ready(function(){
             form.submit();
         }
     });
-
     
     $('#select_profile_picture').on('change', function () {
         $('#form_upload_profile_picture').submit();
@@ -242,22 +235,6 @@ Dropzone.options.uploadImage = {
             // console.log('new file added ', counter);
         });
 
-        // // Send file starts
-        // self.on("sending", function (file) {
-        //     console.log('upload started', file);
-        //     $('.meter').show();
-        // });
-        //
-        // // File upload Progress
-        // self.on("totaluploadprogress", function (progress) {
-        //     console.log("progress ", progress);
-        //     $('.roller').width(progress + '%');
-        // });
-        //
-        // self.on("queuecomplete", function (progress) {
-        //     $('.meter').delay(999).slideUp(999);
-        // });
-        //
         // On removing file
         self.on("removedfile", function (file) {
             console.log("file removed");
@@ -278,13 +255,18 @@ Dropzone.options.uploadImage = {
             $(file.previewElement).find('#dz-error-message').text(response);
             return false;
         });
+        
+        $('#upload_validation_button').on('click', function (e) {
+            e.preventDefault();
+            var result = $('#album-form').valid();
+            if (result == true && self.getQueuedFiles().length > 0) {
+                $('#upload_confirm').modal('open');
+            }
+        });
 
         $('#btnSubmitImage').on('click', function (e) {
             e.preventDefault();
-            var result = $('#album-form').valid();
-            if (result == true) {
-                self.processQueue();
-            }
+            self.processQueue();
         });
 
         // on complete process
@@ -304,6 +286,7 @@ Dropzone.options.uploadImage = {
 };
 
 Dropzone.options.uploadImageIos = {
+    autoProcessQueue: false,
     clickable: '.btn-add-image-ios',
     dictDefaultMessage: 'Preview',
     maxFiles: 25,
@@ -315,19 +298,19 @@ Dropzone.options.uploadImageIos = {
     acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
     init:function(){
         var self = this;
-        var counter = 1;
+        var counter = 0;
 
         // config
         self.options.addRemoveLinks = true;
         self.options.dictRemoveFile = "Delete";
 
         self.on('addedfile', function (file) {
-
+            counter++;
         });
-        
+
         self.on('sending', function (file, xhr, formData) {
             formData.append('fileName', counter + '_' + file.name);
-            counter++;
+            counter--;
         });
 
         self.on("processing", function (file) {
@@ -338,7 +321,8 @@ Dropzone.options.uploadImageIos = {
         // On removing file
         self.on("removedfile", function (file) {
             console.log("file removed");
-            console.log(file);
+            console.log(file.name);
+            console.log(counter);
         });
 
         self.on("canceled", function (file) {
@@ -348,7 +332,7 @@ Dropzone.options.uploadImageIos = {
 
         self.on("maxfilesexceeded", function (file) {
             alert("Files too many!");
-            this.removeAllFiles();
+            self.removeAllFiles();
         });
 
         self.on("error", function (file, response) {
@@ -357,32 +341,33 @@ Dropzone.options.uploadImageIos = {
         });
 
         // on complete process
-        self.on("complete", function (file) {
-            $('.btn-add-image').removeClass('disabled');
-            $('#btnUploadImage').removeClass('disabled');
+        // self.on("complete", function (file) {
+        //     $('.btn-add-image').removeClass('disabled');
+        //     $('#btnUploadImage').removeClass('disabled');
+        // });
 
-            // if (self.getUploadingFiles().length === 0 && self.getQueuedFiles().length === 0) {
-            //     $('#album-form').submit();
-            // }
-        });
-        
         self.on("success", function (file, response) {
-            console.log(response);
-            // if(response === 'success') {
-            //
-            // }
-            $('#is_image').val(1);
-        });
-        
-        $('#btnSubmitImageIos').on('click', function (e) {
-            e.preventDefault();
-            var isUploaded = $('#is_image').val();
-            console.log(isUploaded);
-            var isValid = $('#album-form-ios').valid();
-            if(isValid == true && isUploaded == 1) {
+            console.log(self.getUploadingFiles(), counter);
+
+            if (self.getUploadingFiles().length == 0 && counter == 0) {
+                // console.log('all file uploaded');
                 $('#album-form-ios').submit();
             }
-        })
+        });
+
+        $('#upload_validation_button_ios').on('click', function (e) {
+            e.preventDefault();
+            var isValid = $('#album-form-ios').valid();
+            console.log(isValid, self.getQueuedFiles().length);
+            if(isValid === true && self.getQueuedFiles().length > 0) {
+                $('#upload_confirm_ios').modal('open');
+            }
+        });
+
+        $('#btnSubmitImageIos').on('click', function (e) {
+            e.preventDefault();
+            self.processQueue();
+        });
     }
 };
 
@@ -656,64 +641,78 @@ function urlChecking() {
     }
 }
 
-function getOS() {
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+// function getOS() {
+//     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+//     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+//
+//     var os = '';
+//
+//     // iOS detection from: http://stackoverflow.com/a/9039885/177710
+//     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+//         console.log("iOS");
+//         os = 'iOS';
+//     }
+//
+//     if(os == 'iOS') {
+//         $.ajax({
+//             method: 'POST',
+//             url: window.location.protocol + "//" + window.location.host + '/os-detection',
+//             dataType: 'json',
+//             data: {os: os, _token: CSRF_TOKEN},
+//             success: function (response) {
+//                 if (response == 'success') {
+//                     window.location.replace(window.location.protocol + "//" + window.location.host + '/create-blank-album');
+//                 }
+//             }
+//         });
+//     } else {
+//         window.location.replace(window.location.protocol + "//" + window.location.host + '/create-blank-album');
+//     }
+//
+//
+//
+//     // // Opera 8.0+
+//     // var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+//     //
+//     // // Firefox 1.0+
+//     // var isFirefox = typeof InstallTrigger !== 'undefined';
+//     //
+//     // // Safari 3.0+ "[object HTMLElementConstructor]"
+//     // var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+//     //
+//     // // Internet Explorer 6-11
+//     // var isIE = /*@cc_on!@*/false || !!document.documentMode;
+//     //
+//     // // Edge 20+
+//     // var isEdge = !isIE && !!window.StyleMedia;
+//     //
+//     // // Chrome 1+
+//     // var isChrome = !!window.chrome && !!window.chrome.webstore;
+//     //
+//     // // Blink engine detection
+//     // var isBlink = (isChrome || isOpera) && !!window.CSS;
+//     //
+//     // var output = 'Detecting browsers by ducktyping:<hr>';
+//     // output += 'isFirefox: ' + isFirefox + '<br>';
+//     // output += 'isChrome: ' + isChrome + '<br>';
+//     // output += 'isSafari: ' + isSafari + '<br>';
+//     // output += 'isOpera: ' + isOpera + '<br>';
+//     // output += 'isIE: ' + isIE + '<br>';
+//     // output += 'isEdge: ' + isEdge + '<br>';
+//     // output += 'isBlink: ' + isBlink + '<br>';
+//     // $('#is_browser').html(output);
+// }
 
-    var os = '';
-
-    // iOS detection from: http://stackoverflow.com/a/9039885/177710
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        console.log("iOS");
-        os = 'iOS';
-    }
-
-    if(os == 'iOS') {
-        $.ajax({
-            method: 'POST',
-            url: window.location.protocol + "//" + window.location.host + '/os-detection',
-            dataType: 'json',
-            data: {os: os, _token: CSRF_TOKEN},
-            success: function (response) {
-                if (response == 'success') {
-                    window.location.replace(window.location.protocol + "//" + window.location.host + '/create-blank-album');
-                }
-            }
-        });
-    } else {
-        window.location.replace(window.location.protocol + "//" + window.location.host + '/create-blank-album');
-    }
-
-
-
-    // // Opera 8.0+
-    // var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-    //
-    // // Firefox 1.0+
-    // var isFirefox = typeof InstallTrigger !== 'undefined';
-    //
-    // // Safari 3.0+ "[object HTMLElementConstructor]"
-    // var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
-    //
-    // // Internet Explorer 6-11
-    // var isIE = /*@cc_on!@*/false || !!document.documentMode;
-    //
-    // // Edge 20+
-    // var isEdge = !isIE && !!window.StyleMedia;
-    //
-    // // Chrome 1+
-    // var isChrome = !!window.chrome && !!window.chrome.webstore;
-    //
-    // // Blink engine detection
-    // var isBlink = (isChrome || isOpera) && !!window.CSS;
-    //
-    // var output = 'Detecting browsers by ducktyping:<hr>';
-    // output += 'isFirefox: ' + isFirefox + '<br>';
-    // output += 'isChrome: ' + isChrome + '<br>';
-    // output += 'isSafari: ' + isSafari + '<br>';
-    // output += 'isOpera: ' + isOpera + '<br>';
-    // output += 'isIE: ' + isIE + '<br>';
-    // output += 'isEdge: ' + isEdge + '<br>';
-    // output += 'isBlink: ' + isBlink + '<br>';
-    // $('#is_browser').html(output);
+function showCopyUrl(selected) {
+    var id = $(selected).data('id');
+    $('#copy' + id).toggleClass('hide');
 }
+
+function selectAllText(selected) {
+    $(selected).select();
+}
+
+// function checkOS() {
+//     var os = navigator.userAgent.toLowerCase();
+//     console.log(os);
+// }

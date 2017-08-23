@@ -111,12 +111,14 @@
                 </div>
             @elseif(Route::currentRouteName() == 'create_album' && !Auth::guest())
                 <div class="brand-logo center">
-                    <a href="{{ route('album.index') }}" class="breadcrumb white-text">
-                        <i id="homeBrand" class="fa fa-home"></i>
-                    </a>
-                    <a href="#!" class="breadcrumb text-limiter">
-                        New Album
-                    </a>
+                    <div class="row">
+                        <a href="{{ route('album.index') }}" class="breadcrumb white-text">
+                            <i id="homeBrand" class="fa fa-home"></i>
+                        </a>
+                        <a href="#!" class="breadcrumb text-limiter">
+                            New Album
+                        </a>
+                    </div>
                 </div>
             @elseif(Route::currentRouteName() == 'album.edit' && !Auth::guest())
                 <div class="brand-logo center">
@@ -307,5 +309,6 @@
     <script src="{{ asset('js/venobox/venobox.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('js/custom/myjs.js') }}" type="text/javascript"></script>
+    @stack('page-script')
 </body>
 </html>

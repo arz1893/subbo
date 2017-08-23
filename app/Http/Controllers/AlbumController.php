@@ -26,8 +26,23 @@ class AlbumController extends Controller
 
     public function index(Request $request) {
 
-        if($request->session()->get('operating_system') != null) {
-            $request->session()->forget('operating_system');
+        $os = null;
+
+        $iPod = stripos($request->header('User-Agent'), 'iPod');
+        $iPhone = stripos($request->header('User-Agent'), 'iPhone');
+        $iPad = stripos($request->header('User-Agent'), 'iPad');
+        $android = stripos($request->header('User-Agent'), 'Android');
+
+        if($iPod || $iPhone || $iPad) {
+            $request->session()->put('operating_system', 'iOS');
+            $os = 'iOS';
+
+        } else if($android) {
+            $request->session()->put('operating_system', 'android');
+            $os = 'android';
+        } else {
+            $request->session()->put('operating_system', 'pc');
+            $os = 'pc';
         }
 
         $latestNullAlbums = Album::where('title', null)->where('user_id', Auth::user()->id)->get();
@@ -46,7 +61,7 @@ class AlbumController extends Controller
         $host = $request->getHttpHost();
         $albums = Album::where('user_id', Auth::user()->id)->where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6);
         $imageThumbnails = ImageThumbnail::all();
-        return view('album.albumindex', compact('albums', 'images', 'imageThumbnails', 'user', 'host'));
+        return view('album.albumindex', compact('albums', 'images', 'imageThumbnails', 'user', 'host', 'os'));
     }
 
     public function createAlbumFirst() {
@@ -58,30 +73,46 @@ class AlbumController extends Controller
     }
 
     public function create(Request $request, Album $album) {
-        $os = $request->session()->get('operating_system');
+        $os = null;
+
+        $iPod = stripos($request->header('User-Agent'), 'iPod');
+        $iPhone = stripos($request->header('User-Agent'), 'iPhone');
+        $iPad = stripos($request->header('User-Agent'), 'iPad');
+        $android = stripos($request->header('User-Agent'), 'Android');
+
         $currency = Auth::user()->currency;
         $categories = Category::all('category_name', 'id');
 
-//        $latestNullAlbums = Album::where('title', null)->where('user_id', Auth::user()->id)->get();
-//        if($latestNullAlbums != null) {
-//            foreach ($latestNullAlbums as $latestNullAlbum) {
-//                $latestNullAlbum->delete();
-//                if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $latestNullAlbum->id))) {
-//                    File::deleteDirectory(public_path('uploaded_images/' . Auth::user()->email . '/' . $latestNullAlbum->id), true);
-//                }
-//                if(file_exists(public_path('image_thumbnails/' . Auth::user()->email . '/' . $latestNullAlbum->id))) {
-//                    File::deleteDirectory(public_path('image_thumbnails/' . Auth::user()->email . '/' . $latestNullAlbum->id));
-//                }
-//            }
-//        }
+        $images = $album->images;
+        $imageThumbnails = $album->image_thumbnails;
+        
+        if($images && $imageThumbnails) {
+            foreach ($images as $image) {
+                unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name));
+            }
 
-        if($os != null) {
-            if($os == 'iOS') {
-                return view('album.ios_upload_page', compact('categories', 'album', 'currency'));
+            foreach ($imageThumbnails as $imageThumbnail) {
+                unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $imageThumbnail->thumbnail_name));
+            }
+
+            foreach ($images as $image) {
+                $image->delete();
             }
         }
 
-        return view('album.addalbum', compact('categories', 'album', 'currency'));
+
+        if($iPod || $iPhone || $iPad) {
+            $request->session()->put('operating_system', 'iOS');
+            return view('album.ios_upload_page', compact('categories', 'album', 'currency'));
+
+        } else if($android) {
+            $request->session()->put('operating_system', 'android');
+            $os = 'android';
+        } else {
+            $os = 'pc';
+        }
+
+        return view('album.addalbum', compact('categories', 'album', 'currency', 'os'));
     }
 
     public function store(Request $request) {
@@ -203,7 +234,6 @@ class AlbumController extends Controller
     }
 
     public function uploadImageIos(Request $request) {
-//        dd($request->fileName);
         $image = $request->file('file');
         if(!is_null($image)) {
             $filename = $request->album_id . '_' . $request->fileName;
@@ -212,7 +242,7 @@ class AlbumController extends Controller
                 'file_name' => $filename,
                 'size' => $image->getClientSize(),
                 'path' => 'uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename,
-                'alias' => $image->getClientOriginalName(),
+                'alias' => $request->fileName,
                 'album_id' => $request->album_id
             ]);
 
@@ -237,13 +267,13 @@ class AlbumController extends Controller
                 'thumbnail_name' => 'thumb_' . $filename,
                 'thumbnail_size' => $interventionImage->filesize(),
                 'thumbnail_path' => 'image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename,
-                'alias' => $image->getClientOriginalName(),
+                'alias' => $request->fileName,
                 'image_id' => $uploadedImage->id,
                 'album_id' => $request->album_id,
                 'user_id' => Auth::user()->id
             ]);
         }
-        return response()->json($filename, 200);
+        return response()->json('success', 200);
     }
 
     public function update(Album $album, AlbumRequest $request) {

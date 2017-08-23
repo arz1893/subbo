@@ -16,8 +16,8 @@
     <div class="row">
         @php $counter = 0; @endphp
         @foreach($albums as $album)
-            <div class="col m6 l4">
-                <div class="card small">
+            <div class="col s12 m6 l4">
+                <div class="card small" style="width: 100%">
                     <div class="card-image">
                         @if($album->album_cover_id == null)
                             <a href="{{route('album.show', $album->id)}}">
@@ -32,14 +32,13 @@
                                 @if($imageThumbnail->id == $album->album_cover_id)
                                     <a href="{{route('album.show', $album->id)}}">
                                         <img src="{{asset($imageThumbnail->thumbnail_path)}}">
-
-                                            <span class="card-title">
-                                                @if($album->is_published == 1)
-                                                    <h5>{{$album->title}}</h5>
-                                                @else
-                                                    <h5>{{$album->title}}</h5>
-                                                @endif
-                                            </span>
+                                        <span class="card-title">
+                                            @if($album->is_published == 1)
+                                                <h5>{{$album->title}}</h5>
+                                            @else
+                                                <h5>{{$album->title}}</h5>
+                                            @endif
+                                        </span>
                                     </a>
                                 @endif
                             @endforeach
@@ -61,20 +60,31 @@
                         <a href="#!" class="btn-floating waves-effect waves-light purple">
                             <i class="fa fa-instagram"></i>
                         </a>
-                        <button class="btn-floating waves-effect waves-light blue-grey"
-                           id="btn-share-link"
-                           data-id="{{ $counter }}"
-                           onclick="copyLinkAddress(this)">
-                            <i class="fa fa-link"></i>
-                        </button>
 
-                        <textarea id="{{ "copy" . $counter }}" style="display: none;">{{ $host . '/showcase/show-album/' . $album->id }}</textarea>
+                        @if($os == 'iOS')
+                            <button class="btn-floating waves-effect waves-light blue-grey"
+                                    id="btn-share-link-ios"
+                                    data-id="{{ $counter }}"
+                                    onclick="showCopyUrl(this)">
+                                <i class="fa fa-link"></i>
+                            </button>
+                        @else
+                            <button class="btn-floating waves-effect waves-light blue-grey"
+                                    id="btn-share-link"
+                                    data-id="{{ $counter }}"
+                                    onclick="copyLinkAddress(this)">
+                                <i class="fa fa-link"></i>
+                            </button>
+                        @endif
 
                         @if($album->is_published == 1)
                             <span class="new badge blue right" data-badge-caption="published"></span>
                         @else
                             <span class="new badge red" data-badge-caption="not published"></span>
                         @endif
+
+                        <textarea id="{{ "copy" . $counter }}" class="hide" onfocus="selectAllText(this)" readonly>{{ $host . '/showcase/show-album/' . $album->id }}</textarea>
+
                     </div>
 
                 </div>

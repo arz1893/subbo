@@ -14,7 +14,7 @@
             {{--<a href="{{ route('create_album_first') }}" class="btn-floating btn-large waves-effect waves-light red darken-1">--}}
                 {{--<i class="material-icons">add</i>--}}
             {{--</a>--}}
-            <a onclick="getOS()" href="#!" class="btn-floating btn-large waves-effect waves-light red darken-1">
+            <a href="{{ route('create_album_first') }}" class="btn-floating btn-large waves-effect waves-light red darken-1">
                 <i class="material-icons">add</i>
             </a>
         </div>
