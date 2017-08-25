@@ -708,7 +708,7 @@ function showCopyUrl(selected) {
     $('#copy' + id).toggleClass('hide');
 }
 
-function selectAllText(selected) {
+function copy_text_address(selected, copy_text) {
     $(selected).select();
 }
 

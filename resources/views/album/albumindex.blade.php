@@ -83,7 +83,7 @@
                             <span class="new badge red" data-badge-caption="not published"></span>
                         @endif
 
-                        <textarea id="{{ "copy" . $counter }}" class="hide" onfocus="selectAllText(this)" readonly>{{ $host . '/showcase/show-album/' . $album->id }}</textarea>
+                        <textarea id="{{ "copy" . $counter }}" class="hide" onfocus="copy_text_address(this)">{{ $host . '/showcase/show-album/' . $album->id }}</textarea>
 
                     </div>
 
