@@ -41,6 +41,65 @@ $(document).ready(function(){
         infinigall: true            // default: false
     });
 
+    $('#select_profile_picture').on('change', function () {
+        $('#form_upload_profile_picture').submit();
+    });
+
+    $('.btn-add-image').on('click', function () {
+        $('#upload-image').removeAttr('style');
+    });
+
+    $('.btn-add-image-ios').on('click', function () {
+        $('#upload-image-ios').removeAttr('style');
+    });
+
+    $('#snap-pay-button').click(function (event) {
+        event.preventDefault();
+        $(this).attr("disabled", "disabled");
+        var album_id = $('#album_id').val();
+        console.log(album_id);
+
+        $.ajax({
+
+            url: '/payment/midtrans_token',
+            method: 'POST',
+            dataType: 'json',
+            cache: false,
+            data: {album_id: album_id,_token: CSRF_TOKEN},
+            success: function (data) {
+                //location = data;
+                console.log('token = ' + data);
+
+                function changeResult(type, data) {
+                    $("#result-type").val(type);
+                    $("#result-data").val(JSON.stringify(data));
+                    //resultType.innerHTML = type;
+                    //resultData.innerHTML = JSON.stringify(data);
+                }
+
+                snap.pay(data, {
+
+                    onSuccess: function (result) {
+                        changeResult('success', result);
+                        console.log(result.status_message);
+                        console.log(result);
+                        $('#form-midtrans').submit();
+                    },
+                    onPending: function (result) {
+                        changeResult('pending', result);
+                        console.log(result.status_message);
+                        $('#form-midtrans').submit();
+                    },
+                    onError: function (result) {
+                        changeResult('error', result);
+                        console.log(result.status_message);
+                        $('#form-midtrans').submit();
+                    }
+                });
+            }
+        });
+    });
+
     $('#album-form').validate({
         rules: {
             title: {
@@ -195,19 +254,6 @@ $(document).ready(function(){
             form.submit();
         }
     });
-    
-    $('#select_profile_picture').on('change', function () {
-        $('#form_upload_profile_picture').submit();
-    });
-
-    $('.btn-add-image').on('click', function () {
-        $('#upload-image').removeAttr('style');
-    });
-
-    $('.btn-add-image-ios').on('click', function () {
-        $('#upload-image-ios').removeAttr('style');
-    });
-
 });
 
 Dropzone.options.uploadImage = {

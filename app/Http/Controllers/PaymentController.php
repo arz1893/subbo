@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Album;
+use App\Exceptions\VeritransException;
 use App\ImageThumbnail;
 use App\User;
+use App\Veritrans\Midtrans;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -20,7 +22,8 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
-use App\Veritrans\Veritrans;
+
+
 
 class PaymentController extends Controller
 {
@@ -32,6 +35,8 @@ class PaymentController extends Controller
         $paypal_conf = Config::get('paypal');
         $this->api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
         $this->api_context->setConfig($paypal_conf['settings']);
+        Midtrans::$serverKey = 'VT-server-G23aydjGxOjQj_4TMg0XDx2d';
+        Midtrans::$isProduction = false;
     }
 
     public function showPaymentPage(Album $album) {
@@ -157,8 +162,50 @@ class PaymentController extends Controller
         return redirect()->route('showcase_album', $album)->with('error', 'Payment failed');
     }
 
-    public function buyWithMidtrans(Request $request) {
-        dd($request->all());
+    public function midtransToken(Request $request) {
+        $album = Album::findOrFail($request->album_id);
+        error_log('masuk ke snap token dari ajax');
+        $midtrans = new Midtrans;
+        $transaction_details = array(
+            'order_id'          => uniqid(),
+            'gross_amount'  => $album->price
+        );
+        // Populate items
+        $items = [
+            array(
+                'id'                => 'album_1',
+                'price'         => $album->price,
+                'quantity'  => 1,
+                'name'          => $album->title
+            )
+        ];
+
+        // Populate customer's Info
+        $customer_details = array(
+            'first_name'            => Auth::user()->name,
+            'email'                     => Auth::user()->email,
+            'phone'                     => "081322311801",
+        );
+        // Data yang akan dikirim untuk request redirect_url.
+        $transaction_data = array(
+            'transaction_details'=> $transaction_details,
+            'item_details'           => $items,
+            'customer_details'   => $customer_details
+        );
+
+        try
+        {
+            $snap_token = $midtrans->getSnapToken($transaction_data);
+            //return redirect($vtweb_url);
+            return response()->json($snap_token, 200);
+        }
+        catch (VeritransException $e)
+        {
+            return $e->getMessage();
+        }
     }
 
+    public function midtransFinish(Request $request) {
+
+    }
 }

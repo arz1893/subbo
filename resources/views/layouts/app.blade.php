@@ -308,6 +308,9 @@
     <script src="{{ asset('js/viewer/viewer.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/venobox/venobox.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript"
+            src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="VT-client-C-m6bPmEdPS_ajJs"></script>
     <script src="{{ asset('js/custom/myjs.js') }}" type="text/javascript"></script>
     @stack('page-script')
 </body>

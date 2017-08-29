@@ -95,7 +95,8 @@ Route::post('/payment/buy-album-paypal', 'PaymentController@buyWithPaypal')->nam
 // this is after make the payment, PayPal redirect back to your site
 Route::get('/payment/paypal/get-status/{album}', 'PaymentController@getPaypalPaymentStatus')->name('payment_status');
 
-Route::post('payment/buy-album-midtrans', 'PaymentController@buyWithMidtrans');
+Route::post('/payment/midtrans_token', 'PaymentController@midtransToken');
+Route::post('/payment/midtrans_finish_transaction', 'PaymentController@midtransFinish');
 
 Route::get('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
 Route::get('/order_history/sold_album/{user}', 'OrderHistoryController@showSoldAlbumHistory')->name('sold_album');
