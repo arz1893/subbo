@@ -173,6 +173,7 @@ return [
         Torann\GeoIP\GeoIPServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         Torann\Currency\CurrencyServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -237,7 +238,9 @@ return [
         'InterventionImage' => Intervention\Image\Facades\Image::class,
         'GeoIp' => Torann\GeoIP\Facades\GeoIP::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
-        'Currency' => Torann\Currency\Facades\Currency::class
+        'Currency' => Torann\Currency\Facades\Currency::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
     ],
 
 ];

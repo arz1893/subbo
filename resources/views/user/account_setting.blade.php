@@ -28,6 +28,24 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Phone Number : </td>
+                    <td>
+                        @if($user->phone_number != null)
+                            {{ $user->phone_number }} <br>
+                            <a href="#modal_phone_number">
+                                Change your phone number
+                                <i class="fa fa-phone-square" aria-hidden="true"></i>
+                            </a>
+                        @else
+                            You haven't set your phone number <br>
+                            <a href="#modal_phone_number">
+                                <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                set your phone number
+                            </a>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         Password :
                     </td>
@@ -151,6 +169,26 @@
     </div>
 
     {{-- Modal Section --}}
+
+    <div id="modal_phone_number" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5 class="blue-grey-text">Set your phone number</h5> <br>
+
+            {{ Form::model(Auth::user(), ['method' => 'PATCH', 'action' => ['UserController@changePhoneNumber', Auth::user()], 'id' => 'form_phone_number']) }}
+                @if($user->phone_number != null)
+                    {{ Form::label('phone_number', 'Add phone number :', ['class' => 'control-label']) }}
+                @else
+                    {{ Form::label('phone_number', 'Change phone number:', ['class' => 'control-label']) }}
+                @endif
+                {{ Form::input('tel', 'phone_number', null, ['class' => '']) }}
+            {{ Form::close() }}
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#form_phone_number').submit()">Save changes</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
     <div id="modal_currency" class="modal modal-fixed-footer">
         <div class="modal-content">
             <h5 class="blue-grey-text">Set your currency</h5> <br>

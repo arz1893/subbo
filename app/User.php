@@ -26,6 +26,7 @@ class User extends Authenticatable
         'avatar',
         'user_type_id',
         'about',
+        'phone_number',
         'currency_id',
         'bank_name',
         'account_number'

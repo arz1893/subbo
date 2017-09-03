@@ -24,93 +24,81 @@
             </div>
         @endif
 
-        <!-- Page Contents -->
-        <div class="page animated fadeinup">
 
-            <!-- Hero Header -->
-            <div class="hero-header animated fadein">
-                <!-- Slider -->
-                <div class="swiper-container swiper-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="#!">
-                                @foreach($imageThumbnails as $imageThumbnail)
-                                    @if($imageThumbnail->id == $album->album_cover_id)
-                                        <div class="col s12 m4 l4">
-                                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%">
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination"></div>
+        @foreach($imageThumbnails as $imageThumbnail)
+            @if($imageThumbnail->id == $album->album_cover_id)
+                <div class="col s12 m4 l4">
+                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%" id="showcase_cover">
                 </div>
-                <!-- End of Slider -->
+            @endif
+        @endforeach
 
-                <!-- Floating Action Button -->
-                @if($status == true)
-                    <a href="{{ route('show_download', $album) }}" class="btn grey" style="width: 100%">
-                        Download <i class="fa fa-download" aria-hidden="true"></i>
-                    </a>
-                @else
-                    <a href="{{ route('show_payment', $album) }}" class="btn amber" style="width: 100%">
-                        Purchase <i class="fa fa-cart-plus"></i>
-                    </a>
-                @endif
-            </div>
+        @if($status == true)
+            <a href="{{ route('show_download', $album) }}" class="btn grey" style="width: 100%">
+                Download <i class="fa fa-download" aria-hidden="true"></i>
+            </a>
+        @else
+            <a href="{{ route('show_payment', $album) }}" class="btn amber" style="width: 100%">
+                Purchase <i class="fa fa-cart-plus"></i>
+            </a>
+        @endif
 
-            <ul class="collapsible" data-collapsible="accordion">
-                <li>
-                    <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
-                    <div class="collapsible-body">
-                        <!-- Product Title -->
-                        <div class="center-align p-20">
-                            @unless($album->categories->isEmpty())
-                                <ul>
-                                    @foreach($album->categories as $category)
-                                        <div class="chip">
-                                            <img src="{{ asset('images/default/' . $category->image) }}">
-                                            {{ $category->category_name }}
-                                        </div>
-                                    @endforeach
-                                </ul>
-                            @endunless
-                            <h4 class="m-0"><strong>{{ $album->title }}</strong></h4>
-                            <h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>
-                            <p class="flow-text" style="text-align: justify;">
-                                <span><b>Description: </b></span><br>
-                                {{ $album->description }}
-                            </p>
-                        </div>
+        <ul class="collapsible" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
+                <div class="collapsible-body">
+                    <!-- Product Title -->
+                    <div class="center-align p-20">
+                        @unless($album->categories->isEmpty())
+                            <ul>
+                                @foreach($album->categories as $category)
+                                    <div class="chip">
+                                        <img src="{{ asset('images/default/' . $category->image) }}">
+                                        {{ $category->category_name }}
+                                    </div>
+                                @endforeach
+                            </ul>
+                        @endunless
+                        <h4 class="m-0"><strong>{{ $album->title }}</strong></h4>
+                        <h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>
+                        <p class="flow-text" style="text-align: justify;">
+                            <span><b>Description: </b></span><br>
+                            {{ $album->description }}
+                        </p>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </li>
+        </ul>
 
-            <div class="row">
+        <div class="row">
 
-                @if($status == true)
-                    <ul class="">
-                        @foreach($imageThumbnails as $imageThumbnail)
-                            <li>
-                                <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($imageThumbnail->thumbnail_path) }}">
-                                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
-                                         class="col s4 m2 l2 image-thumbnails" height="75px">
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @else
-                    <ul>
-                        @foreach($imageThumbnails as $imageThumbnail)
-                            <li>
-                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+            @if($status == true)
+                <ul class="">
+                    @foreach($imageThumbnails as $imageThumbnail)
+                        <li>
+                            <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($imageThumbnail->thumbnail_path) }}">
+                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
+                                     class="col s4 m2 l2 image-thumbnails" height="75px">
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <ul>
+                    @foreach($imageThumbnails as $imageThumbnail)
+                        <li>
+                            {{--<img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">--}}
+                            <div
+                                    class="col s4 m2 l2 image-thumbnails"
+                                    style="background-image: url('{{ asset($imageThumbnail->thumbnail_path) }}');
+                                            background-size: 100% 100%;
+                                            height: 75px;
+                                            margin: 1%;">
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 @endsection

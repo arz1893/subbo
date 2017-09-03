@@ -89,6 +89,7 @@ Route::patch('/user/add-bank-account/{user}', 'UserController@addBankAccount')->
 Route::patch('/user/update-currency/{user}', 'UserController@updateCurrency')->name('update_currency');
 Route::get('/user/account-setting-page/{user}', 'UserController@accountSettingPage')->name('account_setting');
 Route::post('/user/change-password/{user}', 'UserController@changePassword')->name('change_password');
+Route::patch('/user/change-phone/{user}', 'UserController@changePhoneNumber')->name('change_phone_number');
 
 Route::get('/payment/album-payment/{album}', 'PaymentController@showPaymentPage')->name('show_payment');
 Route::post('/payment/buy-album-paypal', 'PaymentController@buyWithPaypal')->name('buy_album_paypal');

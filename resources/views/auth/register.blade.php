@@ -21,8 +21,8 @@
 
                 @if ($errors->has('name'))
                     <span class="help-block">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
+                        <strong>{{ $errors->first('name') }}</strong>
+                    </span>
                 @endif
             </div>
 
@@ -33,9 +33,13 @@
 
                 @if ($errors->has('email'))
                     <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
                 @endif
+            </div>
+
+            <div class="input-field">
+                <input type="tel" id="phone_number" name="phone_number" placeholder="Phone Number (optional)" value="{{ old('phone_number') }}">
             </div>
 
             <div class="input-field {{ $errors->has('password') ? ' has-error' : '' }}">

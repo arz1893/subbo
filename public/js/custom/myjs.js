@@ -41,6 +41,8 @@ $(document).ready(function(){
         infinigall: true            // default: false
     });
 
+    $('#phone_number').intlTelInput();
+
     $('#select_profile_picture').on('change', function () {
         $('#form_upload_profile_picture').submit();
     });
@@ -51,6 +53,10 @@ $(document).ready(function(){
 
     $('.btn-add-image-ios').on('click', function () {
         $('#upload-image-ios').removeAttr('style');
+    });
+
+    $("body").on("contextmenu", "#showcase_cover", function(e) {
+        return false;
     });
 
     $('#snap-pay-button').click(function (event) {
@@ -666,6 +672,7 @@ function urlChecking() {
 
         var countryId = null;
         $.getJSON('//freegeoip.net/json/?callback=?', function(data) {
+            console.log(data);
             countryId = data.country_code;
 
             jQuery.getJSON(

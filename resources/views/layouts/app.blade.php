@@ -23,6 +23,7 @@
     <link href="{{ asset('css/dropzone/dropzone.css') }}" rel="stylesheet">
     <link href="{{ asset('css/viewer/viewer.css') }}" rel="stylesheet">
     <link href="{{ asset('css/venobox/venobox.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tel-input/intlTelInput.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom/mycss.css') }}" rel="stylesheet">
 </head>
 <body onload="urlChecking()">
@@ -60,24 +61,7 @@
             </li>
         </ul>
 
-        <ul id="dropdown2" class="dropdown-content">
-            <li>
-                <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
-                    Guest Preview
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('user.show', Auth::user()->id) }}" class="black-text">
-                    Profile
-                </a>
-            </li>
-            <li>
-                <a href="{{route('logout')}}" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();" class="black-text">
-                    Logout
-                </a>
-            </li>
-        </ul>
+
 
         <ul id="walletdrop" class="dropdown-content col m4">
             <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
@@ -101,7 +85,7 @@
                 {{----}}
             {{--@else--}}
             @if(Route::currentRouteName() == 'album.show')
-                <div class="brand-logo center">
+                <div class="brand-logo center" id="bread-nav">
                     <a href="{{ route('album.index') }}" class="breadcrumb white-text">
                         <i id="homeBrand" class="fa fa-home"></i>
                     </a>
@@ -252,40 +236,80 @@
                     </a>
                 @else
                     <li>
-                        <a href="{{ route('album.index') }}">
+                        <a class="dropdown-button" data-activates="dropdown_album">
                             <i class="fa fa-camera-retro" aria-hidden="true"></i>
-                            My Album
+                            Albums
+                            <i class="material-icons right">arrow_drop_down</i>
                         </a>
+
+                        <ul id="dropdown_album" class="dropdown-content">
+                            <li>
+                                <a href="{{ route('album.index') }}" class="black-text">
+                                    My Album
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
+                                    Purchased
+                                </a>
+                            </li>
+                        </ul>
 
                         {{--<a href="{{ url('/home') }}" class="black-text">--}}
                             {{--<i class="fa fa-home" aria-hidden="true"></i> Home--}}
                         {{--</a>--}}
 
-                        <a href="{{ route('show_sales', Auth::user()) }}">
-                            <i class="fa fa-usd" aria-hidden="true"></i> Sales
+                        <a class="dropdown-button" data-activates="dropdown_sales">
+                            <i class="fa fa-usd" aria-hidden="true"></i>
+                            Sales
+                            <i class="material-icons right">arrow_drop_down</i>
                         </a>
 
-                        <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
-                            <i class="fa fa-history" aria-hidden="true"></i> Order History
-                        </a>
-
-                        <a href="{{ route('sold_album', Auth::user()) }}" class="black-text">
-                            <i class="fa fa-area-chart" aria-hidden="true"></i> Sold album
-                        </a>
+                        <ul id="dropdown_sales" class="dropdown-content">
+                            <li>
+                                <a href="{{ route('show_sales', Auth::user()) }}" class="black-text">
+                                    My Wallet
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('sold_album', Auth::user()) }}" class="black-text">
+                                    Sold album
+                                </a>
+                            </li>
+                        </ul>
 
                         <a href="{{ route('account_setting', Auth::user()) }}">
-                            <i class="fa fa-cogs" aria-hidden="true"></i> Setting
+                            <i class="fa fa-cogs" aria-hidden="true"></i> Account Setting
                         </a>
 
                         <a href="#!">
                             <i class="fa fa-question-circle-o" aria-hidden="true"></i> Help / FAQ
                         </a>
 
-                        <a class="dropdown-button profile-name-limiter" href="#!" data-activates="dropdown2">
+                        <a class="dropdown-button profile-name-limiter" href="#!" data-activates="dropdown_user">
                             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                             {{Auth::user()->name}}
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
+
+                        <ul id="dropdown_user" class="dropdown-content">
+                            <li>
+                                <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
+                                    Guest Preview
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user.show', Auth::user()->id) }}" class="black-text">
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('logout')}}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();" class="black-text">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
@@ -307,6 +331,7 @@
     <script src="{{ asset('js/jquery_validation/jquery.validate.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/viewer/viewer.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/venobox/venobox.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/tel-input/intlTelInput.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript"
             src="https://app.sandbox.midtrans.com/snap/snap.js"

@@ -67,6 +67,7 @@ class RegisterController extends Controller
             'id' => Uuid::generate(3, $data['email'], Uuid::NS_DNS),
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
             'password' => bcrypt($data['password']),
         ]);
     }

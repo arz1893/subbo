@@ -134,4 +134,10 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function changePhoneNumber(Request $request, User $user) {
+        $user->phone_number = $request->phone_number;
+        $user->update();
+        return redirect()->back();
+    }
 }

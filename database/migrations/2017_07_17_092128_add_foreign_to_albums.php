@@ -14,7 +14,8 @@ class AddForeignToAlbums extends Migration
     public function up()
     {
         Schema::table('albums', function (Blueprint $table) {
-            $table->foreign('album_cover_id')->references('id')->on('image_thumbnails')->onDelete('cascade');
+            $table->integer('album_cover_id')->unsigned()->nullable();
+            $table->foreign('album_cover_id')->references('id')->on('image_thumbnails')->onDelete('no action');
         });
     }
 
@@ -26,7 +27,7 @@ class AddForeignToAlbums extends Migration
     public function down()
     {
         Schema::table('albums', function (Blueprint $table) {
-            //
+            $table->dropColumn('album_cover_id');
         });
     }
 }
