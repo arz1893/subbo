@@ -25,6 +25,7 @@
     <link href="{{ asset('css/venobox/venobox.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tel-input/intlTelInput.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom/mycss.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom/media-screen.css') }}" rel="stylesheet">
 </head>
 <body onload="urlChecking()">
     <div id="fb-root"></div>
@@ -61,21 +62,6 @@
             </li>
         </ul>
 
-
-
-        <ul id="walletdrop" class="dropdown-content col m4">
-            <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
-                <i class="fa fa-history" aria-hidden="true"></i> Order History
-            </a>
-
-            <a href="{{ route('show_sales', Auth::user()) }}" class="black-text">
-                <i class="fa fa-dollar" aria-hidden="true"></i> Sales
-            </a>
-
-            <a href="{{ route('sold_album', Auth::user()) }}" class="black-text">
-                <i class="fa fa-area-chart" aria-hidden="true"></i> Sold album
-            </a>
-        </ul>
     @endif
 
     <nav>
@@ -94,7 +80,7 @@
                     </a>
                 </div>
             @elseif(Route::currentRouteName() == 'create_album' && !Auth::guest())
-                <div class="brand-logo center">
+                <div class="brand-logo center" id="bread-nav">
                     <div class="row">
                         <a href="{{ route('album.index') }}" class="breadcrumb white-text">
                             <i id="homeBrand" class="fa fa-home"></i>
@@ -105,7 +91,7 @@
                     </div>
                 </div>
             @elseif(Route::currentRouteName() == 'album.edit' && !Auth::guest())
-                <div class="brand-logo center">
+                <div class="brand-logo center" id="bread-nav">
                     <a href="{{ route('album.index') }}" class="breadcrumb white-text">
                         <i id="homeBrand" class="fa fa-home"></i>
                     </a>
@@ -114,7 +100,7 @@
                     </a>
                 </div>
             @elseif(Route::currentRouteName() == 'showcase_album')
-                <div class="brand-logo center">
+                <div class="brand-logo center" id="bread-nav">
                     <a href="{{ route('show_as_guest', $user->id) }}" class="breadcrumb white-text">
                         <i id="homeBrand" class="fa fa-user-circle"></i>
                     </a>
@@ -167,6 +153,10 @@
                         View all user
                     </a>
                 </div>
+            @elseif(Route::currentRouteName() == 'show_sales' && !Auth::guest())
+                <div class="brand-logo center" id="sales-nav">
+                    <a href="#!">Sales</a>
+                </div>
             @else
                 @if(Auth::guest())
                     <a href="{{url('/')}}" class="brand-logo center white-text">Subbo</a>
@@ -180,11 +170,25 @@
             @if(!Auth::guest())
                 <ul class="left hide-on-med-and-down">
                     <li>
-                        <a href="{{ route('album.index') }}" class="white-text">
+                        <a href="#!" class="dropdown-button white-text" data-activates="dropdown_album_pc">
                             <i class="fa fa-camera-retro" aria-hidden="true"></i>
-                            My Album
+                            Album
+                            <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
+
+                    <ul id="dropdown_album_pc" class="dropdown-content">
+                        <li>
+                            <a href="{{ route('album.index') }}" class="black-text">
+                                My Album
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
+                                Purchased
+                            </a>
+                        </li>
+                    </ul>
                     {{--<li>--}}
                         {{--<a href="{{ url('/home') }}" class="white-text">--}}
                             {{--<i class="fa fa-home" aria-hidden="true"></i> Home--}}
@@ -203,6 +207,20 @@
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
+
+                    <ul id="walletdrop" class="dropdown-content col m4">
+                        <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
+                            <i class="fa fa-history" aria-hidden="true"></i> Order History
+                        </a>
+
+                        <a href="{{ route('show_sales', Auth::user()) }}" class="black-text">
+                            <i class="fa fa-dollar" aria-hidden="true"></i> Sales
+                        </a>
+
+                        <a href="{{ route('sold_album', Auth::user()) }}" class="black-text">
+                            <i class="fa fa-area-chart" aria-hidden="true"></i> Sold album
+                        </a>
+                    </ul>
 
                     {{--<li>--}}
                     {{--<a href="{{route('logout')}}" onclick="event.preventDefault();--}}
@@ -236,13 +254,13 @@
                     </a>
                 @else
                     <li>
-                        <a class="dropdown-button" data-activates="dropdown_album">
+                        <a class="dropdown-button" data-activates="dropdown_album-mobile">
                             <i class="fa fa-camera-retro" aria-hidden="true"></i>
                             Albums
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
 
-                        <ul id="dropdown_album" class="dropdown-content">
+                        <ul id="dropdown_album-mobile" class="dropdown-content">
                             <li>
                                 <a href="{{ route('album.index') }}" class="black-text">
                                     My Album

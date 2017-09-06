@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\AdminUser;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Webpatser\Uuid\Uuid;
@@ -18,7 +21,6 @@ class AdminUserController extends Controller
         ]);
 
         $admin_user = new AdminUser([
-            'id' => Uuid::generate(3, $request->input('email'), Uuid::NS_DNS),
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password'))
@@ -33,7 +35,6 @@ class AdminUserController extends Controller
 
     public function signIn(Request $request) {
         $this->validate($request, [
-            'name' => 'required',
             'email' => 'required|email',
             'password' => 'required'
         ]);
@@ -41,6 +42,7 @@ class AdminUserController extends Controller
         $credentials = $request->only('email', 'password');
 
         try {
+            Config::set('auth.providers.users.model', \App\AdminUser::class);
             if(!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'error' => 'Invalid Credentials!'
@@ -54,5 +56,10 @@ class AdminUserController extends Controller
         return response()->json([
             'token' => $token
         ], 200);
+    }
+
+    public function getAdminUser(Request $request, $id) {
+        $user = AdminUser::findOrFail($id);
+        return response()->json($user, 200);
     }
 }

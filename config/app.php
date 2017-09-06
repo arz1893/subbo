@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -172,8 +173,6 @@ return [
         Intervention\Image\ImageServiceProviderLaravel5::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
-        Torann\Currency\CurrencyServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -238,7 +237,6 @@ return [
         'InterventionImage' => Intervention\Image\Facades\Image::class,
         'GeoIp' => Torann\GeoIP\Facades\GeoIP::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
-        'Currency' => Torann\Currency\Facades\Currency::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
     ],

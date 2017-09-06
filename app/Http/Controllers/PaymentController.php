@@ -205,7 +205,18 @@ class PaymentController extends Controller
         }
     }
 
-    public function midtransFinish(Request $request) {
+    public function midtransNotification(Request $request) {
+        $allRequest = $request->all();
+        if($request->json()) {
+            return response()->json([
+                'all_request' => $allRequest
+            ], 200);
+        }
 
+        else return response()->json(['message' => 'could not retrieve your information'],404);
+    }
+
+    public function midtransFinish(Request $request) {
+        dd($request->all());
     }
 }

@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic;
+use Intervention\Image\Facades\Image as InterventionImage;
 use Webpatser\Uuid\Uuid;
+use Imagecow\Image as ImageCow;
 
 class AlbumController extends Controller
 {
@@ -88,11 +90,15 @@ class AlbumController extends Controller
         
         if($images && $imageThumbnails) {
             foreach ($images as $image) {
-                unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name));
+                if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name))) {
+                    unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name));
+                }
             }
 
             foreach ($imageThumbnails as $imageThumbnail) {
-                unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $imageThumbnail->thumbnail_name));
+                if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $imageThumbnail->thumbnail_name))) {
+                    unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $imageThumbnail->thumbnail_name));
+                }
             }
 
             foreach ($images as $image) {
@@ -213,16 +219,48 @@ class AlbumController extends Controller
             if(!File::exists(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id))) {
                 mkdir(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id), 0777, true);
 
-                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage = InterventionImage::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+//                $interventionImage->insert(public_path('images/default/') . 'subbo-watermark.png', 'bottom-right', 10, 10);
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+                $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+                $imageCow->quality(40);
+                $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
+                $logo->opacity(40);
+                $imageCow->watermark($logo, $x='center', $y='center');
+                $imageCow->watermark($logo, $x='right', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='top');
+                $imageCow->watermark($logo, $x='right', $y='top');
+                $imageCow->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename));
+
             } else {
-                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage = InterventionImage::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+//                $interventionImage->insert(public_path('images/default/') . 'subbo-watermark.png', 'bottom-right', 10, 10);
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+
+                $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+                $imageCow->quality(40);
+                $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
+                $logo->opacity(40);
+                $imageCow->watermark($logo, $x='center', $y='center');
+                $imageCow->watermark($logo, $x='right', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='top');
+                $imageCow->watermark($logo, $x='right', $y='top');
+                $imageCow->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename));
             }
 
+//            ImageThumbnail::create([
+//                'thumbnail_name' => 'thumb_' . $filename,
+//                'thumbnail_size' => $interventionImage->filesize(),
+//                'thumbnail_path' => 'image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename,
+//                'alias' => $image->getClientOriginalName(),
+//                'image_id' => $uploadedImage->id,
+//                'album_id' => $request->album_id,
+//                'user_id' => Auth::user()->id
+//            ]);
             ImageThumbnail::create([
                 'thumbnail_name' => 'thumb_' . $filename,
-                'thumbnail_size' => $interventionImage->filesize(),
                 'thumbnail_path' => 'image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename,
                 'alias' => $image->getClientOriginalName(),
                 'image_id' => $uploadedImage->id,
@@ -256,16 +294,47 @@ class AlbumController extends Controller
             if(!File::exists(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id))) {
                 mkdir(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id), 0777, true);
 
-                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+
+                $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+                $imageCow->quality(40);
+                $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
+                $logo->opacity(40);
+                $imageCow->watermark($logo, $x='center', $y='center');
+                $imageCow->watermark($logo, $x='right', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='top');
+                $imageCow->watermark($logo, $x='right', $y='top');
+                $imageCow->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename));
+
             } else {
-                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+                $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+                $imageCow->quality(40);
+                $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
+                $logo->opacity(40);
+                $imageCow->watermark($logo, $x='center', $y='center');
+                $imageCow->watermark($logo, $x='right', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='bottom');
+                $imageCow->watermark($logo, $x='left', $y='top');
+                $imageCow->watermark($logo, $x='right', $y='top');
+                $imageCow->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename));
             }
+
+//            ImageThumbnail::create([
+//                'thumbnail_name' => 'thumb_' . $filename,
+//                'thumbnail_size' => $interventionImage->filesize(),
+//                'thumbnail_path' => 'image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename,
+//                'alias' => $request->fileName,
+//                'image_id' => $uploadedImage->id,
+//                'album_id' => $request->album_id,
+//                'user_id' => Auth::user()->id
+//            ]);
 
             ImageThumbnail::create([
                 'thumbnail_name' => 'thumb_' . $filename,
-                'thumbnail_size' => $interventionImage->filesize(),
                 'thumbnail_path' => 'image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename,
                 'alias' => $request->fileName,
                 'image_id' => $uploadedImage->id,

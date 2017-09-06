@@ -94,7 +94,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     /* end */
-    width: 200px; /* Space size limit */
+    width: 230px; /* Space size limit */
     overflow: hidden;
     text-align: left;
     position: relative;
@@ -126,54 +126,6 @@
 
 .input-field label {
     color: #000;
-}
-
-@media screen and (max-width: 414px) {
-    #albumform-container {
-        margin-top: 13%;
-    }
-
-    #homeBrand {
-        position: relative;
-        right: 10%;
-        padding-top:  3.5%;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    #homeBrand {
-        position: relative;
-        right: 5%;
-    }
-}
-
-@media screen and (min-width: 415px) {
-    #albumform-container {
-        margin-top: 5%;
-    }
-    #category_container {
-        margin-top: -3%;
-        margin-bottom: 3%;
-    }
-}
-
-@media screen and (min-width: 1440px){
-
-}
-
-@media screen and (max-width: 414px){
-    #category_container {
-        margin-top: -11%;
-        margin-bottom: 8%;
-    }
-
-    #dropzone_container {
-        margin-top: -7%;
-    }
-
-    #add_album_container {
-        margin-top: -5%;
-    }
 }
 
 .input-hidden {

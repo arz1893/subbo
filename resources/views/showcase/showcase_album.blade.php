@@ -87,14 +87,14 @@
                 <ul>
                     @foreach($imageThumbnails as $imageThumbnail)
                         <li>
-                            {{--<img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">--}}
-                            <div
-                                    class="col s4 m2 l2 image-thumbnails"
-                                    style="background-image: url('{{ asset($imageThumbnail->thumbnail_path) }}');
-                                            background-size: 100% 100%;
-                                            height: 75px;
-                                            margin: 1%;">
-                            </div>
+                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
+                            {{--<div--}}
+                                    {{--class="col s4 m2 l2 image-thumbnails"--}}
+                                    {{--style="background-image: url('{{ asset($imageThumbnail->thumbnail_path) }}');--}}
+                                            {{--background-size: 100% 100%;--}}
+                                            {{--height: 75px;--}}
+                                            {{--margin: 1%;">--}}
+                            {{--</div>--}}
                         </li>
                     @endforeach
                 </ul>

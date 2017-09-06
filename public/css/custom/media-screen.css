@@ -1,0 +1,73 @@
+/* Portrait and Landscape for Iphone 5 */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 568px)
+and (-webkit-min-device-pixel-ratio: 2) {
+    #homeBrand {
+        position: relative;
+        right: 1%;
+        padding-top:  3.4%;
+        padding-right: 3%;
+    }
+}
+
+/* Portrait and Landscape for Iphone 6 */
+@media only screen
+and (min-device-width: 375px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2) {
+    #bread-nav {
+        position: relative;
+        left: 40%;
+    }
+
+    #homeBrand {
+        position: relative;
+        right: 5%;
+        padding-top:  3%;
+        padding-right: 3%;
+    }
+}
+
+/* Portrait and Landscape for Iphone 6+*/
+@media only screen
+and (min-device-width: 414px)
+and (max-device-width: 736px)
+and (-webkit-min-device-pixel-ratio: 3) {
+    #bread-nav {
+        position: relative;
+        left: 37%;
+    }
+
+    #homeBrand {
+        position: relative;
+        right: 5%;
+        padding-top:  3%;
+        padding-right: 3%;
+    }
+}
+
+/* Portrait and Landscape for Galaxy s5*/
+@media screen
+and (device-width: 360px)
+and (device-height: 640px)
+and (-webkit-device-pixel-ratio: 3) {
+    #bread-nav {
+        position: relative;
+        left: 40%;
+    }
+
+    #homeBrand {
+        position: relative;
+        right: 3%;
+        padding-top:  3%;
+        padding-right: 3%;
+    }
+}
+
+@media screen and (max-device-width: 767px){
+    #sales-nav {
+        position: relative;
+        left: 10%;
+    }
+}

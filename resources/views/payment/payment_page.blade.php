@@ -49,11 +49,11 @@
         </ul>
 
         <h5 class="blue-grey-text">Pay with</h5>
-        <a href="#modal_paypal_confirm">
+        <a href="#modal_paypal_confirm" style="margin: 1%">
             <img src="{{ asset('images/default/Paypal-icon.png') }}" width="75" height="75">
         </a>
 
-        <a href="#!" id="snap-pay-button">
+        <a href="#!" id="snap-pay-button" style="margin: 1%">
             {{ Form::open(['action' => 'PaymentController@midtransFinish', 'id' => 'form-midtrans', 'style' => 'display:inline']) }}
                 {{ Form::hidden('result_type', null, ['id' => 'result_type']) }}
                 {{ Form::hidden('result_data', null, ['id' => 'result_data']) }}
@@ -62,9 +62,14 @@
             <img src="{{ asset('images/default/midtrans.png') }}" width="125">
         </a>
 
-        <a href="#!">
+        <a href="#!" style="margin: 1%">
             <img src="{{ asset('images/default/visa-debit.png') }}" width="75" height="75">
         </a>
+
+        {{ Form::open(['action' => 'PaymentController@midtransNotification']) }}
+            {{ Form::hidden('test', 'test') }}
+            {{ Form::submit('Test a request', ['class' => 'btn blue blue-lighten-2']) }}
+        {{ Form::close() }}
     </div>
 
     <!-- Modal Structure -->
