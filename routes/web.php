@@ -81,6 +81,7 @@ Route::post('/album/apply-album-cover/{album}', 'AlbumController@applyAlbumCover
 //Route::get('album/upload-image-page/{album}', 'AlbumController@uploadImagePage')->name('album.upload_image_page');
 Route::post('/album/upload-image/', 'AlbumController@uploadAllImages')->name('album.upload_all_images');
 Route::post('/album/upload-image-ios/', 'AlbumController@uploadImageIos')->name('album.upload_image_ios');
+
 Route::get('/showcase/show-album/{album}', 'ShowcaseController@showcaseAlbum')->name('showcase_album');
 
 Route::get('/user/show-as-guest/{user}', 'UserController@showAsGuest')->name('show_as_guest');
@@ -100,7 +101,7 @@ Route::post('/payment/midtrans_token', 'PaymentController@midtransToken');
 Route::post('/payment/midtrans_notification', 'PaymentController@midtransNotification');
 Route::post('/payment/midtrans_finish', 'PaymentController@midtransFinish');
 
-Route::get('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
+Route::any('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
 Route::get('/order_history/sold_album/{user}', 'OrderHistoryController@showSoldAlbumHistory')->name('sold_album');
 Route::get('/order_history/view-user-download/{album}', 'OrderHistoryController@viewAllUserDownload')->name('user_download')->middleware('ownership');
 

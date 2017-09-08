@@ -13,10 +13,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ asset('css/materialize/materialize.min.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome/font-awesome.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="{{ asset('css/selectize/selectize.css') }}" rel="stylesheet">
@@ -67,10 +67,6 @@
 
 <nav>
     <div class="nav-wrapper teal lighten-1">
-        {{--@if(Route::currentRouteName() == 'album.show' || Route::currentRouteName() == 'album.create' ||--}}
-        {{--Route::currentRouteName() == 'album.edit' || Route::currentRouteName() == 'showcase_album')--}}
-        {{----}}
-        {{--@else--}}
         @if(Route::currentRouteName() == 'album.show')
             <div class="brand-logo center" id="bread-nav">
                 <a href="{{ route('album.index') }}" class="breadcrumb white-text">
@@ -102,12 +98,18 @@
             </div>
         @elseif(Route::currentRouteName() == 'showcase_album')
             <div class="brand-logo center" id="bread-nav">
-                <a href="{{ route('show_as_guest', $user->id) }}" class="breadcrumb white-text">
-                    <i id="homeBrand" class="fa fa-user-circle"></i>
-                </a>
-                <a href="{{ route('showcase_album', $album->id) }}" class="breadcrumb text-limiter">
-                    {{ $album->title }}
-                </a>
+                @if($status)
+                    <a href="{{ route('order_history', Auth::user()) }}" class="breadcrumb white-text">
+                        <i id="homeBrand" class="fa fa fa-object-group"></i>
+                    </a>
+                    <a href="#!" class="breadcrumb text-limiter">
+                        {{ $album->title }}
+                    </a>
+                @else
+                    <a href="#!" id="showcase-nav">
+                        {{ $album->title }}
+                    </a>
+                @endif
             </div>
         @elseif(Route::currentRouteName() == 'add_bank_account' && !Auth::guest())
             <div class="brand-logo center">
@@ -356,9 +358,9 @@
 <script src="{{ asset('js/venobox/venobox.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/tel-input/intlTelInput.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript"
-        src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="VT-client-C-m6bPmEdPS_ajJs"></script>
+{{--<script type="text/javascript"--}}
+        {{--src="https://app.sandbox.midtrans.com/snap/snap.js"--}}
+        {{--data-client-key="VT-client-C-m6bPmEdPS_ajJs"></script>--}}
 <script src="{{ asset('js/custom/myjs.js') }}" type="text/javascript"></script>
 @stack('page-script')
 </body>

@@ -16,10 +16,35 @@ class OrderHistoryController extends Controller
         $this->middleware('auth');
     }
 
-    public function showOrderHistory(User $user) {
-        $purchasedAlbums = $user->purchased_albums()->get();
-        $currency = $user->currency;
-        return view('order_history.show_order_history', compact('user', 'purchasedAlbums', 'currency'));
+    public function showOrderHistory(Request $request, User $user) {
+
+        $os = null;
+
+        $iPod = stripos($request->header('User-Agent'), 'iPod');
+        $iPhone = stripos($request->header('User-Agent'), 'iPhone');
+        $iPad = stripos($request->header('User-Agent'), 'iPad');
+        $android = stripos($request->header('User-Agent'), 'Android');
+
+        if($iPod || $iPhone || $iPad) {
+            $request->session()->put('operating_system', 'iOS');
+            $os = 'iOS';
+
+        } else if($android) {
+            $request->session()->put('operating_system', 'android');
+            $os = 'android';
+        } else {
+            $request->session()->put('operating_system', 'pc');
+            $os = 'pc';
+        }
+
+        if($request->search_purchased != null) {
+            $purchasedAlbums = $user->purchased_albums()->where('title', 'like', '%' . $request->search_purchased . '%')->paginate(6);
+        } else {
+            $purchasedAlbums = $user->purchased_albums()->paginate(6);
+            $currency = $user->currency;
+        }
+        $host = $request->getHttpHost();
+        return view('order_history.show_order_history', compact('user', 'purchasedAlbums', 'currency', 'host', 'os'));
     }
 
     public function showSoldAlbumHistory(User $user) {

@@ -104,43 +104,21 @@
 
             @else
                 @foreach($imageThumbnails as $imageThumbnail)
-                    @if($imageThumbnail->id == $album->album_cover_id)
-                        <div class="col s12 m4 l4">
-                            <div class="card">
-                                <div class="card-image">
-                                    <a href="#!" onclick="Materialize.toast('Already a cover image', 2000)" >
-                                        <img src="{{asset($imageThumbnail->thumbnail_path)}}" height="300">
-                                        <span class="card-title">
-                                            <h4>Album Cover</h4>
-                                        </span>
-                                    </a>
-                                </div>
-                                {{--<div class="card-content">--}}
-                                    {{--<a  href="#popUpDeleteImage" class="red-text modal-trigger"--}}
-                                        {{--data-id="{{$imageThumbnail->id}}" onclick="setDeleteTarget(this)">--}}
-                                        {{--Delete <i class="fa fa-trash" aria-hidden="true"></i>--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                            </div>
-                        </div>
-                    @else
-                        <div class="col s12 m4 l4">
-                            <div class="card">
-                                <div class="card-image">
-                                    <a href="#popUpConfirm" class="modal-trigger" data-target="#popUpConfirm"
-                                       data-id="{{$imageThumbnail->id}}" onClick="selectCover(this);">
-                                        <img src="{{asset($imageThumbnail->thumbnail_path)}}" height="300">
-                                    </a>
-                                </div>
-                                {{--<div class="card-content">--}}
-                                    {{--<a  href="#popUpDeleteImage" class="red-text modal-trigger"--}}
-                                        {{--data-id="{{$imageThumbnail->id}}" onclick="setDeleteTarget(this)">--}}
-                                        {{--Delete <i class="fa fa-trash" aria-hidden="true"></i>--}}
-                                    {{--</a>--}}
-                                {{--</div>--}}
-                            </div>
-                        </div>
-                    @endif
+                    <ul>
+                        @if($imageThumbnail->id == $album->album_cover_id)
+                            <li>
+                                <a href="#!" onclick="Materialize.toast('This is current album cover', 4000)">
+                                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="#popUpConfirm" class="modal-trigger" data-target="#popUpConfirm" data-id="{{$imageThumbnail->id}}" onClick="selectCover(this);">
+                                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
                 @endforeach
             @endif
 

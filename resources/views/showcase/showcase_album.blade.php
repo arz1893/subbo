@@ -61,11 +61,17 @@
                         @endunless
                         <h4 class="m-0"><strong>{{ $album->title }}</strong></h4>
                         <h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>
+                    </div>
+                        <p>
+                            <span class="flow-text">
+                                <b>Creator:</b> <br/>
+                                <a href="#!">{{ $album->user->name }}</a>
+                            </span>
+                        </p>
                         <p class="flow-text" style="text-align: justify;">
                             <span><b>Description: </b></span><br>
                             {{ $album->description }}
                         </p>
-                    </div>
                 </div>
             </li>
         </ul>

@@ -35,7 +35,7 @@ class UserController extends Controller
             }
         }
 
-        $albums = Album::where('user_id', $user->id)->paginate(6);
+        $albums = DB::table('albums')->where('user_id', $user->id)->where('is_published', 1)->paginate(6);
         $imageThumbnails = ImageThumbnail::all();
         $host = $request->getHttpHost();
         return view('user.show_as_guest', compact('user', 'albums', 'imageThumbnails', 'host'));

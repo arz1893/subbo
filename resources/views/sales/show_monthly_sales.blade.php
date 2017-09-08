@@ -15,7 +15,7 @@
         @endif
 
         <h5>Total Nett Earning</h5>
-        <span style="font-size: 1.5em;" class="blue-grey-text">
+        <span style="font-size: 2em;" class="blue-grey-text">
             {{ $currency->code . " " . number_format( $userWallet->deposit , 2 , '.', '.' ) }}
         </span>
         <hr>
