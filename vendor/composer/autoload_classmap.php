@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddColumnsToUsers' => $baseDir . '/database/migrations/2017_07_06_072526_add_columns_to_users.php',
     'AddForeignToAlbums' => $baseDir . '/database/migrations/2017_07_17_092128_add_foreign_to_albums.php',
+    'AddImageThumbnailIdToImages' => $baseDir . '/database/migrations/2017_09_12_095353_add_image_thumbnail_id_to_images.php',
     'AddInstagramIdToUsers' => $baseDir . '/database/migrations/2017_07_13_084332_add_instagram_id_to_users.php',
     'AddPhoneNumberToUsers' => $baseDir . '/database/migrations/2017_08_30_064116_add_phone_number_to_users.php',
     'AddUserIdToImageThumbnails' => $baseDir . '/database/migrations/2017_07_17_043858_add_user_id_to_image_thumbnails.php',

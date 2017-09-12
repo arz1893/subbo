@@ -18,7 +18,8 @@ class ShowcaseController extends Controller
     public function showcaseAlbum(Album $album) {
         $user = User::findOrFail($album->user_id);
         $currency = $user->currency;
-        $imageThumbnails = ImageThumbnail::where('album_id', $album->id)->get();
+        $images = $album->images;
+        $imageThumbnails = $album->image_thumbnails;
         $purchasedAlbums = Auth::user()->purchased_albums()->get();
         $status = false;
 
@@ -28,6 +29,12 @@ class ShowcaseController extends Controller
             }
         }
 
-        return view('showcase.showcase_album', compact('album', 'imageThumbnails', 'user', 'purchasedAlbums', 'status', 'currency'));
+        if($status == true) {
+            $coverImage = ImageThumbnail::findOrFail($album->album_cover_id);
+            return view('showcase.showcase_album', compact('album', 'coverImage', 'images', 'user', 'purchasedAlbums', 'status', 'currency'));
+        } else {
+            return view('showcase.showcase_album', compact('album', 'imageThumbnails', 'user', 'purchasedAlbums', 'status', 'currency'));
+        }
+
     }
 }

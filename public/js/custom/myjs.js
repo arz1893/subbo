@@ -17,11 +17,6 @@ $(document).ready(function(){
     $('#categoryList').selectize({
         placeholder: 'Choose . . .'
     });
-    // $('#select_currency').selectize();
-    // $('#select_currency').material_select();
-    $('#order-history-table').dataTable({
-        scrollX: true
-    });
 
     $('#table-sold-album').dataTable({
         scrollX: true

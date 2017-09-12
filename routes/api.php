@@ -25,6 +25,10 @@ Route::post('/admin_user/signin', [
     'uses' => 'AdminUserController@signIn'
 ]);
 
+Route::post('/admin_user/signout', [
+    'uses' => 'AdminUserController@signOut'
+]);
+
 Route::get('/admin_user/{id}', [
     'uses' => 'AdminUserController@getAdminUser'
 ]);

@@ -6,11 +6,11 @@
         {{--<meta name="twitter:creator" content="{{ Auth::user()->name }}">--}}
         {{--<meta name="twitter:title" content="{{ $album->title }}">--}}
         {{--<meta name="twitter:description" content="{{ $album->description }}">--}}
-        @foreach($imageThumbnails as $imageThumbnail)
-            @if($album->album_cover_id == $imageThumbnail->id)
-                <meta name="twitter:image" content="{{ asset($imageThumbnail->thumbnail_path) }}">
-            @endif
-        @endforeach
+        {{--@foreach($imageThumbnails as $imageThumbnail)--}}
+            {{--@if($album->album_cover_id == $imageThumbnail->id)--}}
+                {{--<meta name="twitter:image" content="{{ asset($imageThumbnail->thumbnail_path) }}">--}}
+            {{--@endif--}}
+        {{--@endforeach--}}
 
         @if(\Session::has('info'))
             <div class="chip green lighten-1 white-text center" style="width: 100%;">
@@ -24,14 +24,20 @@
             </div>
         @endif
 
+        @if($status == true)
+            <div class="col s12 m4 l4">
+                <img src="{{ asset($coverImage->image->path) }}" width="100%" id="showcase_cover">
+            </div>
+        @else
+            @foreach($imageThumbnails as $imageThumbnail)
+                @if($imageThumbnail->id == $album->album_cover_id)
+                    <div class="col s12 m4 l4">
+                        <img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%" id="showcase_cover">
+                    </div>
+                @endif
+            @endforeach
+        @endif
 
-        @foreach($imageThumbnails as $imageThumbnail)
-            @if($imageThumbnail->id == $album->album_cover_id)
-                <div class="col s12 m4 l4">
-                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%" id="showcase_cover">
-                </div>
-            @endif
-        @endforeach
 
         @if($status == true)
             <a href="{{ route('show_download', $album) }}" class="btn grey" style="width: 100%">
@@ -80,10 +86,10 @@
 
             @if($status == true)
                 <ul class="">
-                    @foreach($imageThumbnails as $imageThumbnail)
+                    @foreach($images as $image)
                         <li>
-                            <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($imageThumbnail->thumbnail_path) }}">
-                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
+                            <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($image->path) }}">
+                                <img src="{{ asset($image->path) }}"
                                      class="col s4 m2 l2 image-thumbnails" height="75px">
                             </a>
                         </li>

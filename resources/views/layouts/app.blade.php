@@ -100,7 +100,7 @@
             <div class="brand-logo center" id="bread-nav">
                 @if($status)
                     <a href="{{ route('order_history', Auth::user()) }}" class="breadcrumb white-text">
-                        <i id="homeBrand" class="fa fa fa-object-group"></i>
+                        <i id="homeBrand" class="fa fa-object-group"></i>
                     </a>
                     <a href="#!" class="breadcrumb text-limiter">
                         {{ $album->title }}
@@ -216,10 +216,6 @@
                 </li>
 
                 <ul id="walletdrop" class="dropdown-content col m4">
-                    <a href="{{ route('order_history', Auth::user()) }}" class="black-text">
-                        <i class="fa fa-history" aria-hidden="true"></i> Order History
-                    </a>
-
                     <a href="{{ route('show_sales', Auth::user()) }}" class="black-text">
                         <i class="fa fa-dollar" aria-hidden="true"></i> Sales
                     </a>

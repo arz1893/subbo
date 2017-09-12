@@ -11,11 +11,16 @@ class Image extends Model
         'path',
         'size',
         'album_id',
-        'alias'
+        'alias',
+        'image_thumbnail_id',
     ];
 
     public function album() {
         return $this->belongsTo(Album::class);
+    }
+
+    public function image_thumbnail() {
+        return $this->hasOne(ImageThumbnail::class);
     }
 
 //    public function image_thumbnail() {

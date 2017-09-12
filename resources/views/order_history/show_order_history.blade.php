@@ -5,7 +5,7 @@
             <div class="nav-wrapper">
                 {{ Form::open(['action' => ['OrderHistoryController@showOrderHistory', Auth::user()]]) }}
                     <div class="input-field">
-                        <input id="search_purchased" name="search_purchased" type="search" required>
+                        <input id="search_purchased" name="search_purchased" type="search">
                         <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                         <i class="material-icons" onclick="$('#search_purchased').val('')">close</i>
                     </div>
@@ -27,11 +27,13 @@
                             @foreach($purchasedAlbum->image_thumbnails as $image_thumbnail)
                                 @if($purchasedAlbum->album_cover_id == $image_thumbnail->id)
                                     <a href="{{ route('showcase_album', $purchasedAlbum) }}">
-                                        <img src="{{ asset($image_thumbnail->thumbnail_path) }}">
+                                        <img src="{{ asset($image_thumbnail->image->path) }}">
                                         <span class="card-title">{{ $purchasedAlbum->title }}</span>
                                     </a>
                                 @endif
                             @endforeach
+
+                            <span class="card-title">{{ $purchasedAlbum->title }}</span>
                         </div>
                         <div class="card-content">
                             <button

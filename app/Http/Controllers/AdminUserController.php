@@ -58,6 +58,17 @@ class AdminUserController extends Controller
         ], 200);
     }
 
+    public function signOut(Request $request) {
+        $currentToken = $request->token;
+        $status = JWTAuth::invalidate($currentToken);
+
+        if($status) {
+            return response()->json(['message' => 'Logout Success'], 200);
+        } else {
+            return response()->json(['error' => 'Something wrong with logout'], 500);
+        }
+    }
+
     public function getAdminUser(Request $request, $id) {
         $user = AdminUser::findOrFail($id);
         return response()->json($user, 200);
