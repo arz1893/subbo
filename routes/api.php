@@ -32,3 +32,7 @@ Route::post('/admin_user/signout', [
 Route::get('/admin_user/{id}', [
     'uses' => 'AdminUserController@getAdminUser'
 ]);
+
+Route::get('/withdraw_request', [
+    'uses' => 'WithdrawController@getAllWithdrawRequest'
+]);

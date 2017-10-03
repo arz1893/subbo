@@ -23,7 +23,6 @@
                 <i class="close material-icons">close</i>
             </div>
         @endif
-
         @if($status == true)
             <div class="col s12 m4 l4">
                 <img src="{{ asset($coverImage->image->path) }}" width="100%" id="showcase_cover">
@@ -54,30 +53,57 @@
                 <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
                 <div class="collapsible-body">
                     <!-- Product Title -->
-                    <div class="center-align p-20">
-                        @unless($album->categories->isEmpty())
-                            <ul>
-                                @foreach($album->categories as $category)
-                                    <div class="chip">
-                                        <img src="{{ asset('images/default/' . $category->image) }}">
-                                        {{ $category->category_name }}
-                                    </div>
-                                @endforeach
-                            </ul>
-                        @endunless
-                        <h4 class="m-0"><strong>{{ $album->title }}</strong></h4>
-                        <h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>
-                    </div>
-                        <p>
-                            <span class="flow-text">
-                                <b>Creator:</b> <br/>
-                                <a href="#!">{{ $album->user->name }}</a>
-                            </span>
-                        </p>
-                        <p class="flow-text" style="text-align: justify;">
-                            <span><b>Description: </b></span><br>
-                            {{ $album->description }}
-                        </p>
+                    {{--<div class="center-align p-20">--}}
+                        {{--@unless($album->categories->isEmpty())--}}
+                            {{--<ul>--}}
+                                {{--@foreach($album->categories as $category)--}}
+                                    {{--<div class="chip">--}}
+                                        {{--<img src="{{ asset('images/default/' . $category->image) }}">--}}
+                                        {{--{{ $category->category_name }}--}}
+                                    {{--</div>--}}
+                                {{--@endforeach--}}
+                            {{--</ul>--}}
+                        {{--@endunless--}}
+                        {{--<h4 class="m-0"><strong>{{ $album->title }}</strong></h4>--}}
+                        {{--<h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>--}}
+                    {{--</div>--}}
+                    <p>
+                        <span class="flow-text">
+                            <b>Creator:</b> <br/>
+                            <a href="#!">{{ $album->user->name }}</a>
+                        </span>
+                    </p>
+                    <p>
+                        <span class="flow-text">
+                            <b>Title:</b> <br/>
+                            {{ $album->title }}
+                        </span>
+                    </p>
+                    <p class="flow-text" style="text-align: justify;">
+                        <span><b>Description: </b></span><br>
+                        {{ $album->description }}
+                    </p>
+                    <p>
+                        <span class="flow-text">
+                            <b>Category:</b> <br/>
+                        </span>
+                    </p>
+                    @unless($album->categories->isEmpty())
+                        <ul>
+                            @foreach($album->categories as $category)
+                                <div class="chip">
+                                    <img src="{{ asset('images/default/' . $category->image) }}">
+                                    {{ $category->category_name }}
+                                </div>
+                            @endforeach
+                        </ul>
+                    @endunless
+                    <p>
+                        <span class="flow-text">
+                            <b>Price:</b> <br/>
+                            {{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}
+                        </span>
+                    </p>
                 </div>
             </li>
         </ul>

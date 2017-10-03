@@ -248,13 +248,16 @@
         </ul>
         <ul class="side-nav" id="mobile-demo">
             @if(Auth::guest())
-                <a href="{{route('login')}}">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i> Login
-                </a>
-
-                <a href="{{route('register')}}">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i> Register
-                </a>
+                <li>
+                    <a href="{{route('login')}}" class="black-text">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('register')}}" class="black-text">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i> Register
+                    </a>
+                </li>
             @else
                 <li>
                     <a class="dropdown-button" data-activates="dropdown_album-mobile">

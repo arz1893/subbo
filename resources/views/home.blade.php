@@ -9,14 +9,11 @@
 
     @yield('main')
 
-    @if(Route::currentRouteName() == 'album.index')
-        <div class="fixed-action-btn">
+    {{--@if(Route::currentRouteName() == 'album.index')--}}
+        {{--<div class="fixed-action-btn">--}}
             {{--<a href="{{ route('create_album_first') }}" class="btn-floating btn-large waves-effect waves-light red darken-1">--}}
                 {{--<i class="material-icons">add</i>--}}
             {{--</a>--}}
-            <a href="{{ route('create_album_first') }}" class="btn-floating btn-large waves-effect waves-light red darken-1">
-                <i class="material-icons">add</i>
-            </a>
-        </div>
-    @endif
+        {{--</div>--}}
+    {{--@endif--}}
 @endsection

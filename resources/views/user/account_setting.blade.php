@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <table class="highlight">
+        <table class="highlight" id="table_account_setting">
             <tbody>
                 <tr>
                     <td>

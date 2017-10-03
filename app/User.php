@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function image_thumbnails() {
         return $this->hasMany(ImageThumbnail::class);
     }
+
+    public function withdraw_requests() {
+        return $this->hasMany(WithdrawRequest::class);
+    }
 }

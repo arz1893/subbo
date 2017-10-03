@@ -274,7 +274,7 @@ class AlbumController extends Controller
     public function uploadImageIos(Request $request) {
         $image = $request->file('file');
         if(!is_null($image)) {
-            $filename = $request->album_id . '_' . $request->fileName;
+            $filename = $request->fileName . '_' . $request->album_id;
 
             $uploadedImage = Image::create([
                 'file_name' => $filename,
@@ -354,7 +354,7 @@ class AlbumController extends Controller
     }
 
     public function show(Album $album) {
-        $imageThumbnails = ImageThumbnail::where('album_id', $album->id)->get();
+        $imageThumbnails = ImageThumbnail::where('album_id', $album->id)->orderBy('thumbnail_name', 'asc')->get();
         $currency = Auth::user()->currency;
         return view('album.showalbum', compact('album', 'imageThumbnails', 'currency'));
     }

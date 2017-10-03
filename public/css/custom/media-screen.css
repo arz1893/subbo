@@ -75,4 +75,10 @@ and (-webkit-device-pixel-ratio: 3) {
         position: relative;
         left: 18%;
     }
+
+    #btnWithdraw {
+        width: 50%;
+        font-size: 1.2em;
+        border-radius: 10px;
+    }
 }

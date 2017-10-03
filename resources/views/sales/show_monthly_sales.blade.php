@@ -15,32 +15,30 @@
         @endif
 
         <h5>Total Nett Earning</h5>
-        <span style="font-size: 2em;" class="blue-grey-text">
+        <span style="font-size: 2.5em;" class="blue-grey-text">
             {{ $currency->code . " " . number_format( $userWallet->deposit , 2 , '.', '.' ) }}
         </span>
         <hr>
 
         <h5>Next payout</h5>
-        <span style="font-size: 1.5em;" class="blue-grey-text">Aug, 8th</span>
+        <span style="font-size: 1.3em;" class="blue-grey-text">Aug, 8th</span>
         <hr>
 
         <h5>Details</h5>
-        <span style="font-size: 1.5em;">
-            <span class="row">
-                <span class="col s6">
+        <div style="font-size: 1.5em;">
+            <div class="row">
+                <div class="col s6">
                     <span class="blue-grey-text">Sales</span>
-                </span>
-                <span class="col s6">
+                </div>
+                <div class="col s6">
                     <span class="blue-grey-text">
                         {{ $currency->code . " " . number_format( $userWallet->deposit , 2 , '.', '.' ) }}
                     </span>
-                </span>
-            </span>
-            <span class="row">
-                <span class="col s6">
+                </div>
+                <div class="col s6">
                     <span class="blue-grey-text">Fees</span>
-                </span>
-                <span class="col s6">
+                </div>
+                <div class="col s6">
                     <span class="blue-grey-text">
                         @if($userWallet->deposit == 0)
                             {{ $currency->code . " " . "00.00" }}
@@ -48,10 +46,9 @@
                             {{ $currency->code . " " . number_format( $userWallet->deposit * 0.01 , 2 , '.', '.' ) }}
                         @endif
                     </span>
-                </span>
-            </span>
-        </span>
-        <hr>
+                </div>
+            </div>
+        </div> <hr>
         <div class="row">
             <div class="col s6">
                 <h5>Nett</h5>
@@ -66,9 +63,23 @@
         </div>
 
         <div class="col s12 m12 l12">
-            <a href="#modal-withdraw" class="btn amber modal-trigger" style="width: 100%">Withdraw</a> <br><br>
-            <a href="{{ route('account_setting', Auth::user()->id) }}" style="font-size: 1.5em;"><u>Payout Settings</u></a>
+            <a href="#modal-withdraw" class="btn amber modal-trigger" id="btnWithdraw">Withdraw</a> <br><br>
+            <a href="{{ route('account_setting', Auth::user()->id) }}" style="font-size: 1.2em;"><u>Payout Settings</u></a>
         </div>
+
+        <table id="table-withdraw">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Requested at</th>
+                    <th>Withdraw amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
     </div>
 
     <!-- Modal Structure -->
@@ -81,7 +92,7 @@
                 <input type="hidden" id="max-withdraw" value="{{ $userWallet->deposit }}">
                 {{ Form::label('withdraw_amount', 'How much ?') }}
                 {{ Form::input('number', 'withdraw_amount', null, ['class' => 'validate', 'id' => 'txt_withdraw_amount']) }}
-                <button type="button" id="btn-max-withdraw" class="btn amber darken-2" style="width: 100%">Max</button>
+                <button type="button" id="btn-max-withdraw" class="btn amber" style="width: 100%">Max</button>
         </div>
         <div class="modal-footer">
             <button type="submit" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Withdraw</button>

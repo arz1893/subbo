@@ -4,6 +4,22 @@
 
     <h3 class="center grey-text">Your album list</h3>
 
+    <div class="fixed-action-btn">
+        <a id="btnCreateAlbum" href="{{ route('create_album_first') }}" class="btn-floating btn-large waves-effect waves-light red darken-1">
+            <i class="material-icons">add</i>
+        </a>
+
+        @if(count($albums) == 0)
+            <!-- Tap Target Structure -->
+            <div class="tap-target" data-activates="btnCreateAlbum">
+                <div class="tap-target-content">
+                    <h5 class="white-text">Info</h5>
+                    <p class="white-text">Click here to create your first album</p>
+                </div>
+            </div>
+        @endif
+    </div>
+
     @if(\Session::has('message'))
         <div class="col s12">
             <div class="chip center green white-text" id="notifChip">

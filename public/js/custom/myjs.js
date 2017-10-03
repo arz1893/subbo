@@ -11,6 +11,7 @@ $(document).ready(function(){
     $('.carousel').carousel();
     $('.slider').slider();
     $('.materialboxed').materialbox();
+    $('.tap-target').tapTarget('open');
     $(".dropdown-button").dropdown();
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $('.scrollspy').scrollSpy();
