@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2017 at 08:20 AM
+-- Generation Time: Oct 05, 2017 at 05:57 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -29,7 +29,7 @@ USE `subbo_db`;
 --
 
 CREATE TABLE `admin_users` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-('80b55a7c-aa98-3f6e-b147-6505763cd9d3', 'Admin 1', 'admin1@example.com', '$2y$10$8iO9cLAHbBAaczQzda9erO8hqxg6J5Lv6BX3517lHlXv1um0ZHwr2', NULL, '2017-08-31 03:21:30', '2017-08-31 03:21:30');
+(1, 'Admin 1', 'admin1@example.com', '$2y$10$dloNLhBQmPfrCD4B65DnPOfOcPbUN.MHZaVBhfD4FcQSeegJFhzOm', NULL, '2017-09-05 01:24:41', '2017-09-05 01:24:41');
 
 -- --------------------------------------------------------
 
@@ -57,16 +57,6 @@ CREATE TABLE `album_category` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `album_category`
---
-
-INSERT INTO `album_category` (`album_id`, `category_id`, `created_at`, `updated_at`) VALUES
-('1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', 6, '2017-08-30 02:15:27', '2017-08-30 02:15:27'),
-('1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', 4, '2017-08-30 02:15:27', '2017-08-30 02:15:27'),
-('cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', 6, '2017-08-30 21:28:20', '2017-08-30 21:28:20'),
-('cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', 4, '2017-08-30 21:28:21', '2017-08-30 21:28:21');
 
 -- --------------------------------------------------------
 
@@ -88,14 +78,6 @@ CREATE TABLE `albums` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `albums`
---
-
-INSERT INTO `albums` (`id`, `title`, `description`, `price`, `views`, `downloaded`, `is_published`, `is_deleted`, `album_cover_id`, `user_id`, `created_at`, `updated_at`) VALUES
-('1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', 'Linux upload', 'upload from linux', 15000, NULL, NULL, 1, 0, 624, 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', '2017-08-30 02:14:09', '2017-08-30 02:15:32'),
-('cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', 'John\'s first album', 'it\'s john', 20000, NULL, NULL, 1, 0, 632, '983ac884-2762-3e85-a7b7-51013cfd1a11', '2017-08-30 21:27:33', '2017-08-30 21:28:28');
 
 -- --------------------------------------------------------
 
@@ -286,7 +268,7 @@ CREATE TABLE `image_thumbnails` (
   `id` int(10) UNSIGNED NOT NULL,
   `thumbnail_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `thumbnail_path` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thumbnail_size` double NOT NULL,
+  `thumbnail_size` double DEFAULT NULL,
   `alias` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `image_id` int(10) UNSIGNED NOT NULL,
   `album_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -294,22 +276,6 @@ CREATE TABLE `image_thumbnails` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `image_thumbnails`
---
-
-INSERT INTO `image_thumbnails` (`id`, `thumbnail_name`, `thumbnail_path`, `thumbnail_size`, `alias`, `image_id`, `album_id`, `created_at`, `updated_at`, `user_id`) VALUES
-(623, 'thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper1.jpg', 'image_thumbnails/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper1.jpg', 259831, 'wallpaper1.jpg', 633, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:26', '2017-08-30 02:15:26', 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114'),
-(624, 'thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper2.jpg', 'image_thumbnails/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper2.jpg', 208744, 'wallpaper2.jpg', 634, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:26', '2017-08-30 02:15:26', 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114'),
-(625, 'thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper3.jpg', 'image_thumbnails/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper3.jpg', 357779, 'wallpaper3.jpg', 635, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:26', '2017-08-30 02:15:26', 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114'),
-(626, 'thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper-1332251.jpg', 'image_thumbnails/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/thumb_1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper-1332251.jpg', 175578, 'wallpaper-1332251.jpg', 636, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:27', '2017-08-30 02:15:27', 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114'),
-(627, 'thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_462174.jpg', 'image_thumbnails/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_462174.jpg', 50102, 'IMG_462174.jpg', 637, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19', '983ac884-2762-3e85-a7b7-51013cfd1a11'),
-(628, 'thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_loading-icon.gif', 'image_thumbnails/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_loading-icon.gif', 2392, 'loading-icon.gif', 638, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19', '983ac884-2762-3e85-a7b7-51013cfd1a11'),
-(629, 'thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_Loyal_Customers_v2.jpg', 'image_thumbnails/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_Loyal_Customers_v2.jpg', 31857, 'Loyal_Customers_v2.jpg', 639, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19', '983ac884-2762-3e85-a7b7-51013cfd1a11'),
-(630, 'thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_japanese_food-wallpaper-1440x960.jpg', 'image_thumbnails/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_japanese_food-wallpaper-1440x960.jpg', 154138, 'japanese_food-wallpaper-1440x960.jpg', 640, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:20', '2017-08-30 21:28:20', '983ac884-2762-3e85-a7b7-51013cfd1a11'),
-(631, 'thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_login-logo.gif', 'image_thumbnails/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_login-logo.gif', 63493, 'login-logo.gif', 641, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:20', '2017-08-30 21:28:20', '983ac884-2762-3e85-a7b7-51013cfd1a11'),
-(632, 'thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_15744.jpg', 'image_thumbnails/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/thumb_cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_15744.jpg', 1679855, 'IMG_15744.jpg', 642, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:20', '2017-08-30 21:28:20', '983ac884-2762-3e85-a7b7-51013cfd1a11');
 
 -- --------------------------------------------------------
 
@@ -325,24 +291,9 @@ CREATE TABLE `images` (
   `alias` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `album_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `image_thumbnail_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `images`
---
-
-INSERT INTO `images` (`id`, `file_name`, `path`, `size`, `alias`, `album_id`, `created_at`, `updated_at`) VALUES
-(633, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper1.jpg', 'uploaded_images/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper1.jpg', 817382, 'wallpaper1.jpg', '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:25', '2017-08-30 02:15:25'),
-(634, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper2.jpg', 'uploaded_images/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper2.jpg', 666150, 'wallpaper2.jpg', '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:26', '2017-08-30 02:15:26'),
-(635, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper3.jpg', 'uploaded_images/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper3.jpg', 1136353, 'wallpaper3.jpg', '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:26', '2017-08-30 02:15:26'),
-(636, '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper-1332251.jpg', 'uploaded_images/arz1893@gmail.com/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e/1afde6b2-41f7-5d6f-97fd-e30e83ffb00e_wallpaper-1332251.jpg', 2095425, 'wallpaper-1332251.jpg', '1afde6b2-41f7-5d6f-97fd-e30e83ffb00e', '2017-08-30 02:15:26', '2017-08-30 02:15:26'),
-(637, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_462174.jpg', 'uploaded_images/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_462174.jpg', 62630, 'IMG_462174.jpg', 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19'),
-(638, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_loading-icon.gif', 'uploaded_images/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_loading-icon.gif', 3374, 'loading-icon.gif', 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19'),
-(639, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_Loyal_Customers_v2.jpg', 'uploaded_images/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_Loyal_Customers_v2.jpg', 52038, 'Loyal_Customers_v2.jpg', 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19'),
-(640, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_japanese_food-wallpaper-1440x960.jpg', 'uploaded_images/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_japanese_food-wallpaper-1440x960.jpg', 490918, 'japanese_food-wallpaper-1440x960.jpg', 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:19', '2017-08-30 21:28:19'),
-(641, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_login-logo.gif', 'uploaded_images/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_login-logo.gif', 1527071, 'login-logo.gif', 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:20', '2017-08-30 21:28:20'),
-(642, 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_15744.jpg', 'uploaded_images/johndoe@example.com/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e/cfd14d8f-3bde-5e30-bcb7-4d226336ad8e_IMG_15744.jpg', 3655551, 'IMG_15744.jpg', 'cfd14d8f-3bde-5e30-bcb7-4d226336ad8e', '2017-08-30 21:28:20', '2017-08-30 21:28:20');
 
 -- --------------------------------------------------------
 
@@ -376,7 +327,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2017_07_17_043858_add_user_id_to_image_thumbnails', 10),
 (20, '2017_07_17_092128_add_foreign_to_albums', 11),
 (21, '2017_08_30_064116_add_phone_number_to_users', 11),
-(24, '2017_08_31_083705_create_admin_users_table', 12);
+(26, '2017_08_31_083705_create_admin_users_table', 12),
+(27, '2017_09_12_095353_add_image_thumbnail_id_to_images', 13),
+(30, '2017_09_13_073737_create_withdraw_requests_table', 14);
 
 -- --------------------------------------------------------
 
@@ -435,8 +388,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `provider_name`, `provider_id`, `avatar`, `about`, `phone_number`, `bank_name`, `account_number`, `currency_id`, `instagram_id`, `wallet_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-('983ac884-2762-3e85-a7b7-51013cfd1a11', 'John Doe', 'johndoe@example.com', '$2y$10$a92bPN8vKMkAcZjEbt/okOFKlUkbURHmQ3yukpSLsr77oi0iYVWbK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 54, NULL, 8, 'hiSUrCvkQr9EcvZiAkgfUkmiPqgcKNkIpExTYlSWTWZIbHZPIQeALQNRr4bG', '2017-08-17 22:26:26', '2017-08-17 22:26:27'),
-('f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', 'Arnadi Denanda Surya', 'arz1893@gmail.com', '$2y$10$Qa/LJqHQtjr3mIrjy/..xeh5MZNs709SR/S0r3iO97Bs1E.3ioxnq', 'facebook', '10210502862241008', NULL, 'Hello World!', '082117519773', NULL, NULL, 54, NULL, 9, 'kIC6wpDhIDQX7B5JLuqXGGoVvpa7Q5SHj12gFoibIiG7GohapXPf7HhuHtS3', '2017-08-23 00:09:57', '2017-08-30 02:12:26');
+('983ac884-2762-3e85-a7b7-51013cfd1a11', 'John Doe', 'johndoe@example.com', '$2y$10$a92bPN8vKMkAcZjEbt/okOFKlUkbURHmQ3yukpSLsr77oi0iYVWbK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 54, NULL, 8, 'rpwRRno8l6KtIpalqiMP8mx3fSvd7D24TRLOfiYlvfODKOEtvAB7aMns6VqX', '2017-08-17 22:26:26', '2017-08-17 22:26:27'),
+('f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', 'Arnadi Denanda Surya', 'arz1893@gmail.com', '$2y$10$Qa/LJqHQtjr3mIrjy/..xeh5MZNs709SR/S0r3iO97Bs1E.3ioxnq', 'facebook', '10210502862241008', NULL, 'Hello World!', '082117519773', NULL, NULL, 54, NULL, 9, 'Fum7Ku9JUU2GN7Xzp3IHH822ZHcHK7ihYKCGem5dwM5bSRFcYaTykuos0Y55', '2017-08-23 00:09:57', '2017-08-30 02:12:26');
 
 -- --------------------------------------------------------
 
@@ -458,8 +411,30 @@ CREATE TABLE `wallets` (
 --
 
 INSERT INTO `wallets` (`id`, `deposit`, `withdraw`, `user_id`, `created_at`, `updated_at`) VALUES
-(8, 10000, 0, '983ac884-2762-3e85-a7b7-51013cfd1a11', '2017-08-17 22:26:26', '2017-08-29 01:52:55'),
-(9, 0, 0, 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', '2017-08-23 00:09:58', '2017-08-23 00:09:58');
+(8, 30000, 0, '983ac884-2762-3e85-a7b7-51013cfd1a11', '2017-08-17 22:26:26', '2017-09-12 03:27:44'),
+(9, 15000, 0, 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', '2017-08-23 00:09:58', '2017-09-08 00:29:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `withdraw_requests`
+--
+
+CREATE TABLE `withdraw_requests` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `amount` double NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_approved` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `withdraw_requests`
+--
+
+INSERT INTO `withdraw_requests` (`id`, `amount`, `user_id`, `is_approved`, `created_at`, `updated_at`) VALUES
+(1, 10000, '983ac884-2762-3e85-a7b7-51013cfd1a11', 0, '2017-09-13 02:29:12', '2017-09-13 02:29:12');
 
 --
 -- Indexes for dumped tables
@@ -514,7 +489,8 @@ ALTER TABLE `image_thumbnails`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `images_album_id_foreign` (`album_id`);
+  ADD KEY `images_album_id_foreign` (`album_id`),
+  ADD KEY `images_image_thumbnail_id_foreign` (`image_thumbnail_id`);
 
 --
 -- Indexes for table `migrations`
@@ -553,9 +529,21 @@ ALTER TABLE `wallets`
   ADD KEY `wallets_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `withdraw_requests`
+--
+ALTER TABLE `withdraw_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `withdraw_requests_user_id_foreign` (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `admin_users`
+--
+ALTER TABLE `admin_users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `categories`
 --
@@ -570,27 +558,32 @@ ALTER TABLE `currency`
 -- AUTO_INCREMENT for table `image_thumbnails`
 --
 ALTER TABLE `image_thumbnails`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=633;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=677;
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=643;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=691;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `order_history`
 --
 ALTER TABLE `order_history`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `wallets`
 --
 ALTER TABLE `wallets`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `withdraw_requests`
+--
+ALTER TABLE `withdraw_requests`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
@@ -606,7 +599,6 @@ ALTER TABLE `album_category`
 -- Constraints for table `albums`
 --
 ALTER TABLE `albums`
-  ADD CONSTRAINT `albums_album_cover_id_foreign` FOREIGN KEY (`album_cover_id`) REFERENCES `image_thumbnails` (`id`) ON DELETE NO ACTION,
   ADD CONSTRAINT `albums_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
@@ -621,7 +613,8 @@ ALTER TABLE `image_thumbnails`
 -- Constraints for table `images`
 --
 ALTER TABLE `images`
-  ADD CONSTRAINT `images_album_id_foreign` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `images_album_id_foreign` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `images_image_thumbnail_id_foreign` FOREIGN KEY (`image_thumbnail_id`) REFERENCES `image_thumbnails` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_history`
@@ -642,6 +635,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `wallets`
   ADD CONSTRAINT `wallets_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `withdraw_requests`
+--
+ALTER TABLE `withdraw_requests`
+  ADD CONSTRAINT `withdraw_requests_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

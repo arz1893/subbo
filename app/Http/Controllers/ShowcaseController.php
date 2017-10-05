@@ -19,7 +19,7 @@ class ShowcaseController extends Controller
         $user = User::findOrFail($album->user_id);
         $currency = $user->currency;
         $images = $album->images;
-        $imageThumbnails = $album->image_thumbnails->orderBy('thumbnail_name', 'asc')->get();
+        $imageThumbnails = $album->image_thumbnails()->orderBy('thumbnail_name', 'asc')->get();
         $purchasedAlbums = Auth::user()->purchased_albums()->get();
         $status = false;
 

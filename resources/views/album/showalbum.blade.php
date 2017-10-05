@@ -28,11 +28,11 @@
 
         @if($album->is_published == 0)
             <a
-                    href="#popUpSetPublish"
-                    data-id="{{$album->id}}"
-                    class="col s12 m4 l5 btn green modal-trigger"
-                    style="width: 100%;"
-                    onclick="setPublishTargetAlbum(this)">
+                href="#popUpSetPublish"
+                data-id="{{$album->id}}"
+                class="col s12 m4 l5 btn green modal-trigger"
+                style="width: 100%;"
+                onclick="setPublishTargetAlbum(this)">
                 Publish <i class="fa fa-check" aria-hidden="true"></i>
             </a>
             <a  href="#popUpDeleteAlbum"
@@ -49,12 +49,12 @@
             </a>
         @else
             <a
-                    href="#popUpSetUnpublish"
-                    data-target="#popUpSetUnpublish"
-                    data-id="{{$album->id}}"
-                    class="btn waves-effect waves-light blue-grey modal-trigger"
-                    style="width: 100%"
-                    onclick="setUnpublishTargetAlbum(this)">
+                href="#popUpSetUnpublish"
+                data-target="#popUpSetUnpublish"
+                data-id="{{$album->id}}"
+                class="btn waves-effect waves-light blue-grey modal-trigger"
+                style="width: 100%"
+                onclick="setUnpublishTargetAlbum(this)">
                 Unpublish <i class="fa fa-power-off" aria-hidden="true"></i>
             </a>
             <a  href="#popUpDeleteAlbum"
