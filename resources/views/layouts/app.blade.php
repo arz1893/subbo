@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="{{ asset('images/subboicon.png') }}">
 
+    @stack('meta-tags')
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -28,45 +30,23 @@
     <link href="{{ asset('css/custom/media-screen.css') }}" rel="stylesheet">
 </head>
 <body onload="urlChecking()">
-<div id="fb-root"></div>
+<!-- Facebook SDK -->
 <script>(function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1273185049434795";
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=277825625980540';
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
+<!-- end of facebook sdk -->
+<!-- Twitter SDK -->
+<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+<!-- end of twitter sdk -->
 
-@if(!Auth::guest())
-    <ul id="dropdown1" class="dropdown-content" style="width: 200px">
-        <li>
-            <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
-                <i class="fa fa-blind"></i> Guest Preview
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('user.show', Auth::user()->id) }}" class="black-text">
-                <i class="fa fa-address-card" aria-hidden="true"></i> Profile
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('account_setting', Auth::user()) }}" class="black-text">
-                <i class="fa fa-cogs" aria-hidden="true"></i> Setting
-            </a>
-        </li>
-        <li>
-            <a href="{{route('logout')}}" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();" class="black-text">
-                <i class="fa fa-sign-out"></i> Logout
-            </a>
-        </li>
-    </ul>
-
-@endif
 
 <nav>
-    <div class="nav-wrapper teal lighten-1">
+    <div class="nav-wrapper cyan darken-2">
         @if(Route::currentRouteName() == 'album.show')
             <div class="brand-logo center" id="bread-nav">
                 <a href="{{ route('album.index') }}" class="breadcrumb white-text">
@@ -106,10 +86,28 @@
                         {{ $album->title }}
                     </a>
                 @else
-                    <a href="#!" id="showcase-nav">
+                    <a href="#!"
+                       id="showcase-title"
+                       class="tooltipped"
+                       data-position="bottom"
+                       data-delay="50"
+                       data-tooltip="{{ $album->title }}">
                         {{ $album->title }}
                     </a>
                 @endif
+            </div>
+        @elseif(Route::currentRouteName() == 'guest_showcase')
+            <div class="brand-logo center">
+                <a href="{{ route('show_as_guest', $album->user_id) }}" class="breadcrumb white-text">
+                    <i id="homeBrand" class="fa fa-user-circle"></i>
+                </a>
+                <a href="#!"
+                   class="breadcrumb text-limiter tooltipped"
+                   data-position="bottom"
+                   data-delay="50"
+                   data-tooltip="{{ $album->title }}">
+                    {{ $album->title }}
+                </a>
             </div>
         @elseif(Route::currentRouteName() == 'add_bank_account' && !Auth::guest())
             <div class="brand-logo center">
@@ -174,6 +172,7 @@
         @endif
 
         <a href="#" data-activates="mobile-demo" class="button-collapse white-text"><i class="fa fa-bars" aria-hidden="true"></i></a>
+
         @if(!Auth::guest())
             <ul class="left hide-on-med-and-down">
                 <li>
@@ -205,7 +204,16 @@
         @endif
         <ul class="right hide-on-med-and-down">
             @if(Auth::guest())
-
+                <li>
+                    <a href="{{ route('login') }}">
+                        <i class="fa fa-sign-in"></i> Login
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('register') }}">
+                        <i class="fa fa-user-plus"></i> Register
+                    </a>
+                </li>
             @else
                 <li>
                     <a class="dropdown-button white-text" href="#!" data-activates="walletdrop">
@@ -237,6 +245,30 @@
                         {{Auth::user()->name}}
                         <i class="fa fa-user-circle"></i>
                     </a>
+
+                    <ul id="dropdown1" class="dropdown-content" style="width: 200px">
+                        <li>
+                            <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
+                                <i class="fa fa-blind"></i> Guest Preview
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.show', Auth::user()->id) }}" class="black-text">
+                                <i class="fa fa-address-card" aria-hidden="true"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('account_setting', Auth::user()) }}" class="black-text">
+                                <i class="fa fa-cogs" aria-hidden="true"></i> Setting
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('logout')}}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();" class="black-text">
+                                <i class="fa fa-sign-out"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <!-- Dropdown Trigger -->
@@ -346,21 +378,33 @@
 
 @yield('content')
 
-<!-- Scripts -->
+<!-- Jquery js -->
 <script src="{{ asset('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/vue/vue.js') }}" type="text/javascript"></script>
+<!-- Vue js -->
+<script src="{{ asset('js/vue/vue.min.js') }}" type="text/javascript"></script>
+<!-- Materialize js -->
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+<!-- Dropzone js -->
 <script src="{{ asset('js/dropzone/dropzone.js') }}" type="text/javascript"></script>
+<!-- Selectize js -->
 <script src="{{ asset('js/selectize/selectize.min.js') }}" type="text/javascript"></script>
+<!-- Jquery Validation -->
 <script src="{{ asset('js/jquery_validation/jquery.validate.js') }}" type="text/javascript"></script>
+<!-- Viewer js -->
 <script src="{{ asset('js/viewer/viewer.js') }}" type="text/javascript"></script>
+<!-- Venobox js -->
 <script src="{{ asset('js/venobox/venobox.js') }}" type="text/javascript"></script>
+<!-- Tel input js -->
 <script src="{{ asset('js/tel-input/intlTelInput.js') }}" type="text/javascript"></script>
+<!-- Datatable js -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-{{--<script type="text/javascript"--}}
-        {{--src="https://app.sandbox.midtrans.com/snap/snap.js"--}}
-        {{--data-client-key="VT-client-C-m6bPmEdPS_ajJs"></script>--}}
+<!-- Twitter widget js -->
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<!-- Application javascript -->
 <script src="{{ asset('js/custom/myjs.js') }}" type="text/javascript"></script>
+<!-- Function javascript -->
+<script src="{{ asset('js/custom/function.js') }}"></script>
 @stack('page-script')
+
 </body>
 </html>

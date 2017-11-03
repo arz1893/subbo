@@ -131,6 +131,19 @@
     height: 150px;
 }
 
+#showcase-title {
+    font-size: 20px;
+    margin-left: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    /*line-height: 55px;     !* fallback *!*/
+    width: 250px;
+    -webkit-box-orient: horizontal;
+}
+
 .input-field label {
     color: #000;
 }
@@ -180,4 +193,5 @@ form .error {
 
 .parallax-container {
     height: 300px;
+    width: 100%;
 }

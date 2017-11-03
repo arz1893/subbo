@@ -65,11 +65,6 @@
         <a href="#!" style="margin: 1%">
             <img src="{{ asset('images/default/visa-debit.png') }}" width="75" height="75">
         </a>
-
-        {{ Form::open(['action' => 'PaymentController@midtransNotification']) }}
-            {{ Form::hidden('test', 'test') }}
-            {{ Form::submit('Test a request', ['class' => 'btn blue blue-lighten-2']) }}
-        {{ Form::close() }}
     </div>
 
     <!-- Modal Structure -->

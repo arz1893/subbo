@@ -49,6 +49,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/guest/show-as-guest/{user}', 'GuestController@showAsGuest')->name('show_as_guest');
+Route::get('/guest/showcase-album/{album}', 'GuestController@showcaseAlbum')->name('guest_showcase');
+
 Route::get('/auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('/auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 //Route::get('/showhistory', 'WalletController@showOrderHistory');
@@ -84,7 +87,6 @@ Route::post('/album/upload-image-ios/', 'AlbumController@uploadImageIos')->name(
 
 Route::get('/showcase/show-album/{album}', 'ShowcaseController@showcaseAlbum')->name('showcase_album');
 
-Route::get('/user/show-as-guest/{user}', 'UserController@showAsGuest')->name('show_as_guest');
 Route::get('/bank-account', 'UserController@bankAccountPage')->name('bank_account');
 Route::patch('/user/add-bank-account/{user}', 'UserController@addBankAccount')->name('add_bank_account');
 Route::patch('/user/update-currency/{user}', 'UserController@updateCurrency')->name('update_currency');

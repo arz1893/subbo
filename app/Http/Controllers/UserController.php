@@ -21,26 +21,6 @@ use Torann\GeoIP\Facades\GeoIP;
 
 class UserController extends Controller
 {
-    public function showAsGuest(Request $request, User $user) {
-        $latestNullAlbums = Album::where('title', null)->where('user_id', $user->id)->get();
-        if($latestNullAlbums != null) {
-            foreach ($latestNullAlbums as $latestNullAlbum) {
-                if(file_exists(public_path('uploaded_images/' . $user->email . '/' . $latestNullAlbum->id))) {
-                    File::deleteDirectory(public_path('uploaded_images/' . $user->email . '/' . $latestNullAlbum->id));
-                }
-                if(file_exists(public_path('image_thumbnails/' . $user->email . '/' . $latestNullAlbum->id))) {
-                    File::deleteDirectory(public_path('image_thumbnails/' . $user->email . '/' . $latestNullAlbum->id));
-                }
-                $latestNullAlbum->delete();
-            }
-        }
-
-        $albums = DB::table('albums')->where('user_id', $user->id)->where('is_published', 1)->paginate(6);
-        $imageThumbnails = ImageThumbnail::all();
-        $host = $request->getHttpHost();
-        return view('user.show_as_guest', compact('user', 'albums', 'imageThumbnails', 'host'));
-    }
-
     public function show(User $user) {
         $currencies = Currency::all();
         $select_currency = Currency::pluck('code', 'id');

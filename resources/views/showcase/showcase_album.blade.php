@@ -70,7 +70,7 @@
                     <p>
                         <span class="flow-text">
                             <b>Creator:</b> <br/>
-                            <a href="#!">{{ $album->user->name }}</a>
+                            <a href="{{ route('show_as_guest', $album->user_id) }}">{{ $album->user->name }}</a>
                         </span>
                     </p>
                     <p>

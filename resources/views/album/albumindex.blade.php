@@ -47,7 +47,7 @@
                             @foreach($imageThumbnails as $imageThumbnail)
                                 @if($imageThumbnail->id == $album->album_cover_id)
                                     <a href="{{route('album.show', $album->id)}}">
-                                        <img src="{{asset($imageThumbnail->thumbnail_path)}}">
+                                        <img src="{{asset($imageThumbnail->image->path)}}">
                                         <span class="card-title">
                                             @if($album->is_published == 1)
                                                 <h5>{{$album->title}}</h5>
@@ -61,20 +61,18 @@
                         @endif
                     </div>
                     <div class="card-content">
+
                         <button
-                           data-url="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($host . '/showcase/show-album/' . $album->id) }}"
+                           data-url="{!! 'http://' . $host . '/guest/showcase-album/' . $album->id !!}"
                            onclick="facebookShare(this)"
                            class="btn-floating waves-effect waves-light blue">
                             <i class="fa fa-facebook"></i>
                         </button>
 
-                        <a class="btn-floating waves-effect waves-light blue lighten-2"
-                           href="https://twitter.com/intent/tweet?text=Hello%20world">
-                            <i class="fa fa-twitter"></i>
-                        </a>
 
-                        <a href="#!" class="btn-floating waves-effect waves-light purple">
-                            <i class="fa fa-instagram"></i>
+                        <a class="btn-floating waves-effect waves-light blue lighten-2"
+                           href="https://twitter.com/intent/tweet?text={{ $album->title }}&url={!! 'http://'. $host .'/guest/showcase-album/'.$album->id !!}">
+                            <i class="fa fa-twitter"></i>
                         </a>
 
                         @if($os == 'iOS')
@@ -99,7 +97,7 @@
                             <span class="new badge red" data-badge-caption="not published"></span>
                         @endif
 
-                        <textarea id="{{ "copy" . $counter }}" class="hide" onfocus="copy_text_address(this)">{{ $host . '/showcase/show-album/' . $album->id }}</textarea>
+                        <textarea id="{{ "copy" . $counter }}" class="hide" onfocus="copy_text_address(this)">{{'http://' . $host . '/guest/showcase-album/' . $album->id }}</textarea>
 
                     </div>
 

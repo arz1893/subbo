@@ -18,13 +18,16 @@
 
         {{--<h3 class="center blue-grey-text">{{$album->title}}</h3>--}}
 
-        @foreach($imageThumbnails as $imageThumbnail)
-            @if($imageThumbnail->id == $album->album_cover_id)
-                <div class="col s12 m4 l4">
-                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%">
-                </div>
-            @endif
-        @endforeach
+        {{--@foreach($imageThumbnails as $imageThumbnail)--}}
+            {{--@if($imageThumbnail->id == $album->album_cover_id)--}}
+                {{--<div class="col s12 m4 l4">--}}
+                    {{--<img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%">--}}
+                {{--</div>--}}
+            {{--@endif--}}
+        {{--@endforeach--}}
+        <div class="col s12 m4 l4">
+            <img src="{{ asset($imageCover->path) }}" width="100%">
+        </div>
 
         @if($album->is_published == 0)
             <a
@@ -92,10 +95,10 @@
 
             @if($album->is_published == 1)
                 <ul class="">
-                    @foreach($imageThumbnails as $imageThumbnail)
+                    @foreach($images as $image)
                         <li>
-                            <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($imageThumbnail->thumbnail_path) }}">
-                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}"
+                            <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($image->path) }}">
+                                <img src="{{ asset($image->path) }}"
                                      class="col s4 m2 l2 image-thumbnails" height="75px">
                             </a>
                         </li>
@@ -108,13 +111,13 @@
                         @if($imageThumbnail->id == $album->album_cover_id)
                             <li>
                                 <a href="#!" onclick="Materialize.toast('This is current album cover', 4000)">
-                                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
+                                    <img src="{{ asset($imageThumbnail->image->path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
                                 </a>
                             </li>
                         @else
                             <li>
                                 <a href="#popUpConfirm" class="modal-trigger" data-target="#popUpConfirm" data-id="{{$imageThumbnail->id}}" onClick="selectCover(this);">
-                                    <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
+                                    <img src="{{ asset($imageThumbnail->image->path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
                                 </a>
                             </li>
                         @endif

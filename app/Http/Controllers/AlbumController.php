@@ -221,12 +221,15 @@ class AlbumController extends Controller
 
 //                $interventionImage = InterventionImage::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
 //                $interventionImage->insert(public_path('images/default/') . 'subbo-watermark.png', 'bottom-right', 10, 10);
-//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage->fit(350);
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 80);
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->quality(40);
+                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
-                $logo->opacity(40);
-                $imageCow->watermark($logo, $x='center', $y='center');
+                $logo->resize(75, 75);
+                $logo->opacity(30);
+                $imageCow->watermark($logo, $x='center', $y='middle');
                 $imageCow->watermark($logo, $x='right', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='top');
@@ -236,13 +239,16 @@ class AlbumController extends Controller
             } else {
 //                $interventionImage = InterventionImage::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
 //                $interventionImage->insert(public_path('images/default/') . 'subbo-watermark.png', 'bottom-right', 10, 10);
-//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage->fit(350);
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 80);
 
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->quality(40);
+                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
-                $logo->opacity(40);
-                $imageCow->watermark($logo, $x='center', $y='center');
+                $logo->resize(75, 75);
+                $logo->opacity(30);
+                $imageCow->watermark($logo, $x='center', $y='middle');
                 $imageCow->watermark($logo, $x='right', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='top');
@@ -274,7 +280,7 @@ class AlbumController extends Controller
     public function uploadImageIos(Request $request) {
         $image = $request->file('file');
         if(!is_null($image)) {
-            $filename = $request->fileName . '_' . $request->album_id;
+            $filename = $request->album_id . '_' . $request->fileName;
 
             $uploadedImage = Image::create([
                 'file_name' => $filename,
@@ -293,15 +299,17 @@ class AlbumController extends Controller
 
             if(!File::exists(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id))) {
                 mkdir(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id), 0777, true);
-
-//                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage = InterventionImage::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+//                $interventionImage->fit(350);
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename), 80);
 
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->quality(40);
+                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
-                $logo->opacity(40);
-                $imageCow->watermark($logo, $x='center', $y='center');
+                $logo->resize(75, 75);
+                $logo->opacity(30);
+                $imageCow->watermark($logo, $x='center', $y='middle');
                 $imageCow->watermark($logo, $x='right', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='top');
@@ -309,13 +317,16 @@ class AlbumController extends Controller
                 $imageCow->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename));
 
             } else {
-//                $interventionImage = ImageManagerStatic::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 60);
+//                $interventionImage = InterventionImage::make(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
+//                $interventionImage->fit(350);
+//                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename), 80);
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->quality(40);
+                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
-                $logo->opacity(40);
-                $imageCow->watermark($logo, $x='center', $y='center');
+                $logo->resize(75, 75);
+                $logo->opacity(30);
+                $imageCow->watermark($logo, $x='center', $y='middle');
                 $imageCow->watermark($logo, $x='right', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='bottom');
                 $imageCow->watermark($logo, $x='left', $y='top');
@@ -353,10 +364,14 @@ class AlbumController extends Controller
         return redirect()->route('album.show', $album->id);
     }
 
-    public function show(Album $album) {
-        $imageThumbnails = ImageThumbnail::where('album_id', $album->id)->orderBy('thumbnail_name', 'asc')->get();
+    public function show(Request $request, Album $album) {
+        $images = Image::where('album_id', $album->id)->get();
+        $imageThumbnail = ImageThumbnail::findOrFail($album->album_cover_id);
+        $imageCover = $imageThumbnail->image;
+        $imageThumbnails = ImageThumbnail::where('album_id', $album->id)->get();
         $currency = Auth::user()->currency;
-        return view('album.showalbum', compact('album', 'imageThumbnails', 'currency'));
+        $host = $request->getHttpHost();
+        return view('album.showalbum', compact('album', 'images', 'imageThumbnails', 'imageCover', 'currency', 'host'));
     }
 
     public function edit(Album $album) {

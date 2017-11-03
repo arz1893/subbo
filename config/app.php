@@ -173,6 +173,7 @@ return [
         Intervention\Image\ImageServiceProviderLaravel5::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
+        KekoApp\LaravelMetaTags\MetaTagsServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -238,7 +239,8 @@ return [
         'GeoIp' => Torann\GeoIP\Facades\GeoIP::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'MetaTag' => KekoApp\LaravelMetaTags\Facades\MetaTag::class
     ],
 
 ];

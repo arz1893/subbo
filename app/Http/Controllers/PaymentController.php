@@ -40,9 +40,15 @@ class PaymentController extends Controller
     }
 
     public function showPaymentPage(Album $album) {
+
         if(Auth::user()->id == $album->user_id) {
-            return redirect()->route('showcase_album', $album->id);
-        } else {
+            return redirect()->route('guest_showcase', $album->id);
+        }else {
+            foreach (Auth::user()->purchased_albums as $purchased_album) {
+                if($purchased_album->id == $album->id) {
+                    return \redirect()->route('showcase_album', $album->id);
+                }
+            }
             $user = User::findOrFail($album->user_id);
             $userCurrency = $user->currency;
             $imageCover = ImageThumbnail::findOrFail($album->album_cover_id);
