@@ -280,3 +280,23 @@ function showCopyUrl(selected) {
 function copy_text_address(selected, copy_text) {
     $(selected).select();
 }
+
+function checkCurrency(selected) {
+    var access_key = 'cdfdcde22defdba0f15ab15f60e97b2b';
+    var from = 'IDR';
+    var to = 'USD';
+    var amount = '1';
+
+    $.ajax({
+        method: 'GET',
+        url: 'https://openexchangerates.org/api/convert/19999.95/GBP/EUR?app_id=e3905ebc424a447a9ba4f30bfcabe724',
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+        }
+    });
+}
+
+function setHeader(xhr) {
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+}

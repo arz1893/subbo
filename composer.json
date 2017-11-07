@@ -16,6 +16,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "paypal/rest-api-sdk-php": "*",
+        "torann/currency": "^1.0",
         "torann/geoip": "^1.0",
         "tymon/jwt-auth": "^0.5.12",
         "webpatser/laravel-uuid": "2.*"

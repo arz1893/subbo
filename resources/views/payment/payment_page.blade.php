@@ -49,7 +49,10 @@
         </ul>
 
         <h5 class="blue-grey-text">Pay with</h5>
-        <a href="#modal_paypal_confirm" style="margin: 1%">
+
+        {{--<div id="paypal-button"></div>--}}
+
+        <a href="#modal_paypal_confirm" style="margin: 1%" onclick="checkCurrency(this)">
             <img src="{{ asset('images/default/Paypal-icon.png') }}" width="75" height="75">
         </a>
 
@@ -86,5 +89,40 @@
             </a>
         </div>
     </div>
-
 @endsection
+
+@push('page-script')
+    <script type="text/javascript">
+        paypal.Button.render({
+            env: 'sandbox',
+            client: {
+                sandbox: 'AdL4stVjRPdbHHBGMDNGV9khGuwN5JJHFBvdDAZ6_I764zBUAXIFJmAvNmQ-Cho4-H1qM4zJi5A2Pn91'
+            },
+            style: {
+                size: 'small',
+                color: 'blue',
+                shape: 'rect',
+                label: 'checkout'
+            },
+            commit: true,       // Show 'Pay Now' button
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '1.00', currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            onAuthorize: function(data, actions) {
+                return actions.payment.execute().then(function(payment) {
+
+                    console.log(payment);
+                });
+            }
+        }, '#paypal-button');
+    </script>
+@endpush

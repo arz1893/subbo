@@ -40,10 +40,9 @@ class PaymentController extends Controller
     }
 
     public function showPaymentPage(Album $album) {
-
         if(Auth::user()->id == $album->user_id) {
             return redirect()->route('guest_showcase', $album->id);
-        }else {
+        } else {
             foreach (Auth::user()->purchased_albums as $purchased_album) {
                 if($purchased_album->id == $album->id) {
                     return \redirect()->route('showcase_album', $album->id);
@@ -66,16 +65,16 @@ class PaymentController extends Controller
         $payer->setPaymentMethod('paypal');
 
         $item_1 = new Item();
-        if($authorCurrency->code == 'IDR') {
+        if($authorCurrency->code == 'USD') {
             $item_1->setName($album->title) // item name
             ->setCurrency('USD')
-                ->setQuantity(1)
-                ->setPrice($album->price * 0.000075); // unit price
+            ->setQuantity(1)
+            ->setPrice($album->price); // unit price
         } else {
-            $item_1->setName($album->title) // item name
-            ->setCurrency('USD')
+            $item_1->setName($album->title)
+                ->setCurrency('USD')
                 ->setQuantity(1)
-                ->setPrice($album->price); // unit price
+                ->setPrice(currency($album->price, $authorCurrency->code, 'USD', false));
         }
 
         // add item to list
@@ -109,7 +108,7 @@ class PaymentController extends Controller
                 $err_data = json_decode($ex->getData(), true);
                 exit;
             } else {
-                die('Some error occur, sorry for inconvenient');
+                dd($ex);
             }
         }
 
@@ -224,5 +223,12 @@ class PaymentController extends Controller
 
     public function midtransFinish(Request $request) {
         dd($request->all());
+    }
+
+    public function checkExchangeRate(Request $request) {
+        if($request->json()) {
+
+        }
+        return redirect()->back();
     }
 }

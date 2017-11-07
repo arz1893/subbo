@@ -174,6 +174,7 @@ return [
         Torann\GeoIP\GeoIPServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         KekoApp\LaravelMetaTags\MetaTagsServiceProvider::class,
+        Torann\Currency\CurrencyServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -240,7 +241,8 @@ return [
         'Zipper' => Chumper\Zipper\Zipper::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'MetaTag' => KekoApp\LaravelMetaTags\Facades\MetaTag::class
+        'MetaTag' => KekoApp\LaravelMetaTags\Facades\MetaTag::class,
+        'Currency' => Torann\Currency\Facades\Currency::class
     ],
 
 ];

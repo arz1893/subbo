@@ -22,6 +22,7 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         '1e298922c3e2134d42dcdb03e6d5f55a' => __DIR__ . '/..' . '/torann/geoip/src/helpers.php',
+        '377d15ea71be0306a9829d9f78207a1c' => __DIR__ . '/..' . '/torann/currency/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -41,6 +42,7 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         array (
             'Tymon\\JWTAuth\\' => 14,
             'Torann\\GeoIP\\' => 13,
+            'Torann\\Currency\\' => 16,
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tests\\' => 6,
         ),
@@ -155,6 +157,10 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         'Torann\\GeoIP\\' => 
         array (
             0 => __DIR__ . '/..' . '/torann/geoip/src',
+        ),
+        'Torann\\Currency\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/torann/currency/src',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -445,6 +451,7 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         'App\\Http\\Requests\\UserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserRequest.php',
         'App\\Image' => __DIR__ . '/../..' . '/app/Image.php',
         'App\\ImageThumbnail' => __DIR__ . '/../..' . '/app/ImageThumbnail.php',
+        'App\\PaymentInvoice' => __DIR__ . '/../..' . '/app/PaymentInvoice.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -479,6 +486,7 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         'CreateImagesTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_100626_create_images_table.php',
         'CreateOrderHistoryTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_14_092411_create_order_history_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+        'CreatePaymentInvoicesTable' => __DIR__ . '/../..' . '/database/migrations/2017_11_06_080645_create_payment_invoices_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'CreateWalletsTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_14_085801_create_wallets_table.php',
         'CreateWithdrawRequestsTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_13_073737_create_withdraw_requests_table.php',
@@ -3935,6 +3943,19 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+        'Torann\\Currency\\Console\\Cleanup' => __DIR__ . '/..' . '/torann/currency/src/Console/Cleanup.php',
+        'Torann\\Currency\\Console\\Manage' => __DIR__ . '/..' . '/torann/currency/src/Console/Manage.php',
+        'Torann\\Currency\\Console\\Update' => __DIR__ . '/..' . '/torann/currency/src/Console/Update.php',
+        'Torann\\Currency\\Contracts\\DriverInterface' => __DIR__ . '/..' . '/torann/currency/src/Contracts/DriverInterface.php',
+        'Torann\\Currency\\Contracts\\FormatterInterface' => __DIR__ . '/..' . '/torann/currency/src/Contracts/FormatterInterface.php',
+        'Torann\\Currency\\Currency' => __DIR__ . '/..' . '/torann/currency/src/Currency.php',
+        'Torann\\Currency\\CurrencyServiceProvider' => __DIR__ . '/..' . '/torann/currency/src/CurrencyServiceProvider.php',
+        'Torann\\Currency\\Drivers\\AbstractDriver' => __DIR__ . '/..' . '/torann/currency/src/Drivers/AbstractDriver.php',
+        'Torann\\Currency\\Drivers\\Database' => __DIR__ . '/..' . '/torann/currency/src/Drivers/Database.php',
+        'Torann\\Currency\\Drivers\\Filesystem' => __DIR__ . '/..' . '/torann/currency/src/Drivers/Filesystem.php',
+        'Torann\\Currency\\Facades\\Currency' => __DIR__ . '/..' . '/torann/currency/src/Facades/Currency.php',
+        'Torann\\Currency\\Formatters\\PHPIntl' => __DIR__ . '/..' . '/torann/currency/src/Formatters/PHPIntl.php',
+        'Torann\\Currency\\Middleware\\CurrencyMiddleware' => __DIR__ . '/..' . '/torann/currency/src/Middleware/CurrencyMiddleware.php',
         'Torann\\GeoIP\\Cache' => __DIR__ . '/..' . '/torann/geoip/src/Cache.php',
         'Torann\\GeoIP\\Console\\Clear' => __DIR__ . '/..' . '/torann/geoip/src/Console/Clear.php',
         'Torann\\GeoIP\\Console\\Update' => __DIR__ . '/..' . '/torann/geoip/src/Console/Update.php',

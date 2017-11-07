@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Album;
 use App\Category;
+use App\Currency;
 use App\Http\Requests\AlbumRequest;
 use App\Image;
 use App\ImageThumbnail;
@@ -87,7 +88,9 @@ class AlbumController extends Controller
 
         $images = $album->images;
         $imageThumbnails = $album->image_thumbnails;
-        
+
+        $minPrice = \currency(0.1, 'USD', $currency->code, false);
+
         if($images && $imageThumbnails) {
             foreach ($images as $image) {
                 if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name))) {
@@ -109,7 +112,7 @@ class AlbumController extends Controller
 
         if($iPod || $iPhone || $iPad) {
             $request->session()->put('operating_system', 'iOS');
-            return view('album.ios_upload_page', compact('categories', 'album', 'currency'));
+            return view('album.ios_upload_page', compact('categories', 'album', 'currency', 'os', 'minPrice'));
 
         } else if($android) {
             $request->session()->put('operating_system', 'android');
@@ -118,7 +121,7 @@ class AlbumController extends Controller
             $os = 'pc';
         }
 
-        return view('album.addalbum', compact('categories', 'album', 'currency', 'os'));
+        return view('album.addalbum', compact('categories', 'album', 'currency', 'os', 'minPrice'));
     }
 
     public function store(Request $request) {
@@ -199,7 +202,8 @@ class AlbumController extends Controller
 //        dd($request->all());
         $image = $request->file('file');
         if(!is_null($image)) {
-            $filename = $request->album_id . '_' . $image->getClientOriginalName();
+            $rawFileName = $request->album_id . '_' . $image->getClientOriginalName();
+            $filename = str_replace(' ', '_', $rawFileName);
 
             $uploadedImage = Image::create([
                 'file_name' => $filename,
@@ -280,7 +284,8 @@ class AlbumController extends Controller
     public function uploadImageIos(Request $request) {
         $image = $request->file('file');
         if(!is_null($image)) {
-            $filename = $request->album_id . '_' . $request->fileName;
+            $rawFileName = $request->album_id . '_' . $image->getClientOriginalName();
+            $filename = str_replace(' ', '_', $rawFileName);
 
             $uploadedImage = Image::create([
                 'file_name' => $filename,

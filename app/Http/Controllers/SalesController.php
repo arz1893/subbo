@@ -28,11 +28,14 @@ class SalesController extends Controller
             if($request->withdraw_amount > $userWallet->deposit) {
                 Session::flash('error', 'you don\'t have enough money');
             } else {
-                WithdrawRequest::create([
-                    'amount' => $request->withdraw_amount,
-                    'user_id' => Auth::user()->id,
-                ]);
-                Session::flash('msg', 'your withdraw request has been processed');
+                $userWallet->deposit = $userWallet->deposit - $request->withdraw_amount;
+                $userWallet->save();
+                Session::flash('msg', 'your money has been transferred to your account');
+//                WithdrawRequest::create([
+//                    'amount' => $request->withdraw_amount,
+//                    'user_id' => Auth::user()->id,
+//                ]);
+//                Session::flash('msg', 'your withdraw request has been processed');
             }
         } else {
             Session::flash('error', 'you don\'t have any deposit!');

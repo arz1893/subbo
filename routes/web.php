@@ -102,6 +102,7 @@ Route::get('/payment/paypal/get-status/{album}', 'PaymentController@getPaypalPay
 Route::post('/payment/midtrans_token', 'PaymentController@midtransToken');
 Route::post('/payment/midtrans_notification', 'PaymentController@midtransNotification');
 Route::post('/payment/midtrans_finish', 'PaymentController@midtransFinish');
+Route::post('/payment/check-exchange-rate' , 'PaymentController@checkExchangeRate');
 
 Route::any('/order_history/purchased_album/{user}', 'OrderHistoryController@showOrderHistory')->name('order_history');
 Route::get('/order_history/sold_album/{user}', 'OrderHistoryController@showSoldAlbumHistory')->name('sold_album');

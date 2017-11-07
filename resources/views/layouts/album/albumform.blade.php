@@ -1,7 +1,7 @@
 <div class="container" id="albumform-container">
 
     <div class="row">
-        <div class="">
+        <div class="col s12 m12 l12">
             <label for="title" class="form-label">Title</label>
             {{ Form::text(
                 'title',
@@ -14,7 +14,7 @@
     </div>
 
     <div class="row">
-        <div class="">
+        <div class="col s12 m12 l12">
             <label for="description" class="form-label">Description</label>
             {{ Form::textarea(
                 'description',
@@ -27,19 +27,24 @@
         </div>
     </div>
 
-    <div class="row" id="category_container" style="margin-top: 10px;">
-        <label for="categoryList" class="form-label">Select Category</label>
-        <select name="category_list[]" id="categoryList" multiple required>
-            @foreach($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-            @endforeach
-        </select>
-        {{--{!! Form::select('category_list', $categories, null, ['multiple' ,'class' => 'validate', 'id' => 'categoryList', 'required']) !!}--}}
+    <div class="row">
+        <div class="col s12 m12 l12" id="category_container" style="margin-top: 10px;">
+            <label for="categoryList" class="form-label">Select Category</label>
+            <select name="category_list[]" id="categoryList" multiple required>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     <div class="row">
-        <div class="">
-            <label for="price" class="form-label">Price <span class="grey-text">(current currency : {{ $currency->code }} / {{ $currency->currency }})</span></label>
+        <div class="col s12 m12 l12">
+            <label for="price" class="form-label">Price
+                (<span id="min_price" data-value="{{ number_format((integer)$minPrice, 2, '.', '') }}" class="red-text">
+                    *min price: {!!$currency->code . ' ' . (integer)$minPrice !!}
+                </span>)
+            </label>
             {!! Form::input(
                 'number',
                 'price',

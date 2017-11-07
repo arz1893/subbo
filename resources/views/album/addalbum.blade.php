@@ -16,18 +16,17 @@
             @include('layouts.album.albumform')
         {!! Form::close() !!}
 
-        <div class="container" id="dropzone_container">
-            <br>
-            <p class="blue-grey-text">
+        <div class="container" id="dropzone_container" style="margin-top: -10px;">
+            <span class="blue-grey-text">
                 @if($os == 'android')
                     <span class="red-text">For android user, please use file explorer to choose image</span>
                 @endif
                 <br>
                 *note: maximum 25 image/photos
-            </p>
+            </span> <br>
 
             <span style="font-size: 1.2em">Add Image</span> <br>
-            <a class="waves-effect waves-light grey btn btn-add-image">
+            <a class="waves-effect waves-light blue lighten-2 btn btn-add-image">
                 <i class="fa fa-plus-square"></i>
             </a> <br> <br>
 

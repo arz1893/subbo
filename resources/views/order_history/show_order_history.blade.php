@@ -21,7 +21,7 @@
             @endif
             @php $counter = 0; @endphp
             @foreach($purchasedAlbums as $purchasedAlbum)
-                <div class="col s12 m6 l6">
+                <div class="col s12 m4 l4">
                     <div class="card small" style="width: 100%">
                         <div class="card-image">
                             @foreach($purchasedAlbum->image_thumbnails as $image_thumbnail)
@@ -37,19 +37,15 @@
                         </div>
                         <div class="card-content">
                             <button
-                                    data-url="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($host . '/showcase/show-album/' . $purchasedAlbum->id) }}"
+                                    data-url="{!! 'http://' . $host . '/guest/showcase-album/' . $purchasedAlbum->id !!}"
                                     onclick="facebookShare(this)"
                                     class="btn-floating waves-effect waves-light blue">
                                 <i class="fa fa-facebook"></i>
                             </button>
 
                             <a class="btn-floating waves-effect waves-light blue lighten-2"
-                               href="https://twitter.com/intent/tweet?text=Hello%20world">
+                               href="https://twitter.com/intent/tweet?text={{ $purchasedAlbum->title }}&url={!! 'http://'. $host .'/guest/showcase-album/'. $purchasedAlbum->id !!}">
                                 <i class="fa fa-twitter"></i>
-                            </a>
-
-                            <a href="#!" class="btn-floating waves-effect waves-light purple">
-                                <i class="fa fa-instagram"></i>
                             </a>
 
                             @if($os == 'iOS')
@@ -71,6 +67,8 @@
                             <a href="{{ route('show_download', $purchasedAlbum) }}" class="btn-floating waves-effect waves-light grey right">
                                 <i class="fa fa-download"></i>
                             </a>
+
+                            <textarea id="{{ "copy" . $counter }}" class="hide" onfocus="copy_text_address(this)">{{'http://' . $host . '/guest/showcase-album/' . $purchasedAlbum->id }}</textarea>
                         </div>
                     </div>
                 </div>

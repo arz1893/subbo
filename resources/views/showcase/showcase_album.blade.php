@@ -24,14 +24,22 @@
             </div>
         @endif
         @if($status == true)
-            <div class="col s12 m4 l4">
-                <img src="{{ asset($coverImage->image->path) }}" width="100%" id="showcase_cover">
+            <div class="row">
+                <div class="center">
+                    <div class="col s12 m6 l6 offset-m3 offset-l3">
+                        <img src="{{ asset($coverImage->image->path) }}" class="responsive-img">
+                    </div>
+                </div>
             </div>
         @else
             @foreach($imageThumbnails as $imageThumbnail)
                 @if($imageThumbnail->id == $album->album_cover_id)
-                    <div class="col s12 m4 l4">
-                        <img src="{{ asset($imageThumbnail->thumbnail_path) }}" width="100%" id="showcase_cover">
+                    <div class="row">
+                        <div class="center">
+                            <div class="col s12 m6 l6 offset-m3 offset-l3">
+                                <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="responsive-img">
+                            </div>
+                        </div>
                     </div>
                 @endif
             @endforeach
@@ -39,74 +47,71 @@
 
 
         @if($status == true)
-            <a href="{{ route('show_download', $album) }}" class="btn grey" style="width: 100%">
-                Download <i class="fa fa-download" aria-hidden="true"></i>
-            </a>
+            <div class="row">
+                <div class="col s12 m6 l6 offset-m3 offset-l3">
+                    <a href="{{ route('show_download', $album) }}" class="btn grey" style="width: 100%">
+                        Download <i class="fa fa-download" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
         @else
-            <a href="{{ route('show_payment', $album) }}" class="btn amber" style="width: 100%">
-                Purchase <i class="fa fa-cart-plus"></i>
-            </a>
+            <div class="row">
+                <div class="col s12 m6 l6 offset-m3 offset-l3">
+                    <a href="{{ route('show_payment', $album) }}" class="btn amber" style="width: 100%">
+                        Purchase <i class="fa fa-cart-plus"></i>
+                    </a>
+                </div>
+            </div>
         @endif
 
-        <ul class="collapsible" data-collapsible="accordion">
-            <li>
-                <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
-                <div class="collapsible-body">
-                    <!-- Product Title -->
-                    {{--<div class="center-align p-20">--}}
-                        {{--@unless($album->categories->isEmpty())--}}
-                            {{--<ul>--}}
-                                {{--@foreach($album->categories as $category)--}}
-                                    {{--<div class="chip">--}}
-                                        {{--<img src="{{ asset('images/default/' . $category->image) }}">--}}
-                                        {{--{{ $category->category_name }}--}}
-                                    {{--</div>--}}
-                                {{--@endforeach--}}
-                            {{--</ul>--}}
-                        {{--@endunless--}}
-                        {{--<h4 class="m-0"><strong>{{ $album->title }}</strong></h4>--}}
-                        {{--<h4>{{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}</h4>--}}
-                    {{--</div>--}}
-                    <p>
-                        <span class="flow-text">
-                            <b>Creator:</b> <br/>
-                            <a href="{{ route('show_as_guest', $album->user_id) }}">{{ $album->user->name }}</a>
-                        </span>
-                    </p>
-                    <p>
-                        <span class="flow-text">
-                            <b>Title:</b> <br/>
-                            {{ $album->title }}
-                        </span>
-                    </p>
-                    <p class="flow-text" style="text-align: justify;">
-                        <span><b>Description: </b></span><br>
-                        {{ $album->description }}
-                    </p>
-                    <p>
-                        <span class="flow-text">
-                            <b>Category:</b> <br/>
-                        </span>
-                    </p>
-                    @unless($album->categories->isEmpty())
-                        <ul>
-                            @foreach($album->categories as $category)
-                                <div class="chip">
-                                    <img src="{{ asset('images/default/' . $category->image) }}">
-                                    {{ $category->category_name }}
-                                </div>
-                            @endforeach
-                        </ul>
-                    @endunless
-                    <p>
-                        <span class="flow-text">
-                            <b>Price:</b> <br/>
-                            {{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}
-                        </span>
-                    </p>
-                </div>
-            </li>
-        </ul>
+        <div class="row">
+            <div class="col s12 m6 l6 offset-m3 offset-l3">
+                <ul class="collapsible" data-collapsible="accordion">
+                    <li>
+                        <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
+                        <div class="collapsible-body">
+                            <p>
+                                <span>
+                                    <b>Creator:</b> <br/>
+                                    <a href="{{ route('show_as_guest', $album->user_id) }}">{{ $album->user->name }}</a>
+                                </span>
+                            </p>
+                            <p>
+                                <span>
+                                    <b>Title:</b> <br/>
+                                    {{ $album->title }}
+                                </span>
+                            </p>
+                            <p style="text-align: justify;">
+                                <span><b>Description: </b></span><br>
+                                {{ $album->description }}
+                            </p>
+                            <p>
+                                <span>
+                                    <b>Category:</b> <br/>
+                                </span>
+                            </p>
+                            @unless($album->categories->isEmpty())
+                                <ul>
+                                    @foreach($album->categories as $category)
+                                        <div class="chip">
+                                            <img src="{{ asset('images/default/' . $category->image) }}">
+                                            {{ $category->category_name }}
+                                        </div>
+                                    @endforeach
+                                </ul>
+                            @endunless
+                            <p>
+                                <span>
+                                    <b>Price:</b> <br/>
+                                    {{ $currency->code . " " .number_format( $album->price , 2 , ',', '.' ) }}
+                                </span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
         <div class="row">
 
@@ -116,7 +121,7 @@
                         <li>
                             <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($image->path) }}">
                                 <img src="{{ asset($image->path) }}"
-                                     class="col s4 m2 l2 image-thumbnails" height="75px">
+                                     class="col s4 m1 l1 image-thumbnails" height="75px">
                             </a>
                         </li>
                     @endforeach
@@ -125,14 +130,7 @@
                 <ul>
                     @foreach($imageThumbnails as $imageThumbnail)
                         <li>
-                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails" height="75px">
-                            {{--<div--}}
-                                    {{--class="col s4 m2 l2 image-thumbnails"--}}
-                                    {{--style="background-image: url('{{ asset($imageThumbnail->thumbnail_path) }}');--}}
-                                            {{--background-size: 100% 100%;--}}
-                                            {{--height: 75px;--}}
-                                            {{--margin: 1%;">--}}
-                            {{--</div>--}}
+                            <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l2 image-thumbnails">
                         </li>
                     @endforeach
                 </ul>

@@ -32,7 +32,7 @@
     <div class="row">
         @php $counter = 0; @endphp
         @foreach($albums as $album)
-            <div class="col s12 m6 l4">
+            <div class="col s12 m6 l3">
                 <div class="card small" style="width: 100%">
                     <div class="card-image">
                         @if($album->album_cover_id == null)

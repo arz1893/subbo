@@ -13,21 +13,30 @@
 
     <title>Subbo</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Materialize CSS -->
     <link rel="stylesheet" href="{{ asset('css/materialize/materialize.min.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <!-- Fonts -->
     <link href="{{ asset('css/font-awesome/font-awesome.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Datatables css -->
     <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Selectize css -->
     <link href="{{ asset('css/selectize/selectize.css') }}" rel="stylesheet">
+    <!-- Dropzone css -->
     <link href="{{ asset('css/dropzone/dropzone.css') }}" rel="stylesheet">
+    <!-- Viewer css -->
     <link href="{{ asset('css/viewer/viewer.css') }}" rel="stylesheet">
+    <!-- Venobox css -->
     <link href="{{ asset('css/venobox/venobox.css') }}" rel="stylesheet">
+    <!-- Tel input css -->
     <link href="{{ asset('css/tel-input/intlTelInput.css') }}" rel="stylesheet">
+    <!-- Application stylesheet -->
     <link href="{{ asset('css/custom/mycss.css') }}" rel="stylesheet">
+    <!-- Device Compatibility css -->
     <link href="{{ asset('css/custom/media-screen.css') }}" rel="stylesheet">
+    <!-- Page Specific Stylesheet -->
+    @stack('stylesheet')
+
 </head>
 <body onload="urlChecking()">
 <!-- Facebook SDK -->
@@ -39,10 +48,10 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
-<!-- end of facebook sdk -->
 <!-- Twitter SDK -->
 <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
-<!-- end of twitter sdk -->
+<!-- Paypal sdk -->
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 
 <nav>
@@ -97,12 +106,9 @@
                 @endif
             </div>
         @elseif(Route::currentRouteName() == 'guest_showcase')
-            <div class="brand-logo center">
-                <a href="{{ route('show_as_guest', $album->user_id) }}" class="breadcrumb white-text">
-                    <i id="homeBrand" class="fa fa-user-circle"></i>
-                </a>
+            <div class="brand-logo center white-text truncate">
                 <a href="#!"
-                   class="breadcrumb text-limiter tooltipped"
+                   class="tooltipped"
                    data-position="bottom"
                    data-delay="50"
                    data-tooltip="{{ $album->title }}">
@@ -129,7 +135,7 @@
             </div>
         @elseif(Route::currentRouteName() == 'show_payment' && !Auth::guest())
             <div class="brand-logo center">
-                <a href="{{ route('showcase_album', $album->id) }}" class="breadcrumb white-text">
+                <a href="{{ route('guest_showcase', $album->id) }}" class="breadcrumb white-text">
                     <i id="homeBrand" class="fa fa-camera-retro"></i>
                 </a>
                 <a href="{{ route('show_payment', $album->id) }}" class="breadcrumb text-limiter">
@@ -404,6 +410,9 @@
 <script src="{{ asset('js/custom/myjs.js') }}" type="text/javascript"></script>
 <!-- Function javascript -->
 <script src="{{ asset('js/custom/function.js') }}"></script>
+<!-- Form validation js -->
+<script src="{{ asset('js/custom/form_validation.js') }}" type="text/javascript"></script>
+<!-- Specific Page Script -->
 @stack('page-script')
 
 </body>
