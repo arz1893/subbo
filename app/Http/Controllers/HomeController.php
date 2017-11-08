@@ -50,7 +50,7 @@ class HomeController extends Controller
             $currentUser->update();
         }
 
-        return view('home');
+        return redirect()->route('album.index');
     }
 
     public function showAbout(Request $request) {

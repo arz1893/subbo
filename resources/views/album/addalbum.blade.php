@@ -19,7 +19,7 @@
         <div class="container" id="dropzone_container" style="margin-top: -10px;">
             <span class="blue-grey-text">
                 @if($os == 'android')
-                    <span class="red-text">For android user, please use file explorer to choose image</span>
+                    <span class="red-text">For android user, please use file explorer / file browser to choose image</span>
                 @endif
                 <br>
                 *note: maximum 25 image/photos

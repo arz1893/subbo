@@ -70,14 +70,14 @@ and (-webkit-device-pixel-ratio: 3) {
 and (min-device-width: 768px)
 and (max-device-width: 1024px)
 and (-webkit-min-device-pixel-ratio: 2) {
-    #homeBrand {
-        position: relative;
-        padding-left: 33%;
-    }
+    /*#homeBrand {*/
+        /*position: relative;*/
+        /*padding-left: 27%;*/
+    /*}*/
 
-    .brand-logo {
-        left: 20%;
-    }
+    /*.brand-logo {*/
+        /*left: 20%;*/
+    /*}*/
 }
 
 @media screen and (max-device-width: 767px){
