@@ -21,7 +21,7 @@
             @endif
             @php $counter = 0; @endphp
             @foreach($purchasedAlbums as $purchasedAlbum)
-                <div class="col s12 m4 l4">
+                <div class="col s12 m6 l4">
                     <div class="card small" style="width: 100%">
                         <div class="card-image">
                             @foreach($purchasedAlbum->image_thumbnails as $image_thumbnail)

@@ -9,7 +9,7 @@ $(document).ready(function () {
             category_list: "required",
             price: {
                 required: true,
-                min: parseInt($('#min_price').data('value'))
+                min: parseFloat($('#min_price').data('value'))
             }
         },
         messages: {
@@ -21,7 +21,7 @@ $(document).ready(function () {
             category_list: "you haven't choose your album category",
             price: {
                 required: "price field is required",
-                min: "the minimum price required is " + parseInt($('#min_price').data('value'))
+                min: "the minimum price required is " + parseFloat($('#min_price').data('value'))
             }
         },
         // Make sure the form is submitted to the destination defined
@@ -41,7 +41,7 @@ $(document).ready(function () {
             category_list: "required",
             price: {
                 required: true,
-                min: parseInt($('#min_price').data('value'))
+                min: parseFloat($('#min_price').data('value'))
             }
         },
         messages: {
@@ -53,7 +53,7 @@ $(document).ready(function () {
             category_list: "you haven't choose your album category",
             price: {
                 required: "price field is required",
-                min: "the minimum price required is " + parseInt($('#min_price').data('value'))
+                min: "the minimum price required is " + parseFloat($('#min_price').data('value'))
             }
         },
         // Make sure the form is submitted to the destination defined

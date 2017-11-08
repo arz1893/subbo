@@ -114,7 +114,7 @@
                     @foreach($images as $image)
                         <li>
                             <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($image->path) }}">
-                                <img src="{{ asset($image->path) }}" class="col s4 m1 l1 image-thumbnails" height="75px">
+                                <img src="{{ asset($image->path) }}" class="col s4 m2 l1 image-thumbnails" height="75px">
                             </a>
                         </li>
                     @endforeach
@@ -126,13 +126,13 @@
                         @if($imageThumbnail->id == $album->album_cover_id)
                             <li>
                                 <a href="#!" onclick="Materialize.toast('This is current album cover', 4000)">
-                                    <img src="{{ asset($imageThumbnail->image->path) }}" class="col s4 m1 l1 image-thumbnails" height="75px">
+                                    <img src="{{ asset($imageThumbnail->image->path) }}" class="col s4 m2 l1 image-thumbnails" height="75px">
                                 </a>
                             </li>
                         @else
                             <li>
                                 <a href="#popUpConfirm" class="modal-trigger" data-target="#popUpConfirm" data-id="{{$imageThumbnail->id}}" onClick="selectCover(this);">
-                                    <img src="{{ asset($imageThumbnail->image->path) }}" class="col s4 m1 l1 image-thumbnails" height="75px">
+                                    <img src="{{ asset($imageThumbnail->image->path) }}" class="col s4 m2 l1 image-thumbnails" height="75px">
                                 </a>
                             </li>
                         @endif

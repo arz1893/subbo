@@ -65,6 +65,21 @@ and (-webkit-device-pixel-ratio: 3) {
     }
 }
 
+/* Portrait and Landscape for Ipad*/
+@media only screen
+and (min-device-width: 768px)
+and (max-device-width: 1024px)
+and (-webkit-min-device-pixel-ratio: 2) {
+    #homeBrand {
+        position: relative;
+        padding-left: 33%;
+    }
+
+    .brand-logo {
+        left: 20%;
+    }
+}
+
 @media screen and (max-device-width: 767px){
     #sales-nav {
         position: relative;
@@ -80,20 +95,5 @@ and (-webkit-device-pixel-ratio: 3) {
         width: 50%;
         font-size: 1.2em;
         border-radius: 10px;
-    }
-}
-
-/* Portrait and Landscape */
-@media only screen
-and (min-device-width: 768px)
-and (max-device-width: 1024px)
-and (-webkit-min-device-pixel-ratio: 2) {
-    #homeBrand {
-        position: relative;
-        padding-left: 7%;
-    }
-
-    .brand-logo {
-        left: 10%;
     }
 }

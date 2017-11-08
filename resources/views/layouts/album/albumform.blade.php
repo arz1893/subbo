@@ -41,8 +41,8 @@
     <div class="row">
         <div class="col s12 m12 l12">
             <label for="price" class="form-label">Price
-                (<span id="min_price" data-value="{{ number_format((integer)$minPrice, 2, '.', '') }}" class="red-text">
-                    *min price: {!!$currency->code . ' ' . (integer)$minPrice !!}
+                (<span id="min_price" data-value="{{ number_format($minPrice, 2, '.', '') }}" class="red-text">
+                    *min price: {!!$currency->code . ' ' . number_format($minPrice, 2, '.', '') !!}
                 </span>)
             </label>
             {!! Form::input(

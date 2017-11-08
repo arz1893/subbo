@@ -121,7 +121,7 @@
                         <li>
                             <a class="venobox" data-gall="showcaseGallery" data-overlay="rgba(95,164,255,0.8)" href="{{ asset($image->path) }}">
                                 <img src="{{ asset($image->path) }}"
-                                     class="col s4 m1 l1 image-thumbnails" height="75px">
+                                     class="col s4 m2 l1 image-thumbnails" height="75px">
                             </a>
                         </li>
                     @endforeach
