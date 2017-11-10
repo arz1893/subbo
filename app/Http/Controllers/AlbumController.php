@@ -91,7 +91,7 @@ class AlbumController extends Controller
 
         $minPrice = \currency(0.1, 'USD', $currency->code, false);
 
-        if($images && $imageThumbnails) {
+        if(count($images) > 0 && count($imageThumbnails) > 0) {
             foreach ($images as $image) {
                 if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name))) {
                     unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name));
@@ -284,7 +284,7 @@ class AlbumController extends Controller
     public function uploadImageIos(Request $request) {
         $image = $request->file('file');
         if(!is_null($image)) {
-            $rawFileName = $request->album_id . '_' . $image->getClientOriginalName();
+            $rawFileName = $request->album_id . '_' . $request->fileName;
             $filename = str_replace(' ', '_', $rawFileName);
 
             $uploadedImage = Image::create([

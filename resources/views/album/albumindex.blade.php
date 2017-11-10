@@ -4,6 +4,12 @@
 
     <h3 class="center grey-text">Your album list</h3>
 
+    <div class="container">
+        <div class="center-align">
+            @include('layouts.paginator.paginator', ['paginator' => $albums])
+        </div>
+    </div>
+
     <div class="fixed-action-btn">
         <a id="btnCreateAlbum" href="{{ route('create_album_first') }}" class="btn-floating btn-large waves-effect waves-light red darken-1">
             <i class="material-icons">add</i>
@@ -106,12 +112,5 @@
             @php $counter++; @endphp
         @endforeach
     </div>
-
-    <div class="container">
-        <div class="center-align">
-            @include('layouts.paginator.paginator', ['paginator' => $albums])
-        </div>
-    </div>
-
     @include('layouts.popup.popup')
 @endsection

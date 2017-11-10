@@ -22,4 +22,5 @@ return array(
     'f18cc91337d49233e5754e93f3ed9ec3' => $vendorDir . '/laravelcollective/html/src/helpers.php',
     '1e298922c3e2134d42dcdb03e6d5f55a' => $vendorDir . '/torann/geoip/src/helpers.php',
     '377d15ea71be0306a9829d9f78207a1c' => $vendorDir . '/torann/currency/src/helpers.php',
+    '3917c79c5052b270641b5a200963dbc2' => $vendorDir . '/kint-php/kint/init.php',
 );

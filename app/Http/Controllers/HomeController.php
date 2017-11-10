@@ -40,13 +40,6 @@ class HomeController extends Controller
                 }
             }
 
-            if(Auth::user()->wallet_id == null) {
-                $wallet = Wallet::create([
-                    'user_id' => Auth::user()->id
-                ]);
-                $currentUser->wallet_id = $wallet->id;
-            }
-
             $currentUser->update();
         }
 

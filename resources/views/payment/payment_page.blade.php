@@ -16,13 +16,19 @@
                     </span>
                 </div>
                 <div class="collapsible-body z-depth-1">
-
+                    {{ Form::open(['action' => 'PaymentController@createInvoice', 'id' => 'form_paypal_invoice']) }}
+                        {{ Form::hidden('album_id', $album->id, ['id' => 'album_id']) }}
+                    {{ Form::close() }}
                     <!-- Products in cart -->
                     <div class="checkout-details">
                         <img class="checkout-image" src="{{ asset($imageCover->thumbnail_path) }}" width="75" height="75">
                         <span class="right">{{ $userCurrency->code . " " . number_format( $album->price , 2 , '.', '.' ) }}</span>
                         <div class="checkout-product-title">
-                            <h6>{{ $album->title }}</h6>
+                            <h5 id="product_title" data-value="{{ $album->title }}">{{ $album->title }}</h5>
+                            <h5>Description:</h5>
+                            <p id="product_description">
+                                {{ $album->description }}
+                            </p>
                             <div>
                                 @unless($album->categories->isEmpty())
                                     <h5>Category : </h5>
@@ -41,7 +47,15 @@
 
                     <!-- Total -->
                     <div class="total">
-                        <h5>Total <span class="right"> {{ $userCurrency->code . " " . number_format( $album->price , 2 , '.', '.' ) }}</span></h5>
+                        <h5>
+                            Total
+                            <span id="product_price"
+                                  data-currency="{{ $userCurrency->code }}"
+                                  data-value="{{ $convertedPrice }}"
+                                  class="right">
+                                {{ $userCurrency->code . " " . number_format( $album->price , 2 , '.', '.' ) }}
+                            </span>
+                        </h5>
                     </div>
 
                 </div>
@@ -50,24 +64,24 @@
 
         <h5 class="blue-grey-text">Pay with</h5>
 
-        {{--<div id="paypal-button"></div>--}}
+        <div id="paypal-button-container"></div>
 
-        <a href="#modal_paypal_confirm" style="margin: 1%" onclick="checkCurrency(this)">
-            <img src="{{ asset('images/default/Paypal-icon.png') }}" width="75" height="75">
-        </a>
+        {{--<a href="#modal_paypal_confirm" style="margin: 1%" onclick="checkCurrency(this)">--}}
+            {{--<img src="{{ asset('images/default/Paypal-icon.png') }}" width="75" height="75">--}}
+        {{--</a>--}}
 
-        <a href="#!" id="snap-pay-button" style="margin: 1%">
-            {{ Form::open(['action' => 'PaymentController@midtransFinish', 'id' => 'form-midtrans', 'style' => 'display:inline']) }}
-                {{ Form::hidden('result_type', null, ['id' => 'result_type']) }}
-                {{ Form::hidden('result_data', null, ['id' => 'result_data']) }}
-            {{ Form::close() }}
+        {{--<a href="#!" id="snap-pay-button" style="margin: 1%">--}}
+            {{--{{ Form::open(['action' => 'PaymentController@midtransFinish', 'id' => 'form-midtrans', 'style' => 'display:inline']) }}--}}
+                {{--{{ Form::hidden('result_type', null, ['id' => 'result_type']) }}--}}
+                {{--{{ Form::hidden('result_data', null, ['id' => 'result_data']) }}--}}
+            {{--{{ Form::close() }}--}}
 
-            <img src="{{ asset('images/default/midtrans.png') }}" width="125">
-        </a>
+            {{--<img src="{{ asset('images/default/midtrans.png') }}" width="125">--}}
+        {{--</a>--}}
 
-        <a href="#!" style="margin: 1%">
-            <img src="{{ asset('images/default/visa-debit.png') }}" width="75" height="75">
-        </a>
+        {{--<a href="#!" style="margin: 1%">--}}
+            {{--<img src="{{ asset('images/default/visa-debit.png') }}" width="75" height="75">--}}
+        {{--</a>--}}
     </div>
 
     <!-- Modal Structure -->
@@ -92,37 +106,5 @@
 @endsection
 
 @push('page-script')
-    <script type="text/javascript">
-        paypal.Button.render({
-            env: 'sandbox',
-            client: {
-                sandbox: 'AdL4stVjRPdbHHBGMDNGV9khGuwN5JJHFBvdDAZ6_I764zBUAXIFJmAvNmQ-Cho4-H1qM4zJi5A2Pn91'
-            },
-            style: {
-                size: 'small',
-                color: 'blue',
-                shape: 'rect',
-                label: 'checkout'
-            },
-            commit: true,       // Show 'Pay Now' button
-            payment: function(data, actions) {
-                return actions.payment.create({
-                    payment: {
-                        transactions: [
-                            {
-                                amount: { total: '1.00', currency: 'USD' }
-                            }
-                        ]
-                    }
-                });
-            },
-
-            onAuthorize: function(data, actions) {
-                return actions.payment.execute().then(function(payment) {
-
-                    console.log(payment);
-                });
-            }
-        }, '#paypal-button');
-    </script>
+    <script src="{{ asset('js/paypal/paypal_payment_config.js') }}" type="text/javascript"></script>
 @endpush

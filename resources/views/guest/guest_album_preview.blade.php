@@ -22,7 +22,7 @@
     <!-- End of twitter Meta Tags -->
     @endpush
 
-    <div class="container" style="margin-top: 5%">
+    <div class="container" style="margin-top: 2%">
 
         @if(\Session::has('info'))
             <div class="chip green lighten-1 white-text center" style="width: 100%;">
@@ -63,12 +63,8 @@
                     <li>
                         <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
                         <div class="collapsible-body">
-                            <p>
-                        <span class="">
                             <b>Creator:</b> <br/>
                             <a>{{ $album->user->name }}</a>
-                        </span>
-                            </p>
                             <p>
                         <span class="">
                             <b>Title:</b> <br/>
@@ -107,11 +103,10 @@
         </div>
 
         <div class="row">
-
             <ul>
                 @foreach($imageThumbnails as $imageThumbnail)
                     <li>
-                        <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l1 image-thumbnails" height="75px">
+                        <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l1 image-thumbnails responsive-img">
                     </li>
                 @endforeach
             </ul>

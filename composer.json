@@ -11,6 +11,7 @@
         "imagecow/imagecow": "^2.2",
         "intervention/image": "^2.3",
         "kekoapp/laravel-meta-tags": "^5.4",
+        "kint-php/kint": "^2.2",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",

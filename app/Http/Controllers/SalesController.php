@@ -16,6 +16,14 @@ class SalesController extends Controller
     }
 
     public function showMonthlyRevenue(User $user) {
+        if($user->wallet == null) {
+            $wallet = Wallet::create([
+                'user_id' => Auth::user()->id
+            ]);
+            $user->wallet_id = $wallet->id;
+            $user->update();
+        }
+
         $userWallet = $user->wallet()->first();
         $currency = $user->currency;
         return view('sales.show_monthly_sales', compact('user', 'userWallet', 'currency'));

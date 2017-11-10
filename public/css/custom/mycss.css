@@ -133,7 +133,7 @@
 
 #showcase-title {
     font-size: 20px;
-    margin-left: 10px;
+    margin-left: 20px;
 
     overflow: hidden;
     white-space: nowrap;
@@ -142,6 +142,17 @@
     /*line-height: 55px;     !* fallback *!*/
     width: 250px;
     -webkit-box-orient: horizontal;
+}
+
+#guest-brand {
+    text-align: center;
+
+    display: inline-block; /* <- Prevent <tr> in a display css */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* end */
+    width: 250px; /* Space size limit */
+    overflow: hidden;
 }
 
 .input-field label {
@@ -194,4 +205,8 @@ form .error {
 .parallax-container {
     height: 350px;
     width: 100%;
+}
+
+pre.sf-dump .sf-dump-compact {
+    display: block !important;
 }

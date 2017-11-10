@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Album;
 use App\Exceptions\VeritransException;
 use App\ImageThumbnail;
+use App\PaypalInvoice;
 use App\User;
 use App\Veritrans\Midtrans;
 use Illuminate\Http\Request;
@@ -48,187 +49,32 @@ class PaymentController extends Controller
                     return \redirect()->route('showcase_album', $album->id);
                 }
             }
+
             $user = User::findOrFail($album->user_id);
             $userCurrency = $user->currency;
             $imageCover = ImageThumbnail::findOrFail($album->album_cover_id);
-            return view('payment.payment_page', compact('imageCover', 'album', 'userCurrency'));
+            $convertedPrice = number_format(currency($album->price, $userCurrency->code, 'USD', false), 2, '.', ',');
+            return view('payment.payment_page', compact('imageCover', 'album', 'userCurrency', 'convertedPrice'));
         }
     }
 
-    public function buyWithPaypal(Request $request) {
+    public function createInvoice(Request $request) {
+
+        $paypalInvoice = PaypalInvoice::create([
+            'album_id' => $request->album_id,
+            'user_id' => Auth::user()->id,
+            'payer_id' => $request->payer_id,
+            'payment_id' => $request->payment_id,
+            'payment_token' => $request->payment_token
+        ]);
 
         $album = Album::findOrFail($request->album_id);
         $albumAuthor = User::findOrFail($album->user_id);
-        $authorCurrency = $albumAuthor->currency;
+        $authorWallet = $albumAuthor->wallet()->first();
+        $authorWallet->deposit = $authorWallet->deposit + $album->price;
+        $authorWallet->update();
 
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-
-        $item_1 = new Item();
-        if($authorCurrency->code == 'USD') {
-            $item_1->setName($album->title) // item name
-            ->setCurrency('USD')
-            ->setQuantity(1)
-            ->setPrice($album->price); // unit price
-        } else {
-            $item_1->setName($album->title)
-                ->setCurrency('USD')
-                ->setQuantity(1)
-                ->setPrice(currency($album->price, $authorCurrency->code, 'USD', false));
-        }
-
-        // add item to list
-        $item_list = new ItemList();
-        $item_list->setItems(array($item_1));
-
-        $amount = new Amount();
-        $amount->setCurrency('USD')
-            ->setTotal($item_1->getPrice());
-
-        $transaction = new Transaction();
-        $transaction->setAmount($amount)
-            ->setItemList($item_list)
-            ->setDescription('Payment for ' . $album->title);
-
-        $redirect_urls = new RedirectUrls();
-        $redirect_urls->setReturnUrl(route('payment_status', $album)) // Specify return URL
-        ->setCancelUrl(route('payment_status', $album));
-
-        $payment = new Payment();
-        $payment->setIntent('Sale')
-            ->setPayer($payer)
-            ->setRedirectUrls($redirect_urls)
-            ->setTransactions(array($transaction));
-
-        try {
-            $payment->create($this->api_context);
-        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-            if (\Config::get('app.debug')) {
-                echo "Exception: " . $ex->getMessage() . PHP_EOL;
-                $err_data = json_decode($ex->getData(), true);
-                exit;
-            } else {
-                dd($ex);
-            }
-        }
-
-        foreach($payment->getLinks() as $link) {
-            if($link->getRel() == 'approval_url') {
-                $redirect_url = $link->getHref();
-                break;
-            }
-        }
-
-        // add payment ID to session
-        $request->session()->put('paypal_payment_id', $payment->getId());
-//        \session(['album_id', $album->id]);
-
-        if(isset($redirect_url)) {
-            // redirect to paypal
-            return redirect($redirect_url);
-        }
-
-        return redirect()->route('showcase_album', $album->id)->with('error', 'Unknown error occured');
-    }
-
-    public function getPaypalPaymentStatus(Request $request, Album $album) {
-        // Get the payment ID before session clear
-        $payment_id = $request->session()->pull('paypal_payment_id');
-//        $album = Album::findOrFail($request->session()->pull('album_id'));
-        $albumAuthor = User::findOrFail($album->user_id);
-
-
-        if(empty($request->input('PayerID')) || empty($request->input('token'))){
-            return redirect()->route('home')->with('info', 'Payment failed');
-        }
-
-        $payment = Payment::get($payment_id, $this->api_context);
-
-        // PaymentExecution object includes information necessary
-        // to execute a PayPal account payment.
-        // The payer_id is added to the request query parameters
-        // when the user is redirected from paypal back to your site
-        $execution = new PaymentExecution();
-        $execution->setPayerId($request->input('PayerID'));
-
-        //Execute the payment
-        $result = $payment->execute($execution, $this->api_context);
-
-        if ($result->getState() == 'approved') { // payment made
-
-//            dd($result);  // Use this data to work as you need
-
-            $authorWallet = $albumAuthor->wallet()->first();
-            $authorWallet->deposit = $authorWallet->deposit + $album->price;
-            $authorWallet->update();
-            $album->purchased_albums()->sync(Auth::user()->id);
-            return redirect()->route('showcase_album', $album)->with('info', 'Album has been purchased');
-        }
-        return redirect()->route('showcase_album', $album)->with('error', 'Payment failed');
-    }
-
-    public function midtransToken(Request $request) {
-        $album = Album::findOrFail($request->album_id);
-        error_log('masuk ke snap token dari ajax');
-        $midtrans = new Midtrans;
-        $transaction_details = array(
-            'order_id'          => uniqid(),
-            'gross_amount'  => $album->price
-        );
-        // Populate items
-        $items = [
-            array(
-                'id'                => 'album_1',
-                'price'         => $album->price,
-                'quantity'  => 1,
-                'name'          => $album->title
-            )
-        ];
-
-        // Populate customer's Info
-        $customer_details = array(
-            'first_name'            => Auth::user()->name,
-            'email'                     => Auth::user()->email,
-            'phone'                     => "081322311801",
-        );
-        // Data yang akan dikirim untuk request redirect_url.
-        $transaction_data = array(
-            'transaction_details'=> $transaction_details,
-            'item_details'           => $items,
-            'customer_details'   => $customer_details
-        );
-
-        try
-        {
-            $snap_token = $midtrans->getSnapToken($transaction_data);
-            //return redirect($vtweb_url);
-            return response()->json($snap_token, 200);
-        }
-        catch (VeritransException $e)
-        {
-            return $e->getMessage();
-        }
-    }
-
-    public function midtransNotification(Request $request) {
-        $allRequest = $request->all();
-        if($request->json()) {
-            return response()->json([
-                'all_request' => $allRequest
-            ], 200);
-        }
-
-        else return response()->json(['message' => 'could not retrieve your information'],404);
-    }
-
-    public function midtransFinish(Request $request) {
-        dd($request->all());
-    }
-
-    public function checkExchangeRate(Request $request) {
-        if($request->json()) {
-
-        }
-        return redirect()->back();
+        $album->purchased_albums()->sync(Auth::user()->id);
+        return redirect()->route('showcase_album', $album)->with('info', 'Album has been purchased');
     }
 }

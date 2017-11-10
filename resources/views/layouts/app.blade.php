@@ -106,8 +106,9 @@
                 @endif
             </div>
         @elseif(Route::currentRouteName() == 'guest_showcase')
-            <div class="brand-logo center white-text text-limiter">
+            <div class="brand-logo center white-text">
                 <a href="#!"
+                   id="guest-brand"
                    class="tooltipped"
                    data-position="bottom"
                    data-delay="50"

@@ -29,7 +29,8 @@ class User extends Authenticatable
         'phone_number',
         'currency_id',
         'bank_name',
-        'account_number'
+        'account_number',
+        'wallet_id'
     ];
 
     /**

@@ -94,10 +94,8 @@ Route::get('/user/account-setting-page/{user}', 'UserController@accountSettingPa
 Route::post('/user/change-password/{user}', 'UserController@changePassword')->name('change_password');
 Route::patch('/user/change-phone/{user}', 'UserController@changePhoneNumber')->name('change_phone_number');
 
+Route::post('/payment/paypal/create-invoice', 'PaymentController@createInvoice')->name('create_paypal_invoice');
 Route::get('/payment/album-payment/{album}', 'PaymentController@showPaymentPage')->name('show_payment');
-Route::post('/payment/buy-album-paypal', 'PaymentController@buyWithPaypal')->name('buy_album_paypal');
-// this is after make the payment, PayPal redirect back to your site
-Route::get('/payment/paypal/get-status/{album}', 'PaymentController@getPaypalPaymentStatus')->name('payment_status');
 
 Route::post('/payment/midtrans_token', 'PaymentController@midtransToken');
 Route::post('/payment/midtrans_notification', 'PaymentController@midtransNotification');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container" style="margin-top: 5%">
+    <div class="container" style="margin-top: 2%;">
         {{--<meta name="twitter:card" content="summary_large_image">--}}
         {{--<meta name="twitter:site" content="{{ $host . '/showcase/show-album/' . $album->id }}">--}}
         {{--<meta name="twitter:creator" content="{{ Auth::user()->name }}">--}}
@@ -70,12 +70,9 @@
                     <li>
                         <div class="collapsible-header"><i class="fa fa-question-circle-o"></i>Album's info</div>
                         <div class="collapsible-body">
-                            <p>
-                                <span>
-                                    <b>Creator:</b> <br/>
-                                    <a href="{{ route('show_as_guest', $album->user_id) }}">{{ $album->user->name }}</a>
-                                </span>
-                            </p>
+                            <b>Creator:</b> <br/>
+                            <a href="{{ route('show_as_guest', $album->user_id) }}">{{ $album->user->name }}</a>
+
                             <p>
                                 <span>
                                     <b>Title:</b> <br/>

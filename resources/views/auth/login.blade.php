@@ -33,7 +33,7 @@
 
                                     @if ($errors->has('password'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
+                                            <strong class="red-text">{{ $errors->first('password') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -45,7 +45,7 @@
                             <br />
                             <center>
                                 <div class='row'>
-                                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue accent-1'>Login</button>
+                                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect cyan darken-2'>Login</button>
                                 </div>
                             </center>
                         </form>
