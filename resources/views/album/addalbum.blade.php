@@ -22,7 +22,7 @@
                     <span class="red-text">For android user, please use file explorer / file browser to choose image</span>
                 @endif
                 <br>
-                *note: maximum 25 image/photos
+                *maximum per upload : 25 image/photo
             </span> <br>
 
             <span style="font-size: 1.2em">Add Image</span> <br>

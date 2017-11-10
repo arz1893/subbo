@@ -127,7 +127,10 @@ Dropzone.options.uploadImage = {
         //New file added
         self.on("addedfile", function (file) {
             counter++;
-            // console.log('new file added ', counter);
+            if(file.name.indexOf(' ')>=0) {
+                alert('Some file contain a whitespace in filename please rename the file before upload it');
+                self.removeFile(file);
+            }
         });
 
         // On removing file
@@ -142,8 +145,7 @@ Dropzone.options.uploadImage = {
         });
 
         self.on("maxfilesexceeded", function (file) {
-            alert("Files too many!");
-            this.removeAllFiles();
+            this.removeFile(file);
         });
 
         self.on("error", function (file, response) {
@@ -201,6 +203,10 @@ Dropzone.options.uploadImageIos = {
 
         self.on('addedfile', function (file) {
             counter++;
+            if(file.name.indexOf(' ')>=0) {
+                alert('Some file contain a whitespace in filename please rename the file before upload it');
+                self.removeFile(file);
+            }
         });
 
         self.on('sending', function (file, xhr, formData) {
@@ -215,6 +221,7 @@ Dropzone.options.uploadImageIos = {
 
         // On removing file
         self.on("removedfile", function (file) {
+            counter--;
             console.log("file removed");
             console.log(file.name);
             console.log(counter);
@@ -226,8 +233,7 @@ Dropzone.options.uploadImageIos = {
         });
 
         self.on("maxfilesexceeded", function (file) {
-            alert("Files too many!");
-            self.removeAllFiles();
+            self.removeFile(file);
         });
 
         self.on("error", function (file, response) {

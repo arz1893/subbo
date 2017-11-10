@@ -7,7 +7,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ $album->title }}" />
     <meta property="og:description" content="{{ $album->description }}" />
-    <meta property="og:image" content="{{ asset($coverImage->thumbnail_path) }}" />
+    <meta property="og:image" content="{{ asset($coverImage->image->path) }}" />
     <meta property="og:image:alt" content="{{ $album->title }}">
     <meta property="oh:image:width" content="350">
     <meta property="oh:image:height" content="350">
