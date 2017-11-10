@@ -94,18 +94,16 @@ class AlbumController extends Controller
         if(count($images) > 0 && count($imageThumbnails) > 0) {
             foreach ($images as $image) {
                 if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name))) {
-                    unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $image->image_name));
+                    unlink(public_path($image->path));
                 }
+                $image->delete();
             }
 
             foreach ($imageThumbnails as $imageThumbnail) {
                 if(file_exists(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $imageThumbnail->thumbnail_name))) {
-                    unlink(public_path('uploaded_images/' . Auth::user()->email . '/' . $album->id . '/' . $imageThumbnail->thumbnail_name));
+                    unlink(public_path($imageThumbnail->thumbnail_path));
                 }
-            }
-
-            foreach ($images as $image) {
-                $image->delete();
+                $imageThumbnail->delete();
             }
         }
 

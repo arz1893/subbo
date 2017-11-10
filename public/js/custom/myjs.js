@@ -135,8 +135,10 @@ Dropzone.options.uploadImage = {
 
         // On removing file
         self.on("removedfile", function (file) {
+            counter--;
             console.log("file removed");
-            console.log(file);
+            console.log(file.name);
+            console.log(counter);
         });
         
         self.on("canceled", function (file) {
@@ -145,7 +147,7 @@ Dropzone.options.uploadImage = {
         });
 
         self.on("maxfilesexceeded", function (file) {
-            this.removeFile(file);
+            self.removeFile(file);
         });
 
         self.on("error", function (file, response) {
@@ -156,7 +158,7 @@ Dropzone.options.uploadImage = {
         $('#upload_validation_button').on('click', function (e) {
             e.preventDefault();
             var result = $('#album-form').valid();
-            if (result == true && self.getQueuedFiles().length > 0) {
+            if (result === true && self.getQueuedFiles().length > 0) {
                 $('#upload_confirm').modal('open');
             }
         });
@@ -170,6 +172,7 @@ Dropzone.options.uploadImage = {
         self.on("success", function (file, response) {
             if(response === 'success') {
                 counter--;
+                console.log(self.getUploadingFiles().length, counter);
             }
 
             // console.log(self.getUploadingFiles().length, counter);

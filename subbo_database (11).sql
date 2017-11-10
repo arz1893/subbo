@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 08, 2017 at 10:21 AM
+-- Generation Time: Nov 10, 2017 at 11:28 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -351,7 +351,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (27, '2017_09_12_095353_add_image_thumbnail_id_to_images', 13),
 (30, '2017_09_13_073737_create_withdraw_requests_table', 14),
 (31, '2013_11_26_161501_create_currency_table', 15),
-(32, '2017_11_06_080645_create_payment_invoices_table', 15);
+(32, '2017_11_06_080645_create_payment_invoices_table', 15),
+(33, '2017_11_10_041828_create_paypal_invoices_table', 16);
 
 -- --------------------------------------------------------
 
@@ -382,12 +383,16 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment_invoices`
+-- Table structure for table `paypal_invoices`
 --
 
-CREATE TABLE `payment_invoices` (
+CREATE TABLE `paypal_invoices` (
   `id` int(10) UNSIGNED NOT NULL,
   `album_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payer_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -423,8 +428,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `provider_name`, `provider_id`, `avatar`, `about`, `phone_number`, `bank_name`, `account_number`, `currency_id`, `instagram_id`, `wallet_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-('983ac884-2762-3e85-a7b7-51013cfd1a11', 'John Doe', 'johndoe@example.com', '$2y$10$FfXE1apLximpGx5e2nslCOey3pIwVx19sM7FaYgW5tRmtknA6whJ2', NULL, NULL, NULL, 'Hello World!', '089652214479', NULL, NULL, 124, NULL, 11, 'JmeBgiWOosAtAJqJMJjbdWw9lCtSIRYYYY4WzzTnRmnvYCTUYjuuAR8ZogIL', '2017-10-20 02:37:46', '2017-11-07 03:49:48'),
-('f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', 'Arnadi Denanda Surya', 'arz1893@gmail.com', NULL, 'facebook', '10210502862241008', NULL, NULL, NULL, NULL, NULL, 54, NULL, 12, '0ZrDVwl1I1V6MX3tssLc944GcC1tDbcJEkot2kWOiJiOKzYedOTWoZc8vTWI', '2017-10-22 20:42:51', '2017-10-31 02:00:35');
+('983ac884-2762-3e85-a7b7-51013cfd1a11', 'John Doe', 'johndoe@example.com', '$2y$10$FfXE1apLximpGx5e2nslCOey3pIwVx19sM7FaYgW5tRmtknA6whJ2', NULL, NULL, NULL, 'Hello World!', '089652214479', NULL, NULL, 124, NULL, 11, 'NNuG1xiUFTgfmc1j2VlA7ywgXrv8ewEbYe0gCg1jAA86WPiieKwTwGQZlDE7', '2017-10-20 02:37:46', '2017-11-07 03:49:48'),
+('f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', 'Arnadi Denanda Surya', 'arz1893@gmail.com', NULL, 'facebook', '10210502862241008', NULL, NULL, NULL, NULL, NULL, 54, NULL, 12, 'gFvjthKaKzxOmO5XKCZucZ3VmA5HixeKmDwjFvNIXyMoy4sJw19M1DImnZhl', '2017-10-22 20:42:51', '2017-10-31 02:00:35');
 
 -- --------------------------------------------------------
 
@@ -446,8 +451,8 @@ CREATE TABLE `wallets` (
 --
 
 INSERT INTO `wallets` (`id`, `deposit`, `withdraw`, `user_id`, `created_at`, `updated_at`) VALUES
-(11, 0.2, 0, '983ac884-2762-3e85-a7b7-51013cfd1a11', '2017-10-20 02:37:46', '2017-11-07 23:54:18'),
-(12, 1350, 0, 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', '2017-10-31 02:00:34', '2017-11-07 02:30:13');
+(11, 0.7, 0, '983ac884-2762-3e85-a7b7-51013cfd1a11', '2017-10-20 02:37:46', '2017-11-08 23:28:53'),
+(12, 31350, 0, 'f3c16e77-3a72-37fb-9a22-c6e6d3fb7114', '2017-10-31 02:00:34', '2017-11-10 01:01:41');
 
 -- --------------------------------------------------------
 
@@ -555,11 +560,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `payment_invoices`
+-- Indexes for table `paypal_invoices`
 --
-ALTER TABLE `payment_invoices`
+ALTER TABLE `paypal_invoices`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `payment_invoices_album_id_index` (`album_id`);
+  ADD KEY `paypal_invoices_album_id_index` (`album_id`),
+  ADD KEY `paypal_invoices_user_id_index` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -612,27 +618,27 @@ ALTER TABLE `currency`
 -- AUTO_INCREMENT for table `image_thumbnails`
 --
 ALTER TABLE `image_thumbnails`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `order_history`
 --
 ALTER TABLE `order_history`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `payment_invoices`
+-- AUTO_INCREMENT for table `paypal_invoices`
 --
-ALTER TABLE `payment_invoices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `paypal_invoices`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `wallets`
 --
@@ -681,6 +687,13 @@ ALTER TABLE `images`
 ALTER TABLE `order_history`
   ADD CONSTRAINT `order_history_album_id_foreign` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_history_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `paypal_invoices`
+--
+ALTER TABLE `paypal_invoices`
+  ADD CONSTRAINT `paypal_invoices_album_id_foreign` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `paypal_invoices_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`
