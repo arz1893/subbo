@@ -8,6 +8,7 @@ use App\Http\Requests\BankAccountRequest;
 use App\Http\Requests\UserRequest;
 use App\ImageThumbnail;
 use App\User;
+use App\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,7 @@ class UserController extends Controller
 
     public function updateCurrency(Request $request, User $user) {
         $userWallet = $user->wallet;
+
         if($userWallet->deposit > 0) {
             Session::flash('error', 'please make sure your account deposit is empty');
         }

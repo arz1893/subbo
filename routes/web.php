@@ -47,7 +47,7 @@ Route::post('/session/set-country-detail', function (\Illuminate\Http\Request $r
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/guest/show-as-guest/{user}', 'GuestController@showAsGuest')->name('show_as_guest');
 Route::get('/guest/showcase-album/{album}', 'GuestController@showcaseAlbum')->name('guest_showcase');

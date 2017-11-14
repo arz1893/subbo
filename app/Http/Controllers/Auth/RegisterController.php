@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Wallet;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Webpatser\Uuid\Uuid;
@@ -63,12 +64,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'id' => Uuid::generate(3, $data['email'], Uuid::NS_DNS),
             'name' => $data['name'],
             'email' => $data['email'],
             'phone_number' => $data['phone_number'],
             'password' => bcrypt($data['password']),
         ]);
+
+        $userWallet = Wallet::create([
+            'user_id' => $user->id
+        ]);
+
+        $user->wallet_id = $userWallet->id;
+        $user->update();
+
+        return $user;
     }
 }

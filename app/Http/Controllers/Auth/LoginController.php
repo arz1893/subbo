@@ -61,12 +61,21 @@ class LoginController extends Controller
             return $authUser;
         }
 
-        return User::create([
+        $user =  User::create([
             'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
             'name'     => $user->name,
             'email'    => $user->email,
             'provider_name' => $provider,
             'provider_id' => $user->id,
         ]);
+
+        $userWallet = Wallet::create([
+            'user_id' => $user->id
+        ]);
+
+        $user->wallet_id = $userWallet->id;
+        $user->update();
+
+        return $user;
     }
 }

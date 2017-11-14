@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Wallet;
 use App\WithdrawRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,11 @@ class SalesController extends Controller
     }
 
     public function showMonthlyRevenue(User $user) {
-        if($user->wallet == null) {
+        if($user->wallet_id == null) {
             $wallet = Wallet::create([
-                'user_id' => Auth::user()->id
+                'user_id' => $user->id,
+                'deposit' => 0,
+                'withdraw' => 0
             ]);
             $user->wallet_id = $wallet->id;
             $user->update();

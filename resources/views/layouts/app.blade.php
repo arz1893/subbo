@@ -255,11 +255,6 @@
 
                     <ul id="dropdown1" class="dropdown-content" style="width: 200px">
                         <li>
-                            <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
-                                <i class="fa fa-blind"></i> Guest Preview
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ route('user.show', Auth::user()->id) }}" class="black-text">
                                 <i class="fa fa-address-card" aria-hidden="true"></i> Profile
                             </a>
@@ -356,11 +351,6 @@
                     </a>
 
                     <ul id="dropdown_user" class="dropdown-content">
-                        <li>
-                            <a href="{{ route('show_as_guest', Auth::user()->id) }}" class="black-text">
-                                Guest Preview
-                            </a>
-                        </li>
                         <li>
                             <a href="{{ route('user.show', Auth::user()->id) }}" class="black-text">
                                 Profile
