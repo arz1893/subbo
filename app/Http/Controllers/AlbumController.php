@@ -226,7 +226,7 @@ class AlbumController extends Controller
 //                $interventionImage->fit(350);
 //                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 80);
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->crop(500, 500, 'center', 'top');
                 $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
                 $logo->resize(75, 75);
@@ -245,7 +245,7 @@ class AlbumController extends Controller
 //                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/') . 'thumb_' . $filename, 80);
 
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->crop(500, 500, 'center', 'top');
                 $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
                 $logo->resize(75, 75);
@@ -307,7 +307,7 @@ class AlbumController extends Controller
 //                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename), 80);
 
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->crop(500, 500, 'center', 'top');
                 $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
                 $logo->resize(75, 75);
@@ -324,7 +324,7 @@ class AlbumController extends Controller
 //                $interventionImage->fit(350);
 //                $interventionImage->save(public_path('image_thumbnails/' . Auth::user()->email . '/' . $request->album_id . '/' . 'thumb_' . $filename), 80);
                 $imageCow = ImageCow::fromFile(public_path('uploaded_images/' . Auth::user()->email . '/' . $request->album_id . '/' . $filename));
-                $imageCow->crop(500, 500, 'center', 'middle');
+                $imageCow->crop(500, 500, 'center', 'top');
                 $imageCow->quality(80);
                 $logo = ImageCow::fromFile(public_path('images/default/subbo-watermark.png'));
                 $logo->resize(75, 75);

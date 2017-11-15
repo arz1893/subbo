@@ -106,7 +106,7 @@
             <ul>
                 @foreach($imageThumbnails as $imageThumbnail)
                     <li>
-                        <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l1 image-thumbnails" height="75px">
+                        <img src="{{ asset($imageThumbnail->thumbnail_path) }}" class="col s4 m2 l1 image-thumbnails" height="75px" width="50">
                     </li>
                 @endforeach
             </ul>
