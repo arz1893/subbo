@@ -40,6 +40,13 @@ return [
         'client_secret' => '7e8a2d6e9b0276d133dedeb5d2528186',
         'redirect' => 'http://localhost:8000/auth/facebook/callback'
     ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_ID'),
+        'client_secret' => env('TWITTER_SECRET'),
+        'redirect' => env('TWITTER_URL')
+    ],
+
     'instagram' => [
         'client_id' => 'b47506421ec7437fa391981865617787',
         'client_secret' => '3acf58cc7b2b4cd6a75bec0f685098c8',

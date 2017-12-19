@@ -2,7 +2,7 @@
 @section('main')
     <div class="container">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="http://subboapp2.esy.es/showcatalog/{{$album->id}}">
+        <meta name="twitter:site" content="https://subbo.online/showcatalog/{{$album->id}}">
         <meta name="twitter:title" content="{{$album->title}}">
         <meta name="twitter:description" content="{{$album->description}}">
         <br/><br/>

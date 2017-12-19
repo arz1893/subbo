@@ -69,7 +69,7 @@
                     <div class="card-content">
 
                         <button
-                           data-url="{!! 'http://' . $host . '/guest/showcase-album/' . $album->id !!}"
+                           data-url="{!! 'https://' . $host . '/guest/showcase-album/' . $album->id !!}"
                            onclick="facebookShare(this)"
                            class="btn-floating waves-effect waves-light blue">
                             <i class="fa fa-facebook"></i>

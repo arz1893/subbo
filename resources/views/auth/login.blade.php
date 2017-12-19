@@ -60,8 +60,15 @@
                 </div>
 
                 <a href="{{url('auth/facebook')}}" class="btn blue darken-2 white-text">
-                    <i class="fa fa-facebook" aria-hidden="true"></i> |
-                    Facebook
+                    <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+                </a>
+
+                <a href="{{ url('auth/twitter') }}" class="btn blue lighten-3 white-text">
+                    <i class="fa fa-twitter"></i> Twitter
+                </a> <br>
+
+                <a href="#!" class="btn red darken-2 white-text" style="margin-top: 0.4%;">
+                    <i class="fa fa-google"></i> Google
                 </a>
             </center>
 
