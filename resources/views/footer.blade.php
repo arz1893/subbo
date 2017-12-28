@@ -1,4 +1,4 @@
-<footer class="page-footer white">
+<footer class="page-footer grey lighten-4">
     <div class="container">
         <div class="row">
             <div class="col l6 s12">
@@ -10,6 +10,7 @@
                 <ul>
                     <li><a class="black-text" href="{{url('/about')}}">About</a></li>
                     <li><a class="black-text" href="{{url('/contact')}}">Contact</a></li>
+                    <li><a class="black-text" href="{{url('/privacy_policy')}}">Privacy & Policy</a></li>
                     <li><a class="black-text" href="#!">FAQ</a></li>
                     <li><a class="black-text" href="#!">Subscribe</a></li>
                 </ul>

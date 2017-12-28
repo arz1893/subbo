@@ -23,6 +23,10 @@ Route::get('/contact', function () {
     return view('etc.contact');
 });
 
+Route::get('/privacy_policy', function () {
+    return view('etc.privacy_policy');
+});
+
 Route::post('/session/set-country-detail', function (\Illuminate\Http\Request $request) {
     if($request->json()) {
         if(!$request->session()->has('country_name')) {
