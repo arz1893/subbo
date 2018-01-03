@@ -11,6 +11,7 @@
                     <li><a class="black-text" href="{{url('/about')}}">About</a></li>
                     <li><a class="black-text" href="{{url('/contact')}}">Contact</a></li>
                     <li><a class="black-text" href="{{url('/privacy_policy')}}">Privacy & Policy</a></li>
+                    <li><a class="black-text" href="{{url('/term_condition')}}">Terms & Condition</a></li>
                     <li><a class="black-text" href="#!">FAQ</a></li>
                     <li><a class="black-text" href="#!">Subscribe</a></li>
                 </ul>

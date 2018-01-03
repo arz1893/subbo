@@ -27,6 +27,10 @@ Route::get('/privacy_policy', function () {
     return view('etc.privacy_policy');
 });
 
+Route::get('/term_condition', function () {
+    return view('etc.terms_condition');
+});
+
 Route::post('/session/set-country-detail', function (\Illuminate\Http\Request $request) {
     if($request->json()) {
         if(!$request->session()->has('country_name')) {
