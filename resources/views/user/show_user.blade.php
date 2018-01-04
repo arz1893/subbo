@@ -3,11 +3,9 @@
 @section('main')
     <div class="center">
         <br/><br/>
-        @if($user->provider_id != null)
-            <img src="{{ $user->avatar }}"
-                 width="150" height="150" id="profilePicture" class="circle">
-        @elseif($user->avatar != null)
-            <img src="{{asset('profile_picture/' . $user->avatar)}}"
+
+        @if($user->avatar != null)
+            <img src="{{$user->avatar}}"
                  width="150" height="150" id="profilePicture" class="circle">
         @else
             <img src="{{asset('images/default/default-avatar.png')}}"
