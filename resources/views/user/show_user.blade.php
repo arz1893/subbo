@@ -4,7 +4,7 @@
     <div class="center">
         <br/><br/>
         @if($user->provider_id != null)
-            <img src="https://graph.facebook.com/v2.8/{{$user->provider_id}}/picture?type=large"
+            <img src="{{ $user->avatar }}"
                  width="150" height="150" id="profilePicture" class="circle">
         @elseif($user->avatar != null)
             <img src="{{asset('profile_picture/' . $user->avatar)}}"
