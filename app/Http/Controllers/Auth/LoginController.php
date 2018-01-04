@@ -56,78 +56,83 @@ class LoginController extends Controller
 
     public function findOrCreateUser($user, $provider)
     {
-        if($provider == 'facebook') {
-            $authUser = User::where('facebook_id', $user->id)->first();
-            if(!is_null($authUser)) {
-                return $authUser;
-            } else {
-                $user =  User::create([
-                    'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
-                    'name'     => $user->name,
-                    'email'    => $user->email,
-                    'provider_name' => $provider,
-                    'facebook_id' => $user->id,
-                    'avatar' => $user->avatar_original
-                ]);
-
-                $userWallet = Wallet::create([
-                    'user_id' => $user->id
-                ]);
-
-                $user->wallet_id = $userWallet->id;
-                $user->update();
-
-                return $user;
-            }
-        } else if($provider == 'twitter') {
-            $authUser = User::where('twitter_id', $user->id)->first();
-            if(!is_null($authUser)) {
-                return $authUser;
-            } else {
-                $user =  User::create([
-                    'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
-                    'name'     => $user->name,
-                    'email'    => $user->email,
-                    'provider_name' => $provider,
-                    'twitter_id' => $user->id,
-                    'avatar' => $user->avatar_original
-                ]);
-
-                $userWallet = Wallet::create([
-                    'user_id' => $user->id
-                ]);
-
-                $user->wallet_id = $userWallet->id;
-                $user->update();
-
-                return $user;
-            }
-
-        } else if($provider == 'google') {
-            $authUser = User::where('google_id', $user->id)->first();
-            if(!is_null($authUser)) {
-                return $authUser;
-            } else {
-                $user =  User::create([
-                    'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
-                    'name'     => $user->name,
-                    'email'    => $user->email,
-                    'provider_name' => $provider,
-                    'google_id' => $user->id,
-                    'avatar' => $user->avatar_original
-                ]);
-
-                $userWallet = Wallet::create([
-                    'user_id' => $user->id
-                ]);
-
-                $user->wallet_id = $userWallet->id;
-                $user->update();
-
-                return $user;
-            }
+        $authUser = User::where('email', $user->email)->first();
+        if($authUser) {
+            return $authUser;
         } else {
-            return redirect()->route('login')->with('error', 'Whoops there is something wrong!');
+            if($provider == 'facebook') {
+                $authUser = User::where('facebook_id', $user->id)->first();
+                if(!is_null($authUser)) {
+                    return $authUser;
+                } else {
+                    $user =  User::create([
+                        'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
+                        'name'     => $user->name,
+                        'email'    => $user->email,
+                        'provider_name' => $provider,
+                        'facebook_id' => $user->id,
+                        'avatar' => $user->avatar_original
+                    ]);
+
+                    $userWallet = Wallet::create([
+                        'user_id' => $user->id
+                    ]);
+
+                    $user->wallet_id = $userWallet->id;
+                    $user->update();
+
+                    return $user;
+                }
+            } else if($provider == 'twitter') {
+                $authUser = User::where('twitter_id', $user->id)->first();
+                if(!is_null($authUser)) {
+                    return $authUser;
+                } else {
+                    $user =  User::create([
+                        'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
+                        'name'     => $user->name,
+                        'email'    => $user->email,
+                        'provider_name' => $provider,
+                        'twitter_id' => $user->id,
+                        'avatar' => $user->avatar_original
+                    ]);
+
+                    $userWallet = Wallet::create([
+                        'user_id' => $user->id
+                    ]);
+
+                    $user->wallet_id = $userWallet->id;
+                    $user->update();
+
+                    return $user;
+                }
+
+            } else if($provider == 'google') {
+                $authUser = User::where('google_id', $user->id)->first();
+                if(!is_null($authUser)) {
+                    return $authUser;
+                } else {
+                    $user =  User::create([
+                        'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
+                        'name'     => $user->name,
+                        'email'    => $user->email,
+                        'provider_name' => $provider,
+                        'google_id' => $user->id,
+                        'avatar' => $user->avatar_original
+                    ]);
+
+                    $userWallet = Wallet::create([
+                        'user_id' => $user->id
+                    ]);
+
+                    $user->wallet_id = $userWallet->id;
+                    $user->update();
+
+                    return $user;
+                }
+            } else {
+                return redirect()->route('login')->with('error', 'Whoops there is something wrong!');
+            }
         }
     }
 }
