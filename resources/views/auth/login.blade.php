@@ -2,6 +2,8 @@
 
 @section('content')
     <div id="login_container">
+        @include('errors.errorlist')
+
         <div class="section"></div>
         <main>
             <center>
@@ -67,7 +69,7 @@
                     <i class="fa fa-twitter"></i> Twitter
                 </a> <br>
 
-                <a href="#!" class="btn red darken-2 white-text" style="margin-top: 0.4%;">
+                <a href="{{ url('auth/google') }}" class="btn red darken-2 white-text" style="margin-top: 0.4%;">
                     <i class="fa fa-google"></i> Google
                 </a>
             </center>

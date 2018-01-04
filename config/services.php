@@ -36,15 +36,21 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '277825625980540',
-        'client_secret' => '7e8a2d6e9b0276d133dedeb5d2528186',
-        'redirect' => 'http://localhost:8000/auth/facebook/callback'
+        'client_id' => env('FACEBOOK_ID'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => env('FACEBOOK_URL')
     ],
 
     'twitter' => [
         'client_id' => env('TWITTER_ID'),
         'client_secret' => env('TWITTER_SECRET'),
         'redirect' => env('TWITTER_URL')
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_ID'),
+        'client_secret' => env('GOOGLE_SECRET'),
+        'redirect' => env('GOOGLE_URL')
     ],
 
     'instagram' => [

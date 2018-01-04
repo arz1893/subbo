@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddColumns2ToUsers' => $baseDir . '/database/migrations/2018_01_04_045935_add_columns_2_to_users.php',
     'AddColumnsToUsers' => $baseDir . '/database/migrations/2017_07_06_072526_add_columns_to_users.php',
     'AddForeignToAlbums' => $baseDir . '/database/migrations/2017_07_17_092128_add_foreign_to_albums.php',
     'AddImageThumbnailIdToImages' => $baseDir . '/database/migrations/2017_09_12_095353_add_image_thumbnail_id_to_images.php',
@@ -56,8 +57,8 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\User' => $baseDir . '/app/User.php',
-    'App\\Veritrans\\Midtrans' => $baseDir . '/app/Veritrans/Midtrans.php',
-    'App\\Veritrans\\Veritrans' => $baseDir . '/app/Veritrans/Veritrans.php',
+    'App\\Veritrans\\Midtrans' => $baseDir . '/app/Http/Veritrans/Midtrans.php',
+    'App\\Veritrans\\Veritrans' => $baseDir . '/app/Http/Veritrans/Veritrans.php',
     'App\\Wallet' => $baseDir . '/app/Wallet.php',
     'App\\WithdrawRequest' => $baseDir . '/app/WithdrawRequest.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',

@@ -409,6 +409,7 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
     );
 
     public static $classMap = array (
+        'AddColumns2ToUsers' => __DIR__ . '/../..' . '/database/migrations/2018_01_04_045935_add_columns_2_to_users.php',
         'AddColumnsToUsers' => __DIR__ . '/../..' . '/database/migrations/2017_07_06_072526_add_columns_to_users.php',
         'AddForeignToAlbums' => __DIR__ . '/../..' . '/database/migrations/2017_07_17_092128_add_foreign_to_albums.php',
         'AddImageThumbnailIdToImages' => __DIR__ . '/../..' . '/database/migrations/2017_09_12_095353_add_image_thumbnail_id_to_images.php',
@@ -459,8 +460,8 @@ class ComposerStaticInit26072d1a36bb823f24dfabaa66bdc5f6
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
-        'App\\Veritrans\\Midtrans' => __DIR__ . '/../..' . '/app/Veritrans/Midtrans.php',
-        'App\\Veritrans\\Veritrans' => __DIR__ . '/../..' . '/app/Veritrans/Veritrans.php',
+        'App\\Veritrans\\Midtrans' => __DIR__ . '/../..' . '/app/Http/Veritrans/Midtrans.php',
+        'App\\Veritrans\\Veritrans' => __DIR__ . '/../..' . '/app/Http/Veritrans/Veritrans.php',
         'App\\Wallet' => __DIR__ . '/../..' . '/app/Wallet.php',
         'App\\WithdrawRequest' => __DIR__ . '/../..' . '/app/WithdrawRequest.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',

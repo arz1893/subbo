@@ -49,6 +49,7 @@ class LoginController extends Controller
 
     public function handleProviderCallback($provider) {
         $user = Socialite::driver($provider)->user();
+        dd($user);
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         return redirect()->intended('/home');
@@ -56,30 +57,76 @@ class LoginController extends Controller
 
     public function findOrCreateUser($user, $provider)
     {
-        $authUser = User::where('email', $user->email)->first();
+        dd($user, $provider);
+        if($provider == 'facebook') {
+            $authUser = User::where('facebook_id', $user->id)->first();
+            if(!is_null($authUser)) {
+                return $authUser;
+            } else {
+                $user =  User::create([
+                    'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
+                    'name'     => $user->name,
+                    'email'    => $user->email,
+                    'provider_name' => $provider,
+                    'facebook_id' => $user->id,
+                ]);
 
-        if ($authUser) {
-            return $authUser;
+                $userWallet = Wallet::create([
+                    'user_id' => $user->id
+                ]);
+
+                $user->wallet_id = $userWallet->id;
+                $user->update();
+
+                return $user;
+            }
+        } else if($provider == 'twitter') {
+            $authUser = User::where('twitter_id', $user->id)->first();
+            if(!is_null($authUser)) {
+                return $authUser;
+            } else {
+                $user =  User::create([
+                    'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
+                    'name'     => $user->name,
+                    'email'    => $user->email,
+                    'provider_name' => $provider,
+                    'twitter_id' => $user->id,
+                ]);
+
+                $userWallet = Wallet::create([
+                    'user_id' => $user->id
+                ]);
+
+                $user->wallet_id = $userWallet->id;
+                $user->update();
+
+                return $user;
+            }
+
+        } else if($provider == 'google') {
+            $authUser = User::where('google_id', $user->id)->first();
+            if(!is_null($authUser)) {
+                return $authUser;
+            } else {
+                $user =  User::create([
+                    'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
+                    'name'     => $user->name,
+                    'email'    => $user->email,
+                    'provider_name' => $provider,
+                    'google_id' => $user->id,
+                ]);
+
+                $userWallet = Wallet::create([
+                    'user_id' => $user->id
+                ]);
+
+                $user->wallet_id = $userWallet->id;
+                $user->update();
+
+                return $user;
+            }
         } else {
-            $authUser = User::where('provider_id', $user->id)->first();
-            return $authUser;
+            return redirect()->route('login')->with('error', 'Whoops there is something wrong!');
         }
-
-        $user =  User::create([
-            'id' => Uuid::generate(3, $user->email, Uuid::NS_DNS),
-            'name'     => $user->name,
-            'email'    => $user->email,
-            'provider_name' => $provider,
-            'provider_id' => $user->id,
-        ]);
-
-        $userWallet = Wallet::create([
-            'user_id' => $user->id
-        ]);
-
-        $user->wallet_id = $userWallet->id;
-        $user->update();
-
-        return $user;
     }
 }
