@@ -67,6 +67,7 @@ class LoginController extends Controller
                     'email'    => $user->email,
                     'provider_name' => $provider,
                     'facebook_id' => $user->id,
+                    'avatar' => $user->avatar
                 ]);
 
                 $userWallet = Wallet::create([
@@ -89,6 +90,7 @@ class LoginController extends Controller
                     'email'    => $user->email,
                     'provider_name' => $provider,
                     'twitter_id' => $user->id,
+                    'avatar' => $user->avatar
                 ]);
 
                 $userWallet = Wallet::create([
@@ -112,6 +114,7 @@ class LoginController extends Controller
                     'email'    => $user->email,
                     'provider_name' => $provider,
                     'google_id' => $user->id,
+                    'avatar' => $user->avatar
                 ]);
 
                 $userWallet = Wallet::create([
