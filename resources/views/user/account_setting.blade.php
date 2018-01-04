@@ -145,7 +145,7 @@
                             </a>
                         </td>
                         <td>
-                            @if($user->provider_id != null)
+                            @if($user->facebook_id != null)
                                 status : <span class="blue-text text-lighten-2">connected</span> <br>
                                 <a href="#!" class="grey-text">disconnect account ?</a>
                             @else
@@ -155,12 +155,18 @@
                     </tr>
                     <tr>
                         <td>
-                            <a href="#!" class="btn waves-effect waves-light purple pulse">
-                                <i class="fa fa-instagram" aria-hidden="true"></i> Instagram
+                            <a href="#!" class="btn waves-effect waves-light blue lighten-3 pulse">
+                                <i class="fa fa-twitter-square " aria-hidden="true"></i> Twitter
                             </a>
                         </td>
                         <td>
-                            status : <span class="red-text">disconnected</span>
+                            @if($user->twitter_id != null)
+                                status : <span class="blue-text text-lighten-2">connected</span> <br>
+                                <a href="#!" class="grey-text">disconnect account ?</a>
+                            @else
+                                status : <span class="red-text">disconnected</span>
+                            @endif
+
                         </td>
                     </tr>
                 </tbody>
