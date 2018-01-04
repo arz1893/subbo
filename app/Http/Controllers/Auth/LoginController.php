@@ -56,6 +56,7 @@ class LoginController extends Controller
 
     public function findOrCreateUser($user, $provider)
     {
+        dd($user);
         if($provider == 'facebook') {
             $authUser = User::where('facebook_id', $user->id)->first();
             if(!is_null($authUser)) {
@@ -67,7 +68,7 @@ class LoginController extends Controller
                     'email'    => $user->email,
                     'provider_name' => $provider,
                     'facebook_id' => $user->id,
-                    'avatar' => $user->avatar
+                    'avatar' => $user->avatar_original
                 ]);
 
                 $userWallet = Wallet::create([
@@ -90,7 +91,7 @@ class LoginController extends Controller
                     'email'    => $user->email,
                     'provider_name' => $provider,
                     'twitter_id' => $user->id,
-                    'avatar' => $user->avatar
+                    'avatar' => $user->avatar_original
                 ]);
 
                 $userWallet = Wallet::create([
@@ -114,7 +115,7 @@ class LoginController extends Controller
                     'email'    => $user->email,
                     'provider_name' => $provider,
                     'google_id' => $user->id,
-                    'avatar' => $user->avatar
+                    'avatar' => $user->avatar_original
                 ]);
 
                 $userWallet = Wallet::create([
