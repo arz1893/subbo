@@ -56,7 +56,6 @@ class LoginController extends Controller
 
     public function findOrCreateUser($user, $provider)
     {
-        dd($user);
         if($provider == 'facebook') {
             $authUser = User::where('facebook_id', $user->id)->first();
             if(!is_null($authUser)) {
